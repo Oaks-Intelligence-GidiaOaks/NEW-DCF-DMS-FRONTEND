@@ -148,7 +148,7 @@ function EnumeratorForm() {
           </div>
 
           {/* Info Bar */}
-          <div className="flex flex-wrap gap-y-10 justify-around sm:justify-between items-end mt-10 pb-14 xs:pb-4 max-w-[1040px] mx-auto">
+          {formState ? <div className="flex flex-wrap gap-y-10 justify-around sm:justify-between items-end mt-10 pb-14 xs:pb-4 max-w-[1040px] mx-auto">
             <ProgressBar formState={formState} />
             <div
               className={`flex flex-nowrap gap-5 ${
@@ -165,7 +165,7 @@ function EnumeratorForm() {
                 <span className="text-white text-[14px] ">Save Changes</span>
               </button>
             </div>
-          </div>
+          </div> : null}
         </div>
 
         {/* Tab Bar */}

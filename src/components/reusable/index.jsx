@@ -8,3 +8,5 @@ export { default as RingsCircle } from "./Rings";
 export { default as ProductItemInput } from "./ProductItemInput";
 export { default as CustomInput } from "./CustomInput";
 
+export { default as SkeletonLoaders } from "./SkeletonLoaders";
+export { default as BackButton } from "./BackButton";

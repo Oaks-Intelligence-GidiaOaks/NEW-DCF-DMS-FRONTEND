@@ -8,6 +8,7 @@ function ProgressBar({formState}) {
 
   return (
     <div className="flex flex-col gap-1 basis-[280px] pl-3">
+     {formState ? <>
       <div className="flex justify-between">
         <span className="text-secondary-gray font-medium text-base">
           Progress bar
@@ -22,6 +23,7 @@ function ProgressBar({formState}) {
           style={{ width: progressPercentage + "%" }}
         ></div>
       </div>
+      </> : null}
     </div>
   );
 }
