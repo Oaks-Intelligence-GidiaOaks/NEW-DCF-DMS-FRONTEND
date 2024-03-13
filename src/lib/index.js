@@ -14,26 +14,44 @@ function countEmptyStringFields(obj) {
 
   return count;
 }
-
-function countValidFields(obj) {
+function countEmptyProductValues(obj) {
   let count = 0;
 
   for (let key in obj) {
     // eslint-disable-next-line no-prototype-builtins
+    console.log(key);
     if (obj.hasOwnProperty(key)) {
-      if (
-        (typeof obj[key] === "string" && obj[key].length > 0) ||
-        typeof obj[key] === "boolean"
-      ) {
+      if (key === "value" && (typeof obj[key] === "string" || typeof obj[key] === "boolean")) {
         count++;
       } else if (typeof obj[key] === "object") {
-        count += countValidFields(obj[key]); // Recursively count fields within nested objects
+        console.log(key);
+        count += countEmptyStringFields(obj[key]); // Recursively count empty string fields within nested objects
       }
     }
   }
 
   return count;
 }
+
+function countValueOccurrences(obj) {
+  let count = 0;
+
+  function explore(obj) {
+      if (obj !== null && typeof obj === 'object') {
+          Object.keys(obj).forEach(key => {
+              if (key === 'value') {
+                  count++;
+              } else {
+                  explore(obj[key]);
+              }
+          });
+      }
+  }
+
+  explore(obj);
+  return count;
+}
+
 
 const revertFormatProductName = (name) => {
   if (!name) {
@@ -73,4 +91,42 @@ const revertFormatProductName = (name) => {
   }
 };
 
-export { countEmptyStringFields, countValidFields, revertFormatProductName };
+function countValidFields(obj) {
+  let count = 0;
+
+  for (let key in obj) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (obj.hasOwnProperty(key)) {
+      if (
+        (typeof obj[key] === "string" && obj[key].length > 0) ||
+        typeof obj[key] === "boolean"
+      ) {
+        count++;
+      } else if (typeof obj[key] === "object") {
+        count += countValidFields(obj[key]); // Recursively count fields within nested objects
+      }
+    }
+  }
+
+  return count;
+}
+function countValidValueKeys(obj) {
+  let count = 0;
+
+  function explore(obj) {
+      if (obj !== null && typeof obj === 'object') {
+          Object.keys(obj).forEach(key => {
+              if (key === 'value' && (typeof obj[key] === 'string' && obj[key].length > 0 || typeof obj[key] === 'boolean')) {
+                  count++;
+              } else {
+                  explore(obj[key]);
+              }
+          });
+      }
+  }
+
+  explore(obj);
+  return count;
+}
+
+export { countEmptyStringFields, countValidFields, revertFormatProductName, countEmptyProductValues, countValueOccurrences, countValidValueKeys };

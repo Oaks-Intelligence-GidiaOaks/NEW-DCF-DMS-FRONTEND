@@ -74,7 +74,7 @@ function App() {
   );
 
   const identifyRoute = (user) => {
-    if (user.role === "enumerator") {
+    if (user.role.toLowerCase() === "enumerator") {
       return <Navigate replace to={"/form"} />;
     }
     if (user.role === "team_lead") {
@@ -86,10 +86,15 @@ function App() {
     }
   };
 
+  // const adminRoleCheck =
+  //   isLoggedIn &&
+  //   user &&
+  //   (user.role === "admin" || user.role === "super_admin"  || user.role === "SuperAdmin");
+
   const adminRoleCheck =
     isLoggedIn &&
     user &&
-    (user.role === "admin" || user.role === "super_admin");
+    (user.role === "admin" || user.role === "super_admin"  || user.role === "SuperAdmin");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -107,7 +112,7 @@ function App() {
           <Route
             path="/form"
             element={
-              isLoggedIn && user && user.role === "enumerator" ? (
+              isLoggedIn && user && user.role.toLowerCase() === "enumerator" ? (
                 <EnumeratorFormProvider>
                   <EnumeratorForm />
                 </EnumeratorFormProvider>

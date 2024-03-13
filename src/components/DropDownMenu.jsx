@@ -39,38 +39,10 @@ const DropDownMenu = ({
 
   // handle state change
   useEffect(() => {
-    if (
-      item === "Charcoal" ||
-      item === "Cement" ||
-      item === "Building Block" ||
-      item === "Firewood"
-    ) {
-      setCommodityItemValue({
-        item,
-        type,
-        valueTitle:
-          item === "Building Block" || item === "Firewood" ? "size" : "weight",
-        value: dropDownValue,
-        i,
-      });
-    } else {
-      if (section === "transportSectionStructure") {
-        return setTransportItemValue({
-          item,
-          valueTitle,
-          value: dropDownValue,
-        });
-      } else if (section === "accomodationSectionStructure") {
-        handleChange(item, valueTitle, dropDownValue, i);
-      } else if (section === "clothingSectionStructure") {
-        handleChange(item, cloth, valueTitle, dropDownValue);
-      } else {
-        handleChange(item, type, valueTitle, dropDownValue, i);
-      }
-    }
+    handleChange(dropDownValue)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dropDownValue, type]);
+  }, [dropDownValue]);
 
   return (
     <div

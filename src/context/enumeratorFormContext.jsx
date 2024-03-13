@@ -38,9 +38,9 @@ export function EnumeratorFormProvider({ children }) {
 
   const initialState = useMemo(
     () => ({
-      currentFormTab: "Food",
+      currentFormTab: null,
       isSubmitting: false,
-      currentLGA: user.LGA[0],
+      currentLGA: user.districts[0],
       showSavedNotification: false,
       showSubmissionNotification: false,
       showDuplicateNotification: false,
@@ -424,7 +424,7 @@ export function EnumeratorFormProvider({ children }) {
   // };
 
   const [state, setState] = useState(
-    user.LGA.includes(savedState?.currentLGA) ? savedState : initialState
+    user.districts.includes(savedState?.currentLGA) ? savedState : initialState
   );
 
   const [contextLgaRoutes, setContextLgaRoutes] = useState(null);

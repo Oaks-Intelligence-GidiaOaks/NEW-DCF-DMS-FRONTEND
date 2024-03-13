@@ -5,3 +5,6 @@ export { default as UpdatePassword } from "./UpdatePassword";
 export { default as PasswordField } from "./PasswordField";
 export { default as YearDropDown } from "./YearDropDown";
 export { default as RingsCircle } from "./Rings";
+export { default as ProductItemInput } from "./ProductItemInput";
+export { default as CustomInput } from "./CustomInput";
+
