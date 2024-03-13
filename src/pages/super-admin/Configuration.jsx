@@ -25,7 +25,7 @@ const Configuration = () => {
   }
 
   return (
-    <div className="font-poppins mx-auto lg:ml-[30px] py-6 text-sm">
+    <div className="font-poppins b mx-auto lg:ml-[30px] py-6 text-sm">
       <div className="flex  items-center justify-between">
         <div className="h-[48px] w-fit px-[22px] bg-white flex gap-[22px] items-center radius-[5px]">
           <span>Total Categories</span>
