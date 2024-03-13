@@ -42,6 +42,23 @@ import Admin from "./components/layout/Admin";
 import secureLocalStorage from "react-secure-storage";
 import { LoginTest } from "./pages";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  SuperAdminAddTeamLead,
+  SuperAdminConfiguration,
+  SuperAdminDashboard,
+  SuperAdminEnumerators,
+  SuperAdminFormResponses,
+  SuperAdminMasterList,
+  SuperAdminNewCategory,
+  SuperAdminNewProduct,
+  SuperAdminNewRoute,
+  SuperAdminProfile,
+  SuperAdminSubAdmins,
+  SuperAdminTeamLeadProfile,
+  SuperAdminViewProducts,
+} from "./pages/super-admin";
+import SuperAdmin from "./components/layout/SuperAdmin";
+import { ProtectedRoute } from "./components/layout";
 
 export const queryClient = new QueryClient();
 
@@ -104,6 +121,7 @@ function App() {
             element={isLoggedIn && user ? identifyRoute(user) : <LoginTest />}
           />
           {/* enumerator routes */}
+
           <Route
             path="/form"
             element={
@@ -350,6 +368,197 @@ function App() {
               ) : (
                 <Navigate replace to={"/"} />
               )
+            }
+          />
+
+          <Route
+            path="/super_admin/:countryId/add_team_lead"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminAddTeamLead />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/configuration"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminConfiguration />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/configuration/products"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminNewProduct />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/configuration/categories"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminNewCategory />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="super_admin/configuration/category_products/:categoryId"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminViewProducts />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/home"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminDashboard />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/:countryId/enumerators"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminEnumerators />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/responses"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminFormResponses />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/master"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminMasterList />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/new_route"
+            element={
+              <SuperAdmin>
+                <SuperAdminNewRoute />
+              </SuperAdmin>
+            }
+          />
+
+          <Route
+            path="/super_admin/profile"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminProfile />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/admins"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminSubAdmins />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/:countryId/team_lead_profile"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminTeamLeadProfile />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/tracker"
+            element={
+              <ProtectedRoute
+                requiredRole="super_admin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminTeamLeadProfile />
+                  </SuperAdmin>
+                }
+              />
             }
           />
 

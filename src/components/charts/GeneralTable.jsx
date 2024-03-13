@@ -17,7 +17,8 @@ import * as XLSX from "xlsx";
 import { BiDownload } from "react-icons/bi";
 import { FadeLoader } from "react-spinners";
 // import { rows } from "../data/old-dms/tableData";
-import more from "../assets/more.svg";
+// import more from "../assets/more.svg";
+import { MdMoreHoriz } from "react-icons/md";
 
 const GeneralTable = ({
   data,
@@ -114,7 +115,8 @@ const GeneralTable = ({
             handleMenuToggle(e);
           }}
         >
-          <img src={more} alt="action button" />
+          {/* <img src={more} alt="action button" /> */}
+          <MdMoreHoriz />
         </div>
 
         {isMenuOpen && (

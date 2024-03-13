@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
-const TagsInput = ({ label, onChange }) => {
+const TagsInput = ({ label, onChange, disabled }) => {
   const [value, setValue] = useState("");
   const [tags, setTags] = useState([]);
 
-  const Tag = ({ text }) => {
+  const Tag = ({ text, formProps }) => {
     const removeSkill = () => {
       const newSkills = tags?.filter((it, i) => it !== text);
       setTags(newSkills);
@@ -52,6 +52,7 @@ const TagsInput = ({ label, onChange }) => {
           <Tag text={item} key={index} />
         ))}
         <input
+          disabled={disabled}
           type="text"
           className="flex-1 mn-w-[30px] outline-none actve:outline-none ml-1"
           value={value}
