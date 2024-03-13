@@ -1,0 +1,15 @@
+export { default as SuperAdminAddTeamLead } from "./AddTeamLead";
+export { default as SuperAdminConfiguration } from "./Configuration";
+export { default as SuperAdminDashboard } from "./Dashboard";
+export { default as SuperAdminEnumerators } from "./Enumerators";
+export { default as SuperAdminFormResponses } from "./FormResponses";
+export { default as SuperAdminHistory } from "./History";
+export { default as SuperAdminMasterList } from "./MasterList";
+export { default as SuperAdminNewRoute } from "./NewRoute";
+export { default as SuperAdminProfile } from "./Profile";
+export { default as SuperAdminSubAdmins } from "./SubAdmins";
+export { default as SuperAdminTeamLeadProfile } from "./TeamLeadProfile";
+export { default as SuperAdminTracker } from "./Tracker";
+export { default as SuperAdminNewCategory } from "./NewCategory";
+export { default as SuperAdminNewProduct } from "./NewProduct";
+export { default as SuperAdminViewProducts } from "./ViewProducts";
