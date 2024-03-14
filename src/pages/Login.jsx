@@ -80,13 +80,14 @@ function EnumeratorLogin() {
       setIsLoading(true);
 
       axios
-        .post("login", data, {
+        .post("user/login", data, {
           headers: {
             "Content-Type": "application/json",
           },
         })
         .then((res) => res.data)
         .then(({ user, ...others }) => {
+          console.log("User: ", { ...user, ...others });
           // if (!user) {
           //   setIsLoading(false);
 
@@ -120,7 +121,7 @@ function EnumeratorLogin() {
           setIsLoggedIn(true);
           setIsLoading(false);
 
-          if (user.role === "enumerator") {
+          if (user.role.toLowerCase() === "enumerator") {
             secureLocalStorage.setItem("oius", "true");
             secureLocalStorage.setItem(
               "user",
@@ -138,7 +139,7 @@ function EnumeratorLogin() {
             navigate("/home");
           }
 
-          if (user.role === "admin" || user.role === "super_admin") {
+          if (user.role === "admin" || user.role === "super_admin" || user.role === "SuperAdmin") {
             secureLocalStorage.setItem("oius", "true");
             secureLocalStorage.setItem(
               "user",
@@ -150,7 +151,7 @@ function EnumeratorLogin() {
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
-          const errorMessage = error.response.data.message || error.message;
+          const errorMessage = error?.response?.data?.message || error?.message;
           setErrorResponse(errorMessage);
         });
     }

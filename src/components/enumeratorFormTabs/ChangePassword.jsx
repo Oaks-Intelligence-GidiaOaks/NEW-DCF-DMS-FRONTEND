@@ -70,8 +70,8 @@ const ChangePassword = () => {
         axios
           .put(
             user?.role === "enumerator"
-              ? "password/update/enumerator"
-              : "password/update",
+              ? "user/password_update"
+              : "user/password_update",
             {
               oldPassword: oldPassword,
               password: password,

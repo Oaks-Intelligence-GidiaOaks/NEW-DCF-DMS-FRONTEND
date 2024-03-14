@@ -10,7 +10,7 @@ const FluctuationRates = memo(({ admin }) => {
   const { user } = useAuth();
   // component states
   const [coveredLgas, setCoveredLgas] = useState(null);
-  const [lga, setLga] = useState(user.LGA[0]);
+  const [lga, setLga] = useState(user?.districts[0]);
   const [priceFluctuation, setPriceFluctuation] = useState(null);
 
   let selectLGA = admin

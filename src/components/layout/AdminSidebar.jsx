@@ -54,7 +54,7 @@ const AdminSidebar = () => {
           <div className="flex items-start ">
             <img
               src={
-                user.avatar.url ||
+                user?.avatar?.url ||
                 `https://res.cloudinary.com/emmaotuonye1/image/upload/v1686759696/avatars/Avatar-2_lmptpe.png`
               }
               alt="avatar"
@@ -63,7 +63,7 @@ const AdminSidebar = () => {
 
             <div className="text-[12px] p-1">
               <p className="text-[16px]">
-                {user.firstName + " " + user.lastName}
+                {user.first_name + " " + user.last_name}
               </p>
               <span>{user.id}</span>
             </div>
