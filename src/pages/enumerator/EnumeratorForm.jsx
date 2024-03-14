@@ -24,11 +24,14 @@ import { useApp, useAuth } from "../../context";
 import axios from "axios";
 import { Rings } from "react-loader-spinner";
 import ChangePassword from "../../components/enumeratorFormTabs/ChangePassword";
-import {
-  useQuery,
-} from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 import { ProductItemInput } from "../../components/reusable";
-import {productDummyData} from "../../constants/dummyData"
+import { productDummyData } from "../../constants/dummyData";
+import {
+  countValidValueKeys,
+  countValueOccurrences,
+  deepCopy,
+} from "../../lib";
 
 function EnumeratorForm() {
   const { secureLocalStorage } = useApp();
@@ -42,6 +45,7 @@ function EnumeratorForm() {
       showSubmissionNotification,
       showDuplicateNotification,
       showErrorNotification,
+      isSubmitting,
     },
     contextLgaRoutes,
     setCurrentLGA,
@@ -55,10 +59,11 @@ function EnumeratorForm() {
     updateTransportTab,
     formatLGA,
     logOut,
+    submitForm,
   } = useContext(EnumeratorFormContext);
 
   const { setUser, user } = useAuth();
-  const [formState, setFormState] = useState(null)
+  const [formState, setFormState] = useState(null);
 
   useEffect(() => {
     window.addEventListener("beforeunload", function (e) {
@@ -81,25 +86,47 @@ function EnumeratorForm() {
     },
     select: (data) => {
       return {
-      categories: data?.data?.data?.reduce((prev, curr) => {
-        return prev.includes(curr.category.name) ? prev : [curr.category.name, ...prev]
-      }, []),
-      data: data?.data?.data?.reduce((prev, curr) => {
-        return {...prev, [curr.category.name]: [{...curr, inputs: curr.inputs.map((inp, i) => ({...inp, value: ""}))}, ...(prev[curr.category.name] ?? [])]}
-      }, {}),
-    }}
+        categories: data?.data?.data?.reduce((prev, curr) => {
+          return prev.includes(curr.category.name)
+            ? prev
+            : [curr.category.name, ...prev];
+        }, []),
+        data: data?.data?.data?.reduce((prev, curr) => {
+          return {
+            ...prev,
+            [curr.category.name]: [
+              {
+                ...curr,
+                inputs: curr.inputs.map((inp, i) => ({ ...inp, value: "" })),
+              },
+              ...(prev[curr.category.name] ?? []),
+            ],
+          };
+        }, {}),
+      };
+    },
   });
 
   useEffect(() => {
-    if(enumeratorFormData.isSuccess) {
-      setFormState(
-        enumeratorFormData?.data?.data
-      );
+    if (enumeratorFormData.isSuccess) {
+      setFormState(deepCopy(enumeratorFormData?.data?.data));
     }
-  }, [enumeratorFormData.isSuccess])
-  
-  console.log("formState:", formState);
-  
+  }, [enumeratorFormData.isSuccess]);
+
+  useEffect(() => {
+    if (showDuplicateNotification) {
+      setFormState(deepCopy(enumeratorFormData?.data?.data));
+    }
+    if (showDuplicateNotification) {
+      setFormState(deepCopy(enumeratorFormData?.data?.data));
+    }
+  }, [showDuplicateNotification, showSubmissionNotification]);
+
+  const progressPercentage = Math.round(
+    (countValidValueKeys(formState) / countValueOccurrences(formState)) * 100
+  );
+
+  console.log("formstate:", formState);
 
   return (
     <div>
@@ -148,24 +175,26 @@ function EnumeratorForm() {
           </div>
 
           {/* Info Bar */}
-          {formState ? <div className="flex flex-wrap gap-y-10 justify-around sm:justify-between items-end mt-10 pb-14 xs:pb-4 max-w-[1040px] mx-auto">
-            <ProgressBar formState={formState} />
-            <div
-              className={`flex flex-nowrap gap-5 ${
-                user?.districts.length > 1
-                  ? "justify-center"
-                  : "justify-end xs:pr-0 sm:pr-3"
-              }  max-w-[410px] xs:w-[90%]`}
-            >
-              {user.districts.length > 1 && <LGAController />}
-              <button
-                className="flex justify-center items-center px-3 bg-primary-green py-2 max-w-[170px] rounded"
-                onClick={saveFormChanges}
+          {formState ? (
+            <div className="flex flex-wrap gap-y-10 justify-around sm:justify-between items-end mt-10 pb-14 xs:pb-4 max-w-[1040px] mx-auto">
+              <ProgressBar formState={formState} />
+              <div
+                className={`flex flex-nowrap gap-5 ${
+                  user?.districts.length > 1
+                    ? "justify-center"
+                    : "justify-end xs:pr-0 sm:pr-3"
+                }  max-w-[410px] xs:w-[90%]`}
               >
-                <span className="text-white text-[14px] ">Save Changes</span>
-              </button>
+                {user.districts.length > 1 && <LGAController />}
+                <button
+                  className="flex justify-center items-center px-3 bg-primary-green py-2 max-w-[170px] rounded"
+                  onClick={saveFormChanges}
+                >
+                  <span className="text-white text-[14px] ">Save Changes</span>
+                </button>
+              </div>
             </div>
-          </div> : null}
+          ) : null}
         </div>
 
         {/* Tab Bar */}
@@ -176,33 +205,84 @@ function EnumeratorForm() {
               : "bg-[#EDF2F6]"
           }`}
         >
-          <TabBar tabs={enumeratorFormData?.data?.categories ?? []}/>
+          <TabBar tabs={enumeratorFormData?.data?.categories ?? []} />
           {/* <TabBar tabs={dummyCategories ?? []}/> */}
         </div>
         <div className={`max-w-[1280px] mx-auto justify-center pb-20 pt-4`}>
           {/* Form */}
           <div className="min-h-[100vh] bg-white px-4">
             {/* {!enumeratorFormData.isLoading ? ( */}
-            {(!enumeratorFormData.isLoading && enumeratorFormData.isSuccess && formState !== null) ? (
-              <div className="flex flex-col gap-y-6 max-w-[1040px] mx-auto">
-              {/* {console.log("user", user)} */}
-              {console.log("currentFormTab", currentFormTab)}
-              {console.log("Hey", enumeratorFormData?.data)}
-              {formState[currentFormTab ?? enumeratorFormData?.data?.categories[0]].map((product, index) => (
-                <ProductItemInput productData={product} key={index} handleState={(e, productData, inputId) => {
-          setFormState((prev) => {
-            let newData = {...prev};
-            newData[productData.category.name][index]["inputs"][inputId]["value"] = e.target.value
-            return newData;
-          })
-                }}  handleDropDownChange={(value, productData, inputId) => {
-                  setFormState((prev) => {
-                    let newData = {...prev};
-                    newData[productData.category.name][index]["inputs"][inputId]["value"] = value
-                    return newData;
-                  })
-                        }}/>
-              ))}
+            {!enumeratorFormData.isLoading &&
+            enumeratorFormData.isSuccess &&
+            formState !== null ? (
+              <div>
+                <div className="flex flex-col gap-y-6 max-w-[1040px] mx-auto">
+                  {formState[
+                    currentFormTab ?? enumeratorFormData?.data?.categories[0]
+                  ].map((product, index) => (
+                    <ProductItemInput
+                      productData={product}
+                      key={index}
+                      handleState={(e, productData, inputId) => {
+                        setFormState((prev) => {
+                          let newData = { ...prev };
+                          newData[productData.category.name][index]["inputs"][
+                            inputId
+                          ]["value"] = e.target.value;
+                          return newData;
+                        });
+                      }}
+                      handleDropDownChange={(value, productData, inputId) => {
+                        setFormState((prev) => {
+                          let newData = { ...prev };
+                          newData[productData.category.name][index]["inputs"][
+                            inputId
+                          ]["value"] = value;
+                          return newData;
+                        });
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="mt-10">
+                  <p className="text-[14px] w-full mb-10 text-gray-500">
+                    <span className="font-bold">NOTE</span>: Submit button will
+                    only be active after all form sections have been filled and
+                    the progress bar at the top is complete.
+                  </p>
+                  <button
+                    disabled={progressPercentage !== 100 || isSubmitting}
+                    onClick={() => {
+                      submitForm(
+                        user.token,
+                        formState,
+                        enumeratorFormData?.data?.categories ?? []
+                      );
+                    }}
+                    className={`${
+                      progressPercentage === 100
+                        ? "bg-primary-green"
+                        : "bg-gray-300"
+                    } w-full rounded-lg flex justify-center items-center p-2 mt-2 text-white ${
+                      isSubmitting ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
+                  >
+                    {isSubmitting ? (
+                      <Rings
+                        height="36"
+                        width="36"
+                        color="#ffffff"
+                        radius="6"
+                        wrapperStyle={{ backgoundColor: "yellow" }}
+                        wrapperClass=""
+                        visible={true}
+                        ariaLabel="rings-loading"
+                      />
+                    ) : (
+                      <span className="block p-2 text-[14px]">Submit</span>
+                    )}
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="w-full min-h-[50vh] flex justify-center gap-2 flex-col items-center ">
@@ -222,7 +302,7 @@ function EnumeratorForm() {
         </div>
       </div>
       {/* Saved changes notification */}
-      {/* {showSavedNotification && (
+      {showSavedNotification && (
         <div className="fixed top-0 left-0 flex backdrop-blur-sm z-20 w-screen h-screen justify-center items-center">
           <div className=" flex flex-col gap-2 px-3 bg-white max-w-[360px] min-w-[240px] pt-10 pb-5 rounded-[10px] login-form-shadow mx-3 xs:w-[90vh]">
             <div className="flex gap-3 justify-center items-center radiant-shadow bg-primary-green w-fit mx-auto p-3 mt-5 mb-10 rounded-full">
@@ -234,9 +314,9 @@ function EnumeratorForm() {
             </p>
           </div>
         </div>
-      )} */}
+      )}
       {/* Submitted notification */}
-      {/* {showSubmissionNotification && (
+      {showSubmissionNotification && (
         <div className="fixed top-0 left-0 flex backdrop-blur-sm z-20 w-screen h-screen justify-center items-center">
           <div className="relative flex flex-col gap-2 px-3 bg-white max-w-[360px] min-w-[240px] pt-10 pb-10 rounded-[10px] login-form-shadow mx-3 xs:w-[90vh]">
             <div
@@ -254,13 +334,13 @@ function EnumeratorForm() {
               your contribution.
             </p>
             <div className="mt-5 flex justify-center">
-              {user.LGA.length > 1 && <LGAController />}
+              {user.districts.length > 1 && <LGAController />}
             </div>
           </div>
         </div>
-      )} */}
+      )}
       {/* Already Submitted notification */}
-      {/* {showDuplicateNotification && (
+      {showDuplicateNotification && (
         <div className="fixed top-0 left-0 flex backdrop-blur-sm z-20 w-screen h-screen justify-center items-center">
           <div className="relative flex flex-col gap-2 px-3 bg-white max-w-[360px] min-w-[240px] pt-10 pb-10 rounded-[10px] login-form-shadow mx-3 xs:w-[90vh]">
             <div
@@ -281,13 +361,13 @@ function EnumeratorForm() {
               <span className="font-semibold">LGA</span> this week.
             </p>
             <div className="mt-5 flex justify-center">
-              {user.LGA.length > 1 && <LGAController />}
+              {user.districts.length > 1 && <LGAController />}
             </div>
           </div>
         </div>
-      )} */}
+      )}
       {/* Error notification */}
-      {/* {showErrorNotification && (
+      {showErrorNotification && (
         <div className="fixed top-0 left-0 flex backdrop-blur-sm z-20 w-screen h-screen justify-center items-center">
           <div className="relative flex flex-col gap-2 px-3 bg-white max-w-[360px] min-w-[240px] pt-10 pb-10 rounded-[10px] login-form-shadow mx-3 xs:w-[90vh]">
             <div
@@ -305,11 +385,11 @@ function EnumeratorForm() {
               your network and try again.
             </p>
             <div className="mt-5 flex justify-center">
-              {user.LGA.length > 1 && <LGAController />}
+              {user.districts.length > 1 && <LGAController />}
             </div>
           </div>
         </div>
-      )} */}
+      )}
       {/* Enumerator Profile */}
       {showEnumeratorProfile && (
         <div className="fixed top-0 left-0 flex backdrop-blur-sm z-20 w-screen h-screen justify-center overflow-y-scroll py-[10vh] xs:py-0 sm:py-[10vh]">

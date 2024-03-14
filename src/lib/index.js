@@ -129,4 +129,22 @@ function countValidValueKeys(obj) {
   return count;
 }
 
-export { countEmptyStringFields, countValidFields, revertFormatProductName, countEmptyProductValues, countValueOccurrences, countValidValueKeys };
+function deepCopy(obj) {
+  // Check if obj is an object
+  if (typeof obj !== 'object' || obj === null) {
+      return obj; // Return primitive values directly
+  }
+
+  // Create a new object or array to store the copied values
+  const copiedObj = Array.isArray(obj) ? [] : {};
+
+  // Iterate over each key in the original object
+  for (let key in obj) {
+      // Recursively copy each property of the object
+      copiedObj[key] = deepCopy(obj[key]);
+  }
+
+  return copiedObj;
+}
+
+export { countEmptyStringFields, countValidFields, revertFormatProductName, countEmptyProductValues, countValueOccurrences, countValidValueKeys, deepCopy };

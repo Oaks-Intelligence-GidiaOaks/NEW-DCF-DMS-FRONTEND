@@ -461,9 +461,9 @@ export function EnumeratorFormProvider({ children }) {
   const backgroundSave = () => {
     secureLocalStorage.setItem("oaks-enum-form-v0.0.0", JSON.stringify(state));
   };
-  const submitForm = async (token) => {
-    const formSubmission = prepareFormSubmission();
-    console.log(formSubmission);
+  const submitForm = async (token, formData) => {
+    const formSubmission = prepareFormSubmission(formData);
+    console.log("Form submission: ", formSubmission);
     setState((prev) => ({
       ...prev,
       isSubmitting: true,
@@ -471,14 +471,18 @@ export function EnumeratorFormProvider({ children }) {
 
     try {
       axios
-        .post("form/add_data", formSubmission, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .post(
+          "submission",
+          { products: formSubmission },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((response) => {
-          // console.log(response);
+          console.log(response);
           if (response.status === 500 || response.status === 503) {
             setState((prev) => ({
               ...prev,
@@ -501,11 +505,6 @@ export function EnumeratorFormProvider({ children }) {
           }
           if (response.response.data.message.includes("Already submitted")) {
             resetState();
-            updateTransportTab(
-              contextLgaRoutes.filter(
-                (t) => t.lga === formatLGA(state.currentLGA)
-              )
-            );
             setState((prev) => ({
               ...prev,
               showDuplicateNotification: true,
@@ -516,11 +515,6 @@ export function EnumeratorFormProvider({ children }) {
         .catch((error) => {
           if (error.response.data.message.includes("Already submitted")) {
             resetState();
-            updateTransportTab(
-              contextLgaRoutes.filter(
-                (t) => t.lga === formatLGA(state.currentLGA)
-              )
-            );
             setState((prev) => ({
               ...prev,
               showDuplicateNotification: true,
@@ -1018,251 +1012,36 @@ export function EnumeratorFormProvider({ children }) {
       return formattedNumber.toLocaleString();
     }
   };
-  const prepareFormSubmission = () => {
-    let object = {};
 
-    const foodItems = [];
-    const accomodationArray = [];
-    const clothingArray = [];
-    const others = [];
+  const prepareFormSubmission = (obj) => {
+    let submission = [];
 
-    // Create foodItems array
-    Object.keys(state.foodSectionStructure).forEach((item) => {
-      if (["Rice", "Beans", "Garri"].includes(item)) {
-        if (item === "Rice" || item === "Beans" || item === "Garri") {
-          Object.keys(state.foodSectionStructure[item]).forEach((type) => {
-            let j = 0;
-            while (state.foodSectionStructure[item][type][j]) {
-              foodItems.push({
-                name: `${item}_${type}`,
-                price: parseInt(
-                  state.foodSectionStructure[item][type][j]["price"].replace(
-                    /,/g,
-                    ""
-                  )
-                ),
-                brand:
-                  state.foodSectionStructure[item][type][j][
-                    item === "Rice" ? "brand" : "type"
-                  ],
-                size:
-                  type === "50-kg"
-                    ? "50 Kg"
-                    : state.foodSectionStructure[item][type][j]["size"],
-              });
-              j++;
+    function explore(obj) {
+      if (obj !== null && typeof obj === "object") {
+        Object.keys(obj).forEach((key) => {
+          if (obj[key].length) {
+            for (const product of obj[key]) {
+              submission.push(
+                // obj[key]
+                {
+                  category: product.category._id,
+                  product: product._id,
+                  inputs: product.inputs.map((input, i) => ({
+                    title: input.title,
+                    value: input.value,
+                  })),
+                }
+              );
             }
-          });
-        }
-      } else if (["Fish", "Beef", "Bread", "Egg", "Yam"].includes(item)) {
-        Object.keys(state.foodSectionStructure[item]).forEach((type) => {
-          let j = 0;
-          while (state.foodSectionStructure[item][type][j]) {
-            foodItems.push({
-              name: `${item}`,
-              price: parseInt(
-                state.foodSectionStructure[item][type][j]["price"].replace(
-                  /,/g,
-                  ""
-                )
-              ),
-              brand: state.foodSectionStructure[item][type][j]["type"],
-              size: state.foodSectionStructure[item][type][j]["type"],
-            });
-            j++;
           }
-        });
-      } else if (
-        ["Chicken", "Turkey", "Palm oil", "Groundnut oil"].includes(item)
-      ) {
-        Object.keys(state.foodSectionStructure[item]).forEach((type) => {
-          let j = 0;
-          while (state.foodSectionStructure[item][type][j]) {
-            foodItems.push({
-              name: `${item}`,
-              price: parseInt(
-                state.foodSectionStructure[item][type][j]["price"].replace(
-                  /,/g,
-                  ""
-                )
-              ),
-              brand: state.foodSectionStructure[item][type][j]["type"],
-              size: type.split("-").join(" "),
-            });
-            j++;
-          }
-        });
-      } else if (item === "Tomatoes") {
-        Object.keys(state.foodSectionStructure[item]["prices"][0]).forEach(
-          (type) =>
-            !["type", "seed-size", "size"].includes(type) &&
-            foodItems.push({
-              name: `${item}_${type}`,
-              price: parseInt(
-                state.foodSectionStructure[item]["prices"][0][type].replace(
-                  /,/g,
-                  ""
-                )
-              ),
-              brand: state.foodSectionStructure[item]["prices"][0]["type"],
-              size:
-                type === "4-seeds"
-                  ? state.foodSectionStructure[item]["prices"][0]["seed-size"]
-                  : state.foodSectionStructure[item]["prices"][0]["size"],
-            })
-        );
-      } else {
-        Object.keys(state.foodSectionStructure[item]).forEach((type) => {
-          foodItems.push({
-            name: `${item}_${type}`,
-            price: parseInt(
-              state.foodSectionStructure[item][type][0]["price"].replace(
-                /,/g,
-                ""
-              )
-            ),
-            brand: state.foodSectionStructure[item][type][0]["brand"] ?? "",
-          });
         });
       }
-    });
+    }
 
-    // Create others array from commodities
-    Object.keys(state.commoditySectionStructure).forEach((item) => {
-      if (item === "Cement") {
-        Object.keys(state.commoditySectionStructure[item]).forEach((type) => {
-          let j = 0;
-          while (state.commoditySectionStructure[item][type][j]) {
-            others.push({
-              name: `${item}_${type}`,
-              price: parseInt(
-                state.commoditySectionStructure[item][type][j]["price"].replace(
-                  /,/g,
-                  ""
-                )
-              ),
-              brand: state.commoditySectionStructure[item][type][j]["weight"],
-              size: type.split("-").join(" "),
-            });
-            j++;
-          }
-        });
-      } else if (["Charcoal", "Building Block"].includes(item)) {
-        state.commoditySectionStructure[item]["prices"].forEach((type) =>
-          others.push({
-            name: `${item}`,
-            price: parseInt(type["price"].replace(/,/g, "")),
-            brand: `${type[item === "Charcoal" ? "weight" : "size"]}`,
-            size: `${type[item === "Charcoal" ? "weight" : "size"]}`,
-          })
-        );
-      } else if (item === "Firewood") {
-        state.commoditySectionStructure[item]["1-bundle"].forEach((type) =>
-          others.push({
-            name: `${item}`,
-            price: parseInt(type["price"].replace(/,/g, "")),
-            brand: `${type["size"]}`,
-            size: `${type["size"]}`,
-          })
-        );
-      } else {
-        Object.keys(state.commoditySectionStructure[item]).forEach((type) => {
-          others.push({
-            name: `${item}_${type}`,
-            price: parseInt(
-              state.commoditySectionStructure[item][type][0]["price"].replace(
-                /,/g,
-                ""
-              )
-            ),
-            brand:
-              state.commoditySectionStructure[item][type][0]["brand"] ?? type,
-            size: type,
-          });
-        });
-      }
-    });
-
-    const electricity = [
-      {
-        hours_per_week: parseInt(
-          state.reportsSectionStructure.Electricity.hours.replace(/,/g, "")
-        ),
-      },
-    ];
-    const transports = Object.keys(state.transportSectionStructure).map(
-      (item) => ({
-        route: item,
-        cost: parseInt(
-          state.transportSectionStructure[item]["cost"].replace(/,/g, "")
-        ),
-        mode: state.transportSectionStructure[item]["mode of transportation"],
-      })
-    );
-    const questions = [
-      {
-        government_project: state.reportsSectionStructure.Projects.boolean,
-        comment_for_government_project:
-          state.reportsSectionStructure.Projects.answer ?? "",
-        crime_report: state.reportsSectionStructure.Crimes.boolean,
-        comment_for_crime_report:
-          state.reportsSectionStructure.Crimes.answer ?? "",
-        accidents: state.reportsSectionStructure.Accidents.boolean,
-        comment_for_accidents:
-          state.reportsSectionStructure.Accidents.answer ?? "",
-        note: state.reportsSectionStructure.Notes.answer ?? "",
-        // ...(state.attachedImage.url && {
-        //   comment_image: state.attachedImage.url,
-        // }),
-      },
-    ];
-
-    // Accomodation logic
-    Object.keys(state.accomodationSectionStructure).forEach((key) => {
-      state.accomodationSectionStructure[key].forEach((value, i) =>
-        accomodationArray.push({
-          price: parseInt(
-            state.accomodationSectionStructure[key][i].cost.replace(/,/g, "")
-          ),
-          type: state.accomodationSectionStructure[key][i].type,
-          rooms: state.accomodationSectionStructure[key][i].rooms,
-        })
-      );
-    });
-
-    // Clothing logic for submission data structure goes here.
-    // Object.keys(state.clothingSectionStructure).forEach()
-    Object.keys(state.clothingSectionStructure).forEach((key) => {
-      Object.keys(state.clothingSectionStructure[key]).forEach((category) => {
-        clothingArray.push({
-          price: parseInt(
-            state.clothingSectionStructure[key][category]["price"].replace(
-              /,/g,
-              ""
-            )
-          ),
-          category: key,
-          sub_category: category,
-          size: state.clothingSectionStructure[key][category]["size"],
-        });
-      });
-    });
-
-    const lga = state.currentLGA;
-
-    object = {
-      foodItems,
-      others,
-      electricity,
-      transports,
-      questions,
-      accomodations: accomodationArray,
-      clothings: clothingArray,
-      lga,
-    };
-
-    return object;
+    explore(obj);
+    return submission;
   };
+
   const resetState = () => {
     localStorage.removeItem("oaks-enum-form-v0.0.0");
     secureLocalStorage.removeItem("tp");
