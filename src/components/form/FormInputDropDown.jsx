@@ -9,7 +9,14 @@ const options = [
   { value: "Bayelsa", label: "Bayelsa" },
 ];
 
-const FormInputDropDown = ({ label, data, index, onChange, formProps }) => {
+const FormInputDropDown = ({
+  label,
+  data,
+  index,
+  onChange,
+  formProps,
+  reff,
+}) => {
   const [value, setValue] = useState("");
 
   const handleChange = (selectedOption) => {
@@ -30,6 +37,7 @@ const FormInputDropDown = ({ label, data, index, onChange, formProps }) => {
           value={value}
           setValue={setValue}
           onChange={handleChange}
+          ref={reff}
         />
       </div>
     </div>

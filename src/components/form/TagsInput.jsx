@@ -27,6 +27,7 @@ const TagsInput = ({ label, onChange, disabled }) => {
 
   const handleChange = (e) => {
     setValue(e.target.value);
+    onChange(tags);
   };
 
   const handleKeyDown = (e) => {
@@ -35,9 +36,11 @@ const TagsInput = ({ label, onChange, disabled }) => {
 
       const values = [...tags, toLowerCaseValue];
       const set = new Set(values);
+
+      console.log(set);
       setValue("");
 
-      setTags(Array.from([...set]));
+      // setTags(Array.from([...set]));
     }
   };
 
@@ -51,6 +54,7 @@ const TagsInput = ({ label, onChange, disabled }) => {
         {tags.map((item, index) => (
           <Tag text={item} key={index} />
         ))}
+
         <input
           disabled={disabled}
           type="text"

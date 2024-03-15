@@ -7,3 +7,40 @@ export const transformCategoryGridData = (data) => {
 
   return newData;
 };
+
+export const transformSubAdminGridData = (data) => {
+  const newData = data.map((item) => {
+    const {
+      identity_image_url,
+      photo_url,
+      role,
+      createdAt,
+      updatedAt,
+      firstUse,
+      disabled,
+      ...rest
+    } = item;
+
+    return rest;
+  });
+
+  return newData;
+};
+
+export const transformCountryFormData = (data) => {
+  const newData = data.map((item) => ({
+    label: item.name,
+    value: item._id,
+  }));
+
+  return newData;
+};
+
+export const transformStateFormData = (data) => {
+  const newData = data.map((item) => ({
+    label: item.name,
+    value: item._id,
+  }));
+
+  return newData;
+};

@@ -6,3 +6,4 @@ export { default as FormInputNumber } from "./FormInputNumber";
 
 export { default as FormMultipleSelect } from "./FormMultipleSelect";
 export { default as TagsInput } from "./TagsInput";
+export { default as FormButton } from "./FormButton";

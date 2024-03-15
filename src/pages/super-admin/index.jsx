@@ -13,3 +13,5 @@ export { default as SuperAdminTracker } from "./Tracker";
 export { default as SuperAdminNewCategory } from "./NewCategory";
 export { default as SuperAdminNewProduct } from "./NewProduct";
 export { default as SuperAdminViewProducts } from "./ViewProducts";
+export { default as SuperAdminNewSubAdmin } from "./NewSubAdmin";
+export { default as SuperAdminNewCountry } from "./NewCountry";

@@ -50,8 +50,10 @@ import {
   SuperAdminFormResponses,
   SuperAdminMasterList,
   SuperAdminNewCategory,
+  SuperAdminNewCountry,
   SuperAdminNewProduct,
   SuperAdminNewRoute,
+  SuperAdminNewSubAdmin,
   SuperAdminProfile,
   SuperAdminSubAdmins,
   SuperAdminTeamLeadProfile,
@@ -98,8 +100,12 @@ function App() {
       return <Navigate replace to={"/home"} />;
     }
 
-    if (user.role === "admin" || user.role === "super_admin") {
+    if (user.role === "SubAdmin") {
       return <Navigate replace to={"/admin/home"} />;
+    }
+
+    if (user.role === "SuperAdmin") {
+      return <Navigate replace to={"/super_admin/home"} />;
     }
   };
 
@@ -108,10 +114,8 @@ function App() {
   //   user &&
   //   (user.role === "admin" || user.role === "super_admin"  || user.role === "SuperAdmin");
 
-  const adminRoleCheck =
-    isLoggedIn &&
-    user &&
-    (user.role === "admin" || user.role === "super_admin"  || user.role === "SuperAdmin");
+  const adminRoleCheck = isLoggedIn && user && user.role === "SubAdmin";
+  const superAdminRoleCheck = isLoggedIn && user && user.role === "SuperAdmin";
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -376,11 +380,12 @@ function App() {
             }
           />
 
+          {/* super admin configuration */}
           <Route
             path="/super_admin/:countryId/add_team_lead"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminAddTeamLead />
@@ -394,7 +399,7 @@ function App() {
             path="/super_admin/configuration"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminConfiguration />
@@ -408,7 +413,7 @@ function App() {
             path="/super_admin/configuration/products"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminNewProduct />
@@ -422,7 +427,7 @@ function App() {
             path="/super_admin/configuration/categories"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminNewCategory />
@@ -436,7 +441,7 @@ function App() {
             path="super_admin/configuration/category_products/:categoryId"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminViewProducts />
@@ -446,11 +451,12 @@ function App() {
             }
           />
 
+          {/* super admin home */}
           <Route
             path="/super_admin/home"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminDashboard />
@@ -461,24 +467,10 @@ function App() {
           />
 
           <Route
-            path="/super_admin/:countryId/enumerators"
-            element={
-              <ProtectedRoute
-                requiredRole="super_admin"
-                component={
-                  <SuperAdmin>
-                    <SuperAdminEnumerators />
-                  </SuperAdmin>
-                }
-              />
-            }
-          />
-
-          <Route
             path="/super_admin/responses"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminFormResponses />
@@ -492,7 +484,7 @@ function App() {
             path="/super_admin/master"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminMasterList />
@@ -505,9 +497,14 @@ function App() {
           <Route
             path="/super_admin/new_route"
             element={
-              <SuperAdmin>
-                <SuperAdminNewRoute />
-              </SuperAdmin>
+              <ProtectedRoute
+                requiredRole="SuperAdmin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminNewRoute />
+                  </SuperAdmin>
+                }
+              />
             }
           />
 
@@ -515,7 +512,7 @@ function App() {
             path="/super_admin/profile"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminProfile />
@@ -525,11 +522,12 @@ function App() {
             }
           />
 
+          {/* Super admin sub admin */}
           <Route
             path="/super_admin/admins"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminSubAdmins />
@@ -540,10 +538,38 @@ function App() {
           />
 
           <Route
+            path="/super_admin/admins/add"
+            element={
+              <ProtectedRoute
+                requiredRole="SuperAdmin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminNewSubAdmin />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/admins/assign_country"
+            element={
+              <ProtectedRoute
+                requiredRole="SuperAdmin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminNewCountry />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
             path="/super_admin/:countryId/team_lead_profile"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminTeamLeadProfile />
@@ -554,10 +580,24 @@ function App() {
           />
 
           <Route
+            path="/super_admin/:countryId/enumerators"
+            element={
+              <ProtectedRoute
+                requiredRole="SuperAdmin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminEnumerators />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
             path="/super_admin/tracker"
             element={
               <ProtectedRoute
-                requiredRole="super_admin"
+                requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
                     <SuperAdminTeamLeadProfile />

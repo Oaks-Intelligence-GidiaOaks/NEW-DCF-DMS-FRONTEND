@@ -1,8 +1,33 @@
 import React, { useState } from "react";
 import { FormInput, FormInputDropDown, TagsInput } from "../components/form";
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import { getAllCountries } from "../lib/service";
+import { transformCountryFormData } from "../lib/utils";
 
 const CreateCategoryForm = () => {
+  const {
+    data: countries,
+    isLoading,
+    isError,
+    isSuccess: isCountryQuerySuccess,
+  } = useQuery({
+    queryKey: ["getAllCountries"],
+    queryFn: getAllCountries,
+  });
+
+  const [formFields, setFormFields] = useState({
+    country_id: "",
+    name: "",
+    expected_inputs: [],
+  });
+
+  // component variables
+
+  let countryData = isCountryQuerySuccess
+    ? transformCountryFormData(countries.data.data)
+    : [];
+
   const {
     register,
     handleSubmit,
@@ -10,14 +35,30 @@ const CreateCategoryForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      country_id: "",
       name: "",
-      expected_inputs: [],
     },
   });
 
   const onSubmit = (data) => {
-    console.log("form data", data);
+    // e.preventDefault();
+
+    const categoryData = {
+      ...data,
+      ...formFields,
+    };
+
+    console.log(categoryData);
+  };
+
+  const handleChange = (val, fieldName) => {
+    if (fieldName === "expected_inputs") {
+      setFormFields({
+        ...formFields,
+        expected_inputs: [...formFields.expected_inputs, val],
+      });
+    } else {
+      setFormFields({ ...formFields, [fieldName]: val });
+    }
   };
 
   return (
@@ -28,28 +69,24 @@ const CreateCategoryForm = () => {
 
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <FormInputDropDown
-          // formProps={register("", {
-          //   required: "Input is required",
-          // })}
-          data={[]}
+          onChange={(e) => handleChange(e, "country_id")}
+          data={countryData}
           label={"Country"}
         />
 
         <FormInput
-          formProps={register("name", {
-            required: "Input is required",
-          })}
           label={"Category Name"}
-          placeholder={"Category name"}
-          errorMessage={errors}
+          onChange={(e) => handleChange(e, "name")}
+          placeholder="Category name"
+          formProps={register("name", {
+            required: "input is required.",
+          })}
+          errorMessage={errors?.name?.message}
         />
 
         <TagsInput
-          // formProps={register("", {
-          //   required: "Input is required",
-          // })}
-          data={[]}
           label={"Expected Input Name(s)"}
+          onChange={(e) => handleChange(e, "expected_inputs")}
         />
 
         <button className="h-[54px] w-full my-[45px] text-center rounded-[5px] text-white bg-[#82B22E] font-[500] text-base leading-[24px]">
