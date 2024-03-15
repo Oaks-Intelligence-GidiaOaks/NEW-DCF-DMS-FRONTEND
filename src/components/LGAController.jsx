@@ -39,7 +39,6 @@ function LGAController() {
         showSubmissionNotification: false,
         showDuplicateNotification: false,
         showErrorNotification: false,
-        currentFormTab: "Food",
       }));
     }
   };
@@ -66,7 +65,7 @@ function LGAController() {
   return (
     <div
       ref={dropDownRef}
-      className="relative flex items-center px-2 py-1 border-[1px] border-solid border-primary-green rounded clamp-md"
+      className="relative flex items-center px-2 py-1 border-[1px] border-solid border-primary-green rounded clamp-md w-[256px_!important] pr-6"
     >
       <SlLocationPin size={16} color="#72a247" />
       <input
@@ -74,7 +73,7 @@ function LGAController() {
         type="text"
         value={currentLGA}
         placeholder="Change LGA"
-        className="flex w-[60%] capitalize flex-1 pl-3 outline-none rounded cursor-pointer text-[14px] bg-transparent "
+        className="flex flex-1 capitalize pl-1 outline-none rounded cursor-pointer text-[14px] bg-transparent"
         onFocus={() => {
           setShowDropDown(true);
           setIsFocused(true);
@@ -82,36 +81,41 @@ function LGAController() {
         ref={inputRef}
       />
       {showDropDown && (
-        <ul className="absolute w-full z-20 left-0 top-0 bg-white translate-y-10 drop-down-shadow rounded max-h-[50vh]">
-          {user.LGA.filter((lga) => lga !== currentLGA).map((item, i) => (
-            <li
-              key={i}
-              className="px-2 py-2 text-[14px] capitalize cursor-pointer hover:bg-light-primary-green flex items-center gap-2"
-              onClick={() => {
-                setDropDownValue(item);
-                setState((prev) => ({ ...prev, currentLGA: item }));
-                updateForm(item);
-                inputRef.current.blur();
-                setShowDropDown(false);
-                setIsFocused(false);
-              }}
-            >
-              <SlLocationPin size={16} color="#72a247" />
-              <span>{item}</span>
-            </li>
-          ))}
+        <ul className="absolute w-full z-20 left-0 top-0 bg-white overflow-hidden translate-y-10 drop-down-shadow rounded max-h-[50vh]">
+          {user.districts
+            .filter((district) => district !== currentLGA)
+            .map((item, i) => (
+              <li
+                key={i}
+                className="px-2 py-2 text-[14px] capitalize cursor-pointer hover:bg-light-primary-green flex items-center gap-1 w-full"
+                onClick={() => {
+                  setDropDownValue(item);
+                  setState((prev) => ({ ...prev, currentLGA: item }));
+                  updateForm(item);
+                  inputRef.current.blur();
+                  setShowDropDown(false);
+                  setIsFocused(false);
+                }}
+              >
+                <SlLocationPin size={16} color="#72a247" />
+                <span>{item}</span>
+              </li>
+            ))}
         </ul>
       )}
       <div
-        className={`absolute right-0 top-3 w-8 ${
-          isFocused ? "pointer-events-auto" : "pointer-events-none"
+        className={`absolute cursor-pointer rounded-r h-full right-0 top-0 w-7 flex justify-center items-center ${
+          isFocused ? "pointer-events-auto" : "pointer-events-auto"
         }`}
         onClick={() => {
           !showDropDown ? setShowDropDown(true) : setShowDropDown(false);
         }}
       >
         <BsChevronDown
-          className={`cursor-pointer -translate-y-1 ${
+          onClick={() => {
+            !showDropDown ? setShowDropDown(true) : setShowDropDown(false);
+          }}
+          className={`cursor-pointer rounded-full transition-all ${
             showDropDown ? "rotate-0" : "rotate-180"
           }`}
         />

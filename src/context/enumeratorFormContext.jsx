@@ -32,8 +32,6 @@ export function EnumeratorFormProvider({ children }) {
   const { user, setUser, setIsLoggedIn } = useAuth();
   const { secureLocalStorage } = useApp();
 
-  const cachedTransport = secureLocalStorage.getItem("tp") ?? {};
-
   // User's saved changes
 
   const initialState = useMemo(
@@ -46,333 +44,6 @@ export function EnumeratorFormProvider({ children }) {
       showDuplicateNotification: false,
       showErrorNotification: false,
       showEnumeratorProfile: false,
-      foodSectionStructure: {
-        Rice: {
-          "1-cup": [
-            {
-              price: "",
-              brand: "",
-              size: "",
-            },
-          ],
-          "50-kg": [
-            {
-              price: "",
-              brand: "",
-            },
-          ],
-        },
-        Beans: {
-          "1-cup": [
-            {
-              price: "",
-              type: "",
-              size: "",
-            },
-          ],
-          "50-kg": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        Garri: {
-          "1-cup": [
-            {
-              price: "",
-              type: "",
-              size: "",
-            },
-          ],
-          "50-kg": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        Tomatoes: {
-          prices: [
-            {
-              type: "",
-              "4-seeds": "",
-              "seed-size": "",
-              "big-basket": "",
-              size: "",
-            },
-          ],
-        },
-        Fish: {
-          prices: [
-            {
-              price: "",
-              type: "",
-              size: "",
-            },
-          ],
-        },
-        Beef: {
-          "5-pieces": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        Chicken: {
-          "1-kg": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        Turkey: {
-          "1-kg": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        Bread: {
-          "1-loaf": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        Egg: {
-          "1-crate": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        Yam: {
-          "1-Standard size": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        "Palm oil": {
-          "0.75(75cl)-Litre": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-          "1-Litre": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-          "1.5(150cl)-Litre": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-        "Groundnut oil": {
-          "0.75(75cl)-Litre": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-          "1-Litre": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-          "1.5(150cl)-Litre": [
-            {
-              price: "",
-              type: "",
-            },
-          ],
-        },
-      },
-      commoditySectionStructure: {
-        Kerosene: {
-          "1-Litre": [
-            {
-              price: "",
-            },
-          ],
-        },
-        "Cooking Gas": {
-          "12-kg": [
-            {
-              price: "",
-            },
-          ],
-        },
-        Firewood: {
-          "1-bundle": [
-            {
-              size: "",
-              price: "",
-            },
-          ],
-        },
-        Charcoal: {
-          prices: [
-            {
-              price: "",
-              weight: "",
-            },
-          ],
-        },
-        "Petrol/PMS": {
-          "1-Litre": [
-            {
-              price: "",
-            },
-          ],
-        },
-        Cement: {
-          "50-kg": [
-            {
-              price: "",
-              weight: "",
-            },
-          ],
-        },
-        "Building Block": {
-          prices: [
-            {
-              price: "",
-              size: "",
-            },
-          ],
-        },
-        "Diesel/AGO": {
-          "1-Litre": [
-            {
-              price: "",
-            },
-          ],
-        },
-      },
-      clothingSectionStructure: {
-        Male: {
-          Shirt: {
-            price: "",
-            size: "",
-          },
-          "T-Shirt": {
-            price: "",
-            size: "",
-          },
-          Shorts: {
-            price: "",
-            size: "",
-          },
-          Trousers: {
-            price: "",
-            size: "",
-          },
-        },
-        Female: {
-          Blouse: {
-            price: "",
-            size: "",
-          },
-          Skirt: {
-            price: "",
-            size: "",
-          },
-          Trousers: {
-            price: "",
-            size: "",
-          },
-          Gown: {
-            price: "",
-            size: "",
-          },
-        },
-        Children: {
-          "T-Shirt": {
-            price: "",
-            size: "",
-          },
-          Trousers: {
-            price: "",
-            size: "",
-          },
-          Skirt: {
-            price: "",
-            size: "",
-          },
-        },
-      },
-      transportSectionStructure: cachedTransport,
-      accomodationSectionStructure: {
-        // variations: [
-        //   {
-        //     cost: "",
-        //     type: "",
-        //     rooms: "",
-        //   },
-        "1 Room": [
-          {
-            cost: "",
-            type: "",
-            rooms: "",
-          },
-        ],
-        "2 Rooms": [
-          {
-            cost: "",
-            type: "",
-            rooms: "",
-          },
-        ],
-        "3 Rooms": [
-          {
-            cost: "",
-            type: "",
-            rooms: "",
-          },
-        ],
-        "4 Rooms": [
-          {
-            cost: "",
-            type: "",
-            rooms: "",
-          },
-        ],
-      },
-      reportsSectionStructure: {
-        Projects: {
-          boolean: "",
-        },
-        Crimes: {
-          boolean: "",
-        },
-        Accidents: {
-          boolean: "",
-        },
-        Electricity: {
-          hours: "",
-        },
-        Notes: {
-          // boolean: "",
-          answer: "",
-        },
-      },
-      attachedImage: {
-        url: "",
-      },
     }),
     [user.LGA]
   );
@@ -382,20 +53,7 @@ export function EnumeratorFormProvider({ children }) {
   // This version must always be the version number of the previous enum form
   secureLocalStorage.removeItem("oaks-enum-form");
 
-  const savedState = JSON.parse(
-    secureLocalStorage.getItem("oaks-enum-form-v0.0.0")
-  );
-
-  // check if commodity fields to fill are complete
-  if (
-    savedState &&
-    Object.keys(savedState?.commoditySectionStructure).length <
-      Object.keys(initialState?.commoditySectionStructure).length
-  ) {
-    savedState.commoditySectionStructure = {
-      ...initialState.commoditySectionStructure,
-    };
-  }
+  const savedState = JSON.parse(secureLocalStorage.getItem("oaks-enum-forms"));
 
   // If user has saved changes use changes else use initial state
 
@@ -452,14 +110,14 @@ export function EnumeratorFormProvider({ children }) {
     }));
   };
   const saveFormChanges = () => {
-    secureLocalStorage.setItem("oaks-enum-form-v0.0.0", JSON.stringify(state));
+    secureLocalStorage.setItem("oaks-enum-form", JSON.stringify(state));
     setState((prev) => ({
       ...prev,
       showSavedNotification: true,
     }));
   };
   const backgroundSave = () => {
-    secureLocalStorage.setItem("oaks-enum-form-v0.0.0", JSON.stringify(state));
+    secureLocalStorage.setItem("oaks-enum-forms", JSON.stringify(state));
   };
   const submitForm = async (token, formData) => {
     const formSubmission = prepareFormSubmission(formData);
@@ -473,7 +131,7 @@ export function EnumeratorFormProvider({ children }) {
       axios
         .post(
           "submission",
-          { products: formSubmission },
+          { products: formSubmission, district: state.currentLGA },
           {
             headers: {
               "Content-Type": "application/json",
@@ -490,13 +148,11 @@ export function EnumeratorFormProvider({ children }) {
               isSubmitting: false,
             }));
           }
-          if (response.data.message.includes("successful")) {
+          if (
+            response.status === 201 ||
+            response?.data?.message.toLowerCase().includes("successfully")
+          ) {
             resetState();
-            updateTransportTab(
-              contextLgaRoutes.filter(
-                (t) => t.lga === formatLGA(state.currentLGA)
-              )
-            );
             setState((prev) => ({
               ...prev,
               showSubmissionNotification: true,
@@ -1043,8 +699,7 @@ export function EnumeratorFormProvider({ children }) {
   };
 
   const resetState = () => {
-    localStorage.removeItem("oaks-enum-form-v0.0.0");
-    secureLocalStorage.removeItem("tp");
+    localStorage.removeItem("oaks-enum-forms");
     setState(initialState);
   };
   const logOut = () => {
@@ -1247,11 +902,11 @@ export function EnumeratorFormProvider({ children }) {
   );
 
   // Save form if any change is made
-  useEffect(() => {
-    // console.log(state);
-    backgroundSave();
-    secureLocalStorage.setItem("tp", state.transportSectionStructure);
-  }, [state]);
+  // useEffect(() => {
+  //   // console.log(state);
+  //   backgroundSave();
+  //   secureLocalStorage.setItem("tp", state.transportSectionStructure);
+  // }, [state]);
 
   // hide saved notification after three seconds
   useEffect(() => {

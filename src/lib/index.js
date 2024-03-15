@@ -147,4 +147,36 @@ function deepCopy(obj) {
   return copiedObj;
 }
 
-export { countEmptyStringFields, countValidFields, revertFormatProductName, countEmptyProductValues, countValueOccurrences, countValidValueKeys, deepCopy };
+function deepCompare(obj1, obj2, propertyToIgnore) {
+  // Check if both parameters are objects
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 === null || obj2 === null) {
+      return obj1 === obj2; // Compare primitive values directly
+  }
+
+  // Get keys from both objects
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  // Check if number of keys match
+  if (keys1.length !== keys2.length) {
+      return false;
+  }
+
+  // Iterate over keys and compare values recursively
+  for (let key of keys1) {
+      // If the key is the property to ignore, skip this iteration
+      if (key === propertyToIgnore) {
+          continue;
+      }
+
+      // If the key doesn't exist in obj2 or values don't match, return false
+      if (!obj2.hasOwnProperty(key) || !deepCompare(obj1[key], obj2[key], propertyToIgnore)) {
+          return false;
+      }
+  }
+
+  // If all keys and values match, return true
+  return true;
+}
+
+export { countEmptyStringFields, countValidFields, revertFormatProductName, countEmptyProductValues, countValueOccurrences, countValidValueKeys, deepCopy, deepCompare };

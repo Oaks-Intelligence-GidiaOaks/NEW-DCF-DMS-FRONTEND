@@ -11,13 +11,6 @@ import { MdOutlineEmail, MdDone, MdOutlineClose } from "react-icons/md";
 import LGAController from "../../components/LGAController";
 import ProgressBar from "../../components/ProgressBar";
 import TabBar from "../../components/TabBar";
-
-import Food from "../../components/enumeratorFormTabs/Food";
-import Commodity from "../../components/enumeratorFormTabs/Commodity";
-import Clothing from "../../components/enumeratorFormTabs/Clothing";
-import Transport from "../../components/enumeratorFormTabs/Transport";
-import Accomodation from "../../components/enumeratorFormTabs/Accomodation";
-import Reports from "../../components/enumeratorFormTabs/Reports";
 import oaksLogo from "../../assets/oaks-logo.svg";
 import EnumeratorFormContext from "../../context/enumeratorFormContext";
 import { useApp, useAuth } from "../../context";
@@ -26,16 +19,17 @@ import { Rings } from "react-loader-spinner";
 import ChangePassword from "../../components/enumeratorFormTabs/ChangePassword";
 import { useQuery } from "@tanstack/react-query";
 import { ProductItemInput } from "../../components/reusable";
-import { productDummyData } from "../../constants/dummyData";
 import {
   countValidValueKeys,
   countValueOccurrences,
+  deepCompare,
   deepCopy,
 } from "../../lib";
 
 function EnumeratorForm() {
   const { secureLocalStorage } = useApp();
-  const cachedTp = secureLocalStorage.getItem("tp") ?? {};
+  const savedState = JSON.parse(secureLocalStorage.getItem("oaks-enum-forms"));
+
   const {
     state: {
       showEnumeratorProfile,
@@ -47,12 +41,12 @@ function EnumeratorForm() {
       showErrorNotification,
       isSubmitting,
     },
+    setState,
     contextLgaRoutes,
     setCurrentLGA,
     setContextLgaRoutes,
     showProfile,
     hideProfile,
-    saveFormChanges,
     hideSubmissionNotification,
     hideDuplicateNotification,
     hideErrorNotification,
@@ -63,7 +57,7 @@ function EnumeratorForm() {
   } = useContext(EnumeratorFormContext);
 
   const { setUser, user } = useAuth();
-  const [formState, setFormState] = useState(null);
+  const [formState, setFormState] = useState(savedState?.formState ?? null);
 
   useEffect(() => {
     window.addEventListener("beforeunload", function (e) {
@@ -109,11 +103,22 @@ function EnumeratorForm() {
 
   useEffect(() => {
     if (enumeratorFormData.isSuccess) {
-      setFormState(deepCopy(enumeratorFormData?.data?.data));
+      if (
+        deepCompare(
+          savedState?.formState,
+          enumeratorFormData?.data?.data,
+          "value"
+        )
+      ) {
+        setFormState(savedState.formState);
+      } else {
+        setFormState(deepCopy(enumeratorFormData?.data?.data));
+      }
     }
   }, [enumeratorFormData.isSuccess]);
 
   useEffect(() => {
+    // checks if the form has any update, it there's an update use the new form else use saved form
     if (showDuplicateNotification) {
       setFormState(deepCopy(enumeratorFormData?.data?.data));
     }
@@ -122,11 +127,61 @@ function EnumeratorForm() {
     }
   }, [showDuplicateNotification, showSubmissionNotification]);
 
+  // Save form if any change is made
+  useEffect(() => {
+    backgroundSave();
+  }, [
+    showEnumeratorProfile,
+    currentFormTab,
+    currentLGA,
+    showSavedNotification,
+    showSubmissionNotification,
+    showDuplicateNotification,
+    showErrorNotification,
+    isSubmitting,
+    formState,
+  ]);
+
   const progressPercentage = Math.round(
     (countValidValueKeys(formState) / countValueOccurrences(formState)) * 100
   );
 
-  console.log("formstate:", formState);
+  const saveForm = () => {
+    secureLocalStorage.setItem(
+      "oaks-enum-forms",
+      JSON.stringify({
+        showEnumeratorProfile,
+        currentFormTab,
+        currentLGA,
+        showSavedNotification,
+        showSubmissionNotification,
+        showDuplicateNotification,
+        showErrorNotification,
+        isSubmitting,
+        formState,
+      })
+    );
+    setState((prev) => ({
+      ...prev,
+      showSavedNotification: true,
+    }));
+  };
+  const backgroundSave = () => {
+    secureLocalStorage.setItem(
+      "oaks-enum-forms",
+      JSON.stringify({
+        showEnumeratorProfile,
+        currentFormTab,
+        currentLGA,
+        showSavedNotification,
+        showSubmissionNotification,
+        showDuplicateNotification,
+        showErrorNotification,
+        isSubmitting,
+        formState,
+      })
+    );
+  };
 
   return (
     <div>
@@ -135,6 +190,12 @@ function EnumeratorForm() {
         className={`${
           currentLGA.toLowerCase() === user.districts[0].toLowerCase()
             ? "bg-light-gray"
+            : currentLGA.toLowerCase() === user.districts[1].toLowerCase()
+            ? "bg-[#d1f5f1]"
+            : currentLGA.toLowerCase() === user.districts[2].toLowerCase()
+            ? "bg-[#e9f5d1]"
+            : currentLGA.toLowerCase() === user.districts[3].toLowerCase()
+            ? "bg-[#e8d1f5]"
             : "bg-[#D1E5F5]"
         }`}
       >
@@ -156,6 +217,12 @@ function EnumeratorForm() {
           className={`${
             currentLGA.toLowerCase() === user.districts[0].toLowerCase()
               ? "bg-white"
+              : currentLGA.toLowerCase() === user.districts[1].toLowerCase()
+              ? "bg-[#d1f5f17d]"
+              : currentLGA.toLowerCase() === user.districts[2].toLowerCase()
+              ? "bg-[#e9f5d177]"
+              : currentLGA.toLowerCase() === user.districts[3].toLowerCase()
+              ? "bg-[#e8d1f570]"
               : "bg-[#EDF2F6]"
           }`}
         >
@@ -188,7 +255,7 @@ function EnumeratorForm() {
                 {user.districts.length > 1 && <LGAController />}
                 <button
                   className="flex justify-center items-center px-3 bg-primary-green py-2 max-w-[170px] rounded"
-                  onClick={saveFormChanges}
+                  onClick={saveForm}
                 >
                   <span className="text-white text-[14px] ">Save Changes</span>
                 </button>
@@ -199,9 +266,15 @@ function EnumeratorForm() {
 
         {/* Tab Bar */}
         <div
-          className={`sticky top-0 z-10 w-full fix-scrollbar overflow-x-scroll ${
+          className={`sticky top-0 z-10 max-w-[1040px] mx-auto fix-scrollbar overflow-x-scroll backdrop-blur-[300px] ${
             currentLGA.toLowerCase() === user.districts[0].toLowerCase()
               ? "bg-white"
+              : currentLGA.toLowerCase() === user.districts[1].toLowerCase()
+              ? "bg-[#d1f5f17d]"
+              : currentLGA.toLowerCase() === user.districts[2].toLowerCase()
+              ? "bg-[#e9f5d177]"
+              : currentLGA.toLowerCase() === user.districts[3].toLowerCase()
+              ? "bg-[#e8d1f570]"
               : "bg-[#EDF2F6]"
           }`}
         >

@@ -12,7 +12,6 @@ const CustomInput = ({
 }) => {
   const { handleValue } = useContext(EnumeratorFormContext);
 
-  console.log("gadfgsgsa: ", productData);
   if (inputType.toLowerCase() === "number") {
     return (
       <div className="flex items-center justify-start gap-2 relative border-b border-solid border-mid-gray">
@@ -40,15 +39,12 @@ const CustomInput = ({
           onChange={(e) => handleState(e, productData, inputId)}
           onWheel={(e) => e.target.blur()}
           placeholder="Enter answer"
-          className="flex-1 py-2 outline-primary-green"
+          className="flex-1 pl-2 py-2 outline-primary-green"
         />
       </div>
     );
   }
-  if (
-    inputType.toLowerCase() === "textarea" ||
-    inputType.toLowerCase() === "string"
-  ) {
+  if (inputType.toLowerCase() === "textarea") {
     return (
       <div className="flex items-center justify-start gap-2 relative border-0 border-solid border-mid-gray">
         <textarea
