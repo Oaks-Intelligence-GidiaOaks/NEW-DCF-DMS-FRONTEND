@@ -94,12 +94,7 @@ const SuperAdminSidebar = () => {
             Icon={FilterNone}
             link="super_admin/responses"
           />
-          <SidebarItem
-            key="4"
-            text="Response tracker"
-            Icon={OpenWith}
-            link="super_admin/tracker"
-          />
+
           <SidebarItem
             key="5"
             text="Master list"

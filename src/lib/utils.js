@@ -72,3 +72,136 @@ export const transformCategoryFormData = (data) => {
     categoryIds: categoryIds,
   };
 };
+
+export const transformProductsGridData = (data) => {
+  const newData = data.map((item) => {
+    const inputs = item.inputs.reduce((acc, inp) => {
+      acc[inp.title] = inp.value;
+      return acc;
+    });
+
+    const tData = {
+      category: item.category.name,
+      product: item.product.name,
+      district: item.district.name,
+      state: item.state.name,
+      created_by: item.created_by.first_name + item.created_by.last_name,
+      flagged: item.flagged,
+
+      ...inputs,
+    };
+
+    return tData;
+
+    // console.log("tData", tData);
+  });
+
+  return newData;
+};
+
+export const transformProductsDataByCategory = (data) => {
+  const categories = [];
+  let productsByCategory = {};
+
+  console.log("trans by data", data);
+
+  data.forEach((item) => {
+    let catObj = { _id: item.category?._id, name: item.category?.name };
+
+    let inputs = reduceArrayToObject(item.inputs);
+
+    let prodObj = {
+      name: item.product?.name,
+      district: item.district?.name,
+      state: item.state?.name,
+      created_by: item.created_by?.id,
+      // ...rStructure,
+    };
+
+    console.log("finishing", prodObj);
+
+    if (!categories.some((cat) => cat._id === catObj._id)) {
+      categories.push(catObj);
+    }
+
+    if (!productsByCategory[item.category?._id]) {
+      productsByCategory[item.category?._id] = [prodObj];
+    } else {
+      productsByCategory[item.category?._id].push(prodObj);
+    }
+  });
+
+  return {
+    categories,
+    productsByCategory,
+  };
+
+  // console.log(categories, "from categries array");
+  // console.log(productsByCategory, "products By Category");
+};
+
+export const transformMasterGridData = (data) => {
+  // console.log("master grid data", data);
+
+  const newGridData = [];
+
+  data.forEach((dt) => {
+    const hold = reduceProductsArrayToObject(dt.products);
+
+    let rStructure = hold.reduce(
+      (acc, curr) => ({
+        ...acc,
+        ...curr,
+      }),
+      {}
+    );
+
+    let last = {
+      _id: dt._id,
+      country: dt.country?.name,
+      created_by: dt.created_by?.id,
+      district: dt.district?.name,
+      state: dt.state?.name,
+      ...rStructure,
+    };
+
+    newGridData.push(last);
+  });
+
+  console.log(newGridData);
+
+  return newGridData;
+};
+
+const reduceArrayToObject = (data) =>
+  data.reduce((acc, inp) => {
+    acc[inp.title] = inp.value;
+    return acc;
+  });
+
+const reduceProductsArrayToObject = (data) => {
+  const transformedData = [];
+
+  data.forEach((item) => {
+    const name = item.product.name;
+    const inputs = item.inputs;
+
+    let newInputs = inputs.reduce((acc, curr) => {
+      // console.log(curr, "current");
+
+      let objNew = {
+        [`${curr.title}  ${name} `]: curr.value,
+      };
+
+      return { ...acc, ...objNew };
+    }, {});
+
+    // console.log("new inputs", newInputs);
+
+    transformedData.push(newInputs);
+  });
+
+  // console.log("main transform", transformedData);
+
+  return transformedData;
+};

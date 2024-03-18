@@ -130,7 +130,7 @@ function EnumeratorLogin() {
             navigate("/form");
           }
 
-          if (user.role === "team_lead") {
+          if (user.role === "TeamLead") {
             secureLocalStorage.setItem("oius", "true");
             secureLocalStorage.setItem(
               "user",
@@ -139,7 +139,11 @@ function EnumeratorLogin() {
             navigate("/home");
           }
 
-          if (user.role === "admin" || user.role === "super_admin" || user.role === "SuperAdmin") {
+          if (
+            user.role === "admin" ||
+            user.role === "super_admin" ||
+            user.role === "SuperAdmin"
+          ) {
             secureLocalStorage.setItem("oius", "true");
             secureLocalStorage.setItem(
               "user",

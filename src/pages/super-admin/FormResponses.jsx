@@ -11,15 +11,7 @@ import {
   Download,
 } from "@mui/icons-material";
 
-import {
-  OthersGrid,
-  NotesGrid,
-  FoodGrid,
-  ElectricityGrid,
-  TransportGrid,
-  AccomodationGrid,
-  ClothingGrid,
-} from "../../components/grid";
+import { FoodGrid } from "../../components/grid";
 import OaksSlider from "../../components/Slider";
 import axios from "axios";
 import { Loading } from "../../components/reusable";
@@ -32,11 +24,14 @@ import {
   getPrevProductDataByCountry,
   getProductDataByCountry,
 } from "../../lib/service";
-import { transformCountryFormData } from "../../lib/utils";
+import {
+  transformCountryFormData,
+  transformProductsDataByCategory,
+  transformProductsGridData,
+} from "../../lib/utils";
 
 const FormResponses = () => {
-  const [activeTab, setActiveTab] = useState("food");
-
+  const [activeTab, setActiveTab] = useState(null);
   const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552abe");
 
   // SA
@@ -51,32 +46,29 @@ const FormResponses = () => {
     queryFn: getAllCountries,
   });
 
-  // const { data: productData, isSuccess: pdSuccess } = useQuery({
-  //   queryKey: ["getProductDataByCountry"],
-  //   queryFn: () => getProductDataByCountry(countryId),
-  // });
-
-  const { data: prevProductData, isSuccess: prevPdSuccess } = useQuery({
+  const { data: productData, isSuccess: pdSuccess } = useQuery({
     queryKey: ["getProductDataByCountry"],
-    queryFn: () => getPrevProductDataByCountry(countryId),
+    queryFn: () => getProductDataByCountry(countryId),
   });
+
+  // const { data: prevProductData, isSuccess: prevPdSuccess } = useQuery({
+  //   queryKey: ["getProductDataByCountry"],
+  //   queryFn: () => getPrevProductDataByCountry(countryId),
+  // });
 
   let countriesData = cSuccess
     ? transformCountryFormData(countries.data.data)
     : [];
 
-  // const getFoodData = useQuery({
-  //   queryKey: ["getFoodData"],
-  //   queryFn: async () => {
-  //     const res = await axios.get("form_response/food_product");
+  let productsData = pdSuccess
+    ? transformProductsGridData(productData.data.data)
+    : [];
 
-  //     if (res.statusText == "OK") {
-  //       return res;
-  //     }
-  //   },
-  // });
+  let productsByCategory = pdSuccess
+    ? transformProductsDataByCategory(productData.data.data)
+    : [];
 
-  // all data values
+  console.log("prod by cat", productsByCategory);
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
@@ -106,26 +98,38 @@ const FormResponses = () => {
       </div>
 
       <OaksSlider slideDefault={5} break1={3} break2={2} break3={2}>
-        <div
-          className={`rounded w-fit mr-3 ${
-            activeTab === "food" ? "bg-oaksgreen text-white" : "bg-white"
-          }`}
-          onClick={() => {}}
-        >
-          <CategoryTab text="Food" Icon={Restaurant} activeTab={activeTab} />
-        </div>
+        {productsByCategory.categories?.map((it, i) => (
+          <div
+            key={i}
+            className={`rounded w-fit mr-3 ${
+              activeTab === it._id ? "bg-oaksgreen text-white" : "bg-white"
+            }`}
+            onClick={() => setActiveTab(it._id)}
+          >
+            <CategoryTab
+              text={it.name}
+              Icon={Restaurant}
+              activeTab={activeTab}
+            />
+          </div>
+        ))}
       </OaksSlider>
 
       <div className="bg-white h-80 w-full">
-        {true ? (
+        {false ? (
           <div className="h-32">
             <Loading />
           </div>
         ) : (
           <>
-            {activeTab === "food" && (
-              <GeneralTable avgData={avgFoodData} data={foodData} />
-            )}
+            <GeneralTable
+              avgData={productsByCategory.productsByCategory}
+              data={
+                activeTab
+                  ? productsByCategory.productsByCategory[activeTab]
+                  : []
+              }
+            />
           </>
         )}
       </div>

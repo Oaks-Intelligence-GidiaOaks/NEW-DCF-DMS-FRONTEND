@@ -148,19 +148,20 @@ function App() {
           <Route
             path="/home"
             element={
-              isLoggedIn && user && user.role === "team_lead" ? (
-                <TeamLead>
-                  <Dashboard />
-                </TeamLead>
-              ) : (
-                <Navigate replace to={"/"} />
-              )
+              <ProtectedRoute
+                requiredRole="TeamLead"
+                component={
+                  <TeamLead>
+                    <Dashboard />
+                  </TeamLead>
+                }
+              />
             }
           />
           <Route
             path="/enumerators"
             element={
-              isLoggedIn && user && user.role === "team_lead" ? (
+              isLoggedIn && user && user.role === "TeamLead" ? (
                 <TeamLead>
                   <Enumerators />
                 </TeamLead>
@@ -172,7 +173,7 @@ function App() {
           <Route
             path="/responses"
             element={
-              isLoggedIn && user && user.role === "team_lead" ? (
+              isLoggedIn && user && user.role === "TeamLead" ? (
                 <TeamLead>
                   <FormResponses />
                 </TeamLead>
@@ -184,7 +185,7 @@ function App() {
           <Route
             path="/tracker"
             element={
-              isLoggedIn && user && user.role === "team_lead" ? (
+              isLoggedIn && user && user.role === "TeamLead" ? (
                 <TeamLead>
                   <Tracker />
                 </TeamLead>
@@ -196,7 +197,7 @@ function App() {
           <Route
             path="/add"
             element={
-              isLoggedIn && user && user.role === "team_lead" ? (
+              isLoggedIn && user && user.role === "TeamLead" ? (
                 <TeamLead>
                   <AddEnumerator />
                 </TeamLead>
@@ -208,7 +209,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              isLoggedIn && user && user.role === "team_lead" ? (
+              isLoggedIn && user && user.role === "TeamLead" ? (
                 <TeamLead>
                   <Profile />
                 </TeamLead>
@@ -220,7 +221,7 @@ function App() {
           <Route
             path="/master"
             element={
-              user && user.role === "team_lead" ? (
+              user && user.role === "TeamLead" ? (
                 <TeamLead>
                   <MasterList />
                 </TeamLead>

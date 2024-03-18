@@ -247,8 +247,16 @@ export const deleteDistrict = async (districtId) => {
 // Form Submission
 
 // Master List
+export const getMasterDataByCountry = async (countryId) => {
+  const data = await axios.get(`master_list/${countryId}`);
+  return data;
+};
 
 // Team Lead Dashboard
+export const getTeamLeadSubmissionRate = async () => {
+  const data = await axios.get(`team_lead_dashboard/submission_rate`);
+  return data;
+};
 
 // Admin Dashboard
 export const getTeamLeadsCount = async () => {

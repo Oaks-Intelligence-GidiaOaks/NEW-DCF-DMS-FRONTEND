@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const ACCESS_LEVELS = {
   enumerator: 1,
-  team_lead: 2,
+  TeamLead: 2,
   SubAdmin: 3,
   SuperAdmin: 4,
 };
