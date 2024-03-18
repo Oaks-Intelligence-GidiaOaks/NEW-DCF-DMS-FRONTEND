@@ -8,11 +8,7 @@ import {
 } from "../../components/form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import {
-  createUser,
-  getAllCountries,
-  getAllCountryStates,
-} from "../../lib/service";
+import { createUser, getAllCountries, getAllSubAdmin } from "../../lib/service";
 import { useForm } from "react-hook-form";
 import { ClipLoader } from "react-spinners";
 import { transformCountryFormData } from "../../lib/utils";
@@ -21,8 +17,6 @@ import { IdTypes } from "../../data/form/others";
 
 const NewSubAdmin = () => {
   // tanstack
-  const queryClient = useQueryClient();
-
   const {
     data: countries,
     isLoading,
@@ -31,6 +25,11 @@ const NewSubAdmin = () => {
   } = useQuery({
     queryKey: ["getAllCountries"],
     queryFn: getAllCountries,
+  });
+
+  const { data: subAdmins, isSuccess: issubAdminsSuccess } = useQuery({
+    queryKey: ["getAllSubAdmin"],
+    queryFn: getAllSubAdmin,
   });
 
   const {
@@ -72,6 +71,8 @@ const NewSubAdmin = () => {
   const [statesData, setStatesData] = useState([]);
   const [districtsData, setDistrictsData] = useState([]);
 
+  const totalAdmins = subAdmins?.data ? subAdmins.data.totalSubAdmin : 0;
+  const newAdmins = subAdmins?.data ? subAdmins.data.newlyAdded : 0;
   const isBtnActive = Object.keys(errors).length < 1;
   let countryData = isCountryQuerySuccess
     ? transformCountryFormData(countries.data.data)
@@ -85,6 +86,7 @@ const NewSubAdmin = () => {
     mutationFn: (formData) => createUser(formData),
     onSuccess: () => {
       toast.success(`created sub admin successfully..`);
+      reset();
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -101,10 +103,20 @@ const NewSubAdmin = () => {
       identityType: "",
     });
 
-    // countryRef.current.clearValue();
+    countryRef.current.setValue([]);
+    stateRef.current.setValue([]);
+    districtsRef.current.setValue([]);
+    identityRef.current.clearValue();
   };
 
   const onSubmit = async (data) => {
+    // const isError = Object.values(formFields).filter((it) => !it.length);
+
+    // if (isError) {
+    //   console.log(isError);
+    //   return toast.error(`Please fill all inputs`);
+    // }
+
     const mutationData = {
       ...data,
       ...formFields,
@@ -123,13 +135,15 @@ const NewSubAdmin = () => {
     formData.append("profile_image", mutationData.profile_image);
     formData.append("role", mutationData.role);
 
-    mutationData.states.map((st) => formData.append("states", st));
-    mutationData.districts.map((dst) => formData.append("districts", dst));
+    mutationData.states.forEach((st) => formData.append("states", st));
+    mutationData.districts.forEach((dst) => formData.append("districts", dst));
 
-    // await mutate(formData);
-    console.log(mutationData);
-    // reset();
-    // clearFormFields();
+    try {
+      await mutate(formData);
+      clearFormFields();
+    } catch (ex) {
+      console.log("error");
+    }
   };
 
   const handleChange = (val, fieldName) => {
@@ -171,11 +185,19 @@ const NewSubAdmin = () => {
   };
 
   return (
-    <div className="mx-2 lg:mx-[50px] my-[30px]">
+    <div className="mx-2 lg:mx-[50px] my-[30px] font-poppins">
       {/*  */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-6">
-        <CountCard count={585} text="Total Enumerators" styles=" !bg-white" />
-        <CountCard count={585} text="Recently added" styles=" !bg-white" />
+        <CountCard
+          count={totalAdmins}
+          text="Total Sub Admins"
+          styles=" !bg-white"
+        />
+        <CountCard
+          count={newAdmins}
+          text="Recently added"
+          styles=" !bg-white"
+        />
 
         <Link
           className="ml-auto col-span-2 md:col-span-1 "
@@ -186,7 +208,9 @@ const NewSubAdmin = () => {
       </div>
 
       <div className="mt-5">
-        <h3 className="">Create New Sub Admin Profile</h3>
+        <h3 className="text-[20px] font-[500] pb-4">
+          Create New Sub Admin Profile
+        </h3>
 
         <form action="" onSubmit={handleSubmit(onSubmit)} className="lg:w-3/5">
           {/* image upload input */}

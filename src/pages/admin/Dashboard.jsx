@@ -50,95 +50,97 @@ const Dashboard = () => {
     setYearDropdown(year);
   };
 
-  return (
-    <div className="">
-      <div className="mx-auto  mt-8 pb-4 lg:w-5/6">
-        <div className="flex items-center justify-between gap-3 overflow-x-scroll metrics-scrollbar">
-          {teamLeadsCount ? (
-            <MetricsCard
-              key={"1"}
-              lead="Team leads"
-              data={teamLeadsCount}
-              guide="Newly added"
-              guideCount="2"
-              legendOne="Total team leads"
-              legendTwo="Newly added"
-            />
-          ) : (
-            <div className="h-32 grid place-items-center w-1/3 p-2 drop-shadow-sm bg-white">
-              <Loading />
-            </div>
-          )}
+  return <div>dbjjj</div>;
 
-          {submissionRate ? (
-            <MetricsCard
-              key={"2"}
-              lead="Submissions"
-              guide="No response"
-              legendOne="Submission"
-              data={submissionRate ?? submissionRate}
-              getLgaCount={getLgaCount ?? getLgaCount}
-              legendTwo="No response"
-            />
-          ) : (
-            <div className="h-32 grid place-items-center w-1/3 p-2 drop-shadow-sm bg-white">
-              <Loading />
-            </div>
-          )}
+  // return (
+  //   <div className="">
+  //     <div className="mx-auto  mt-8 pb-4 lg:w-5/6">
+  //       <div className="flex items-center justify-between gap-3 overflow-x-scroll metrics-scrollbar">
+  //         {teamLeadsCount ? (
+  //           <MetricsCard
+  //             key={"1"}
+  //             lead="Team leads"
+  //             data={teamLeadsCount}
+  //             guide="Newly added"
+  //             guideCount="2"
+  //             legendOne="Total team leads"
+  //             legendTwo="Newly added"
+  //           />
+  //         ) : (
+  //           <div className="h-32 grid place-items-center w-1/3 p-2 drop-shadow-sm bg-white">
+  //             <Loading />
+  //           </div>
+  //         )}
 
-          {totalLgas ? (
-            <MetricsCard
-              key={"3"}
-              lead="Total LGAs"
-              leadCount="16"
-              data={totalLgas ?? totalLgas}
-              guide="Unassigned LGAs"
-              guideCount="4"
-              legendOne="Total LGAs"
-              legendTwo="Unasigned LGAs"
-            />
-          ) : (
-            <div className="h-32 grid place-items-center w-1/3 p-2 drop-shadow-sm bg-white">
-              <Loading />
-            </div>
-          )}
-        </div>
+  //         {submissionRate ? (
+  //           <MetricsCard
+  //             key={"2"}
+  //             lead="Submissions"
+  //             guide="No response"
+  //             legendOne="Submission"
+  //             data={submissionRate ?? submissionRate}
+  //             getLgaCount={getLgaCount ?? getLgaCount}
+  //             legendTwo="No response"
+  //           />
+  //         ) : (
+  //           <div className="h-32 grid place-items-center w-1/3 p-2 drop-shadow-sm bg-white">
+  //             <Loading />
+  //           </div>
+  //         )}
 
-        {/* timely charts */}
-        <div className="bg-white drop-shadow-sm p-3 mt-6 text-sm rounded-sm w-full lg:px-16">
-          <div className="flex items-start">
-            <div className="flex-1">
-              <p className="flex-1 text-[#00BCD4]">Enumerators </p>
-              <p className="flex-1 text-xs">Added vs Removed </p>
-            </div>
+  //         {totalLgas ? (
+  //           <MetricsCard
+  //             key={"3"}
+  //             lead="Total LGAs"
+  //             leadCount="16"
+  //             data={totalLgas ?? totalLgas}
+  //             guide="Unassigned LGAs"
+  //             guideCount="4"
+  //             legendOne="Total LGAs"
+  //             legendTwo="Unasigned LGAs"
+  //           />
+  //         ) : (
+  //           <div className="h-32 grid place-items-center w-1/3 p-2 drop-shadow-sm bg-white">
+  //             <Loading />
+  //           </div>
+  //         )}
+  //       </div>
 
-            <div className="flex flex-col px-5">
-              <div className="flex items-center">
-                <div className="h-2 w-2 bg-yellow-500 mr-1" />{" "}
-                <span>Added</span>
-              </div>
-              <div className="flex items-center">
-                <div className="h-2 w-2 bg-red-500 mr-1" /> <span>Removed</span>
-              </div>
-            </div>
+  //       {/* timely charts */}
+  //       <div className="bg-white drop-shadow-sm p-3 mt-6 text-sm rounded-sm w-full lg:px-16">
+  //         <div className="flex items-start">
+  //           <div className="flex-1">
+  //             <p className="flex-1 text-[#00BCD4]">Enumerators </p>
+  //             <p className="flex-1 text-xs">Added vs Removed </p>
+  //           </div>
 
-            <YearDropDown
-              startYear={2019}
-              endYear={getCurrentYear()}
-              selectedYear={yearDropdown}
-              onChange={(selectedValue) => handleSelectOption(selectedValue)}
-            />
-          </div>
+  //           <div className="flex flex-col px-5">
+  //             <div className="flex items-center">
+  //               <div className="h-2 w-2 bg-yellow-500 mr-1" />{" "}
+  //               <span>Added</span>
+  //             </div>
+  //             <div className="flex items-center">
+  //               <div className="h-2 w-2 bg-red-500 mr-1" /> <span>Removed</span>
+  //             </div>
+  //           </div>
 
-          {/* charts */}
-          <SubmissionRateAdmin data={enumeratorsCount ?? enumeratorsCount} />
-        </div>
-      </div>
+  //           <YearDropDown
+  //             startYear={2019}
+  //             endYear={getCurrentYear()}
+  //             selectedYear={yearDropdown}
+  //             onChange={(selectedValue) => handleSelectOption(selectedValue)}
+  //           />
+  //         </div>
 
-      {/* fluctuation rates */}
-      <FluctuationRates admin />
-    </div>
-  );
+  //         {/* charts */}
+  //         <SubmissionRateAdmin data={enumeratorsCount ?? enumeratorsCount} />
+  //       </div>
+  //     </div>
+
+  //     {/* fluctuation rates */}
+  //     <FluctuationRates admin />
+  //   </div>
+  // );
 };
 
 export default Dashboard;

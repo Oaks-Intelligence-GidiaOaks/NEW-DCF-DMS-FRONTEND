@@ -3,7 +3,74 @@ import axios from "axios";
 
 // USER
 export const createUser = async (userData) => {
-  const data = await axios.post(`user`, userData);
+  const data = await axios.post(`user`, userData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data;
+};
+
+export const updateUserById = async (userId, userData) => {
+  const data = await axios.put(`user/profile/${userId}`, userData);
+  return data;
+};
+
+export const getMyProfile = async () => {
+  const data = await axios.get(`user`);
+  return data;
+};
+
+export const updatePassword = async (passwordData) => {
+  const data = await axios.put(`user/password_update`, passwordData);
+  return data;
+};
+
+export const resetPassword = async (passwordData) => {
+  const data = await axios.put(`user/password/reset`, passwordData);
+  return data;
+};
+
+export const getIndividualUser = async (userId) => {
+  const data = await axios.get(`user/${userId}`);
+  return data;
+};
+
+export const updateMyProfile = async (profileData) => {
+  const data = await axios.put(`user/profile`, profileData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data;
+};
+
+export const getAllSubAdmin = async () => {
+  const data = await axios.get(`user/sub_admin`);
+  return data;
+};
+
+export const getTeamLeadsByCountry = async (countryId) => {
+  const data = await axios.get(`user/team_lead/${countryId}`);
+  return data;
+};
+
+export const getAllEnumerators = async (countryId) => {
+  const data = await axios.get(`user/enumerators`);
+  return data;
+};
+
+export const getTeamLeadEnumerators = async (teanLeadId) => {
+  const data = await axios.get(`user/enumerators/${teanLeadId}`);
+  return data;
+};
+
+export const disableUser = async (userId) => {
+  const data = await axios.put(`user/disable/${userId}`);
+  return data;
+};
+export const assignUserDistrict = async (userId, districtData) => {
+  const data = await axios.put(`user/district/${userId}`, districtData);
   return data;
 };
 
@@ -24,7 +91,7 @@ export const getSingleCategory = async (categoryId) => {
 };
 
 export const getCategoryByCountry = async (countryId) => {
-  const data = await axios.get(`by_country/${countryId}`);
+  const data = await axios.get(`category/by_country/${countryId}`);
   return data;
 };
 
@@ -184,7 +251,38 @@ export const deleteDistrict = async (districtId) => {
 // Team Lead Dashboard
 
 // Admin Dashboard
+export const getTeamLeadsCount = async () => {
+  const data = await axios.get(`admin_dashboard/team_leads_count`);
+  return data;
+};
+
+export const getDistrictsCount = async () => {
+  const data = await axios.get(`admin_dashboard/district_count`);
+  return data;
+};
+
+export const getEnumeratorCount = async (yearFilter = 2024) => {
+  console.log(yearFilter, "here");
+
+  const data = await axios.get(
+    `admin_dashboard/yearly_enumerators?yearFilter=${yearFilter}`
+  );
+  return data;
+};
+
+export const getSubmissionCount = async () => {
+  const data = await axios.get(`admin_dashboard/submission_rate`);
+  return data;
+};
 
 // Form Responses
+export const getProductDataByCountry = async (countryId) => {
+  const data = await axios.get(`form_response/product/${countryId}`);
+  return data;
+};
+export const getPrevProductDataByCountry = async (countryId) => {
+  const data = await axios.get(`form_response/prev_product/${countryId}`);
+  return data;
+};
 
 // Admin

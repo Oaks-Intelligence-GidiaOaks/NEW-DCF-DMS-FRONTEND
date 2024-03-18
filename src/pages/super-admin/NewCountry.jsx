@@ -7,28 +7,71 @@ import {
   FormInputDropDown,
   FormMultipleSelect,
 } from "../../components/form";
+import { Link } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { getAllSubAdmin } from "../../lib/service";
 
 const NewCountry = () => {
+  const {
+    data: subAdmins,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["getAllSubAdmin"],
+    queryFn: getAllSubAdmin,
+  });
+
+  const {
+    mutate,
+    isPending,
+    isSuccess: isMutateSuccess,
+  } = useMutation({
+    mutationFn: (formData) => createUser(formData),
+    onSuccess: () => {
+      toast.success(`created sub admin successfully..`);
+      clearFormFields();
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
+  // component variables
+  let newAdminCount = subAdmins?.data ? subAdmins.data.newlyAdded : 0;
+  let totalCountries = subAdmins?.data ? subAdmins.data.totalSubAdmin : 0;
+
+  const clearFormFields = () => {
+    //
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="mx-2 my-5 md:mx-[35px]">
       <div className="grid md:grid-cols-3 gap-y-4">
         <CountCard
-          count={66}
+          count={newAdminCount}
           countStyles=" bg-[#FAF9F9] text-xs "
           styles=" bg-white "
-          text="Total Countries"
+          text="Newly Added"
         />
 
         <CountCard
-          count={66}
+          count={totalCountries}
           countStyles=" bg-[#FAF9F9] text-xs"
           styles=" bg-white"
           text="Total Countries"
         />
 
-        <div className="col-span-2 md:col-span-1  ml-auto">
+        <Link
+          to="/super_admin/admins"
+          className="col-span-2 md:col-span-1  ml-auto"
+        >
           <BackButton />
-        </div>
+        </Link>
       </div>
 
       <div className=" mt-[36px] w-full">
@@ -36,8 +79,8 @@ const NewCountry = () => {
           Assign New Country to Sub Admin
         </h3>
 
-        <form action="" className="md:w-3/5 w-full border ">
-          <FormMultipleSelect label="Sub Admin *" data={[]} />
+        <form action="" onSubmit={handleSubmit} className="md:w-3/5 w-full">
+          <FormInputDropDown label="Sub Admin *" data={[]} />
 
           <FormMultipleSelect label="Country * *" data={[]} />
 

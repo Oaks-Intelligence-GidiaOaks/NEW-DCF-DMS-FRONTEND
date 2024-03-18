@@ -1,26 +1,22 @@
 [
   {
     "label": "Text",
-    "value": "Text"
+    "value": "text"
   },
   {
     "label": "Number",
-    "value": "Number"
+    "value": "number"
   },
   {
     "label": "DropDown",
-    "value": "DropDown"
+    "value": "dropdown"
   },
   {
-    "label": "Long Text",
-    "value": "Long_Text"
+    "label": "Textarea",
+    "value": "textarea"
   },
   {
-    "label": "Question",
-    "value": "Question"
-  },
-  {
-    "label": "Comment",
-    "value": "Comment"
+    "label": "Radio",
+    "value": "radio"
   }
 ]

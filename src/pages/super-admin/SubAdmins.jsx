@@ -4,9 +4,22 @@ import { GeneralTable } from "../../components/charts";
 import subAdminsData from "../../data/grid/subAdminData.json";
 import { transformSubAdminGridData } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getAllSubAdmin } from "../../lib/service";
 
 const SubAdmins = () => {
   const navigate = useNavigate();
+
+  const {
+    data: subAdmins,
+    isLoading: saLoading,
+    isSuccess: saSuccess,
+  } = useQuery({
+    queryKey: ["getAllSubAdmin"],
+    queryFn: getAllSubAdmin,
+  });
+
+  // console.log(subAdmins.data.totalSubAdmin);
 
   const tableActions = [
     {
@@ -39,13 +52,13 @@ const SubAdmins = () => {
           text="Total Sub Admin"
           styles=" bg-[#FFAD10] text-white"
           countStyles=" bg-white text-[#4A4848] p-1 text-xs rounded-[5px]"
-          count={56}
+          count={subAdmins?.data.totalSubAdmin}
         />
 
         <CountCard
           text="Recently added"
           styles="border border-[#FFAD10]"
-          count={52}
+          count={subAdmins?.data.newlyAdded}
         />
 
         <Link className="!ml-auto" to="/super_admin/admins/add">
@@ -76,7 +89,11 @@ const SubAdmins = () => {
       <div>
         <GeneralTable
           title="Sub Admin Table"
-          data={transformSubAdminGridData(subAdminsData)}
+          data={
+            subAdmins?.data
+              ? transformSubAdminGridData(subAdmins?.data.users)
+              : []
+          }
           actions={tableActions}
         />
       </div>

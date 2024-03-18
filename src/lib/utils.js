@@ -18,10 +18,19 @@ export const transformSubAdminGridData = (data) => {
       updatedAt,
       firstUse,
       disabled,
+      states,
+      districts,
       ...rest
     } = item;
 
-    return rest;
+    const newD = {
+      ...rest,
+      // states: rest.states.map((it) => it.name),
+      // districts: rest.districts.map((it) => it.name),
+      country: rest.country.name,
+    };
+
+    return newD;
   });
 
   return newData;
@@ -43,4 +52,23 @@ export const transformStateFormData = (data) => {
   }));
 
   return newData;
+};
+
+export const transformCategoryFormData = (data) => {
+  let expectedInputs = {};
+  let categoryIds = [];
+
+  data.forEach((item) => {
+    categoryIds.push({ label: item.name, value: item._id });
+
+    expectedInputs[item._id] = item.expected_inputs.map((it) => ({
+      label: it,
+      value: it,
+    }));
+  });
+
+  return {
+    expectedInputs: expectedInputs,
+    categoryIds: categoryIds,
+  };
 };
