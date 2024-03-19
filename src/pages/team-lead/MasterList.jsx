@@ -8,9 +8,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getMasterDataByCountry } from "../../lib/service";
 import { transformMasterGridData } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
+import { useAuth } from "../../context";
 
 const MasterList = () => {
-  const [countryId, setCountryId] = useState(`65e344bff0eab8c4f2552abe`);
+  const { user } = useAuth();
+
+  const [countryId, setCountryId] = useState(user.country);
 
   const [startDateValue, setStartDateValue] = useState("");
   const [endDateValue, setEndDateValue] = useState("");

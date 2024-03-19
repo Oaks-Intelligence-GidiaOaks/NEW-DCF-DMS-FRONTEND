@@ -64,6 +64,34 @@ export const transformEnumeratorsGridData = (data) => {
   return newData;
 };
 
+export const transformTeamLedsGridData = (data) => {
+  const newData = data.map((item) => {
+    const {
+      identity_image_url,
+      photo_url,
+      role,
+      createdAt,
+      updatedAt,
+      firstUse,
+      disabled,
+      // states,
+      districts,
+      ...rest
+    } = item;
+
+    const newD = {
+      ...rest,
+      states: rest.states.map((it) => it.name),
+      // districts: rest.districts.map((it) => it.name),
+      country: rest.country?.name,
+    };
+
+    return newD;
+  });
+
+  return newData;
+};
+
 export const transformCountryFormData = (data) => {
   const newData = data.map((item) => ({
     label: item.name,
@@ -170,14 +198,14 @@ export const transformProductGridData = (data) => {
   const newData = data.map((item) => {
     const inputs = item.inputs.reduce((acc, curr) => {
       // change to value
-      acc[curr.title] = curr.input_type;
+      acc[curr.title] = curr.value;
 
       return acc;
     }, {});
 
     const tData = {
       _id: item._id,
-      name: item.name,
+      name: item.product.name,
       ...inputs,
       createdAt: item.createdAt,
       created_by: item.created_by?.id,
@@ -221,7 +249,7 @@ export const transformMasterGridData = (data) => {
     newGridData.push(last);
   });
 
-  console.log(newGridData);
+  // console.log(newGridData);
 
   return newGridData;
 };

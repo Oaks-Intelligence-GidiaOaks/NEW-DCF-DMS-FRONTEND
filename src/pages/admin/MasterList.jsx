@@ -7,8 +7,15 @@ import axios from "axios";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { BiDownload } from "react-icons/bi";
 import { arrangeTime } from "../../lib/helpers";
+import { useAuth } from "../../context";
+import { getMasterDataByCountry } from "../../lib/service";
+import { useQuery } from "@tanstack/react-query";
+import { transformMasterGridData } from "../../lib/utils";
+import { GeneralTable } from "../../components/charts";
 
 const MasterList = () => {
+  const { user } = useAuth();
+
   const [masterList, setMasterList] = useState(null);
   const [newMaster, setNewMaster] = useState(null);
   const [startDateValue, setStartDateValue] = useState("");
@@ -17,155 +24,182 @@ const MasterList = () => {
   let [pageNo, setPageNo] = useState(1);
 
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 7);
+
   const maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), 27);
 
+  const {
+    data: masterData,
+    isLoading: masterLoading,
+    isSuccess: masterSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["getMasterDataByCountry"],
+    queryFn: () =>
+      getMasterDataByCountry(
+        user.country,
+        startDateValue,
+        endDateValue,
+        pageNo
+      ),
+  });
+
   useEffect(() => {
-    try {
-      setMasterList(null);
-      setNewMaster(null);
-      axios
-        .get(
-          `form_response/master_list_data?startDateFilter=${startDateValue}&endDateFilter=${endDateValue}&page=${pageNo}`
-        )
-        .then((res) => {
-          setMasterList(res.data.forms);
-          setTotalDataCount(res.data.total);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.error(err);
-    }
+    refetch();
   }, [endDateValue, pageNo]);
 
-  useEffect(() => {
-    async function transformData() {
-      try {
-        let waitedData = await Promise.all(
-          masterList?.map(async (master, i) => {
-            const {
-              foodItems,
-              others,
-              state: State,
-              transports,
-              electricity,
-              clothings,
-              lga: LGA,
-              accomodations,
-              created_by,
-              _id,
-              updated_at,
-              questions,
-            } = master;
+  let mGridData = masterSuccess
+    ? transformMasterGridData(masterData.data.data)
+    : null;
 
-            const clothingsObj = await clothings
-              ?.map((cloth, i) => ({
-                [`Cloth category`]: cloth?.category,
-                [`Cloth subcategory`]: cloth?.sub_category,
-                [`Cloth size`]: cloth?.size,
-                [`Cloth Price`]: cloth?.price === 0 ? "N/A" : cloth?.price,
-              }))
-              ?.reduce((acc, obj) => {
-                return {
-                  ...acc,
-                  ...obj,
-                };
-              }, {});
+  console.log("mGridData", mGridData);
 
-            const foodObj = await foodItems
-              ?.map((food, i) => ({
-                [`Price of ${food?.name}`]:
-                  food?.price === "0" ? "N/A" : food?.price,
-                [`Brand of ${food?.name}`]:
-                  food?.brand < 1 ? "N/A" : food?.brand,
-                [`Size of ${food?.name}`]: food?.size,
-              }))
-              .reduce((acc, obj) => {
-                return {
-                  ...acc,
-                  ...obj,
-                };
-              }, {});
+  // useEffect(() => {
+  //   try {
+  //     setMasterList(null);
+  //     setNewMaster(null);
+  //     axios
+  //       .get(
+  //         `form_response/master_list_data?startDateFilter=${startDateValue}&endDateFilter=${endDateValue}&page=${pageNo}`
+  //       )
+  //       .then((res) => {
+  //         setMasterList(res.data.forms);
+  //         setTotalDataCount(res.data.total);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, [endDateValue, pageNo]);
 
-            const accObj = await accomodations
-              ?.map((acc, i) => ({
-                [`${acc?.rooms} room`]:
-                  acc?.price === "0" ? "N/A" : `${acc?.price} (${acc?.type})`,
-              }))
-              .reduce((acc, obj) => {
-                return { ...acc, ...obj };
-              }, {});
+  // useEffect(() => {
+  //   async function transformData() {
+  //     try {
+  //       let waitedData = await Promise.all(
+  //         masterList?.map(async (master, i) => {
+  //           const {
+  //             foodItems,
+  //             others,
+  //             state: State,
+  //             transports,
+  //             electricity,
+  //             clothings,
+  //             lga: LGA,
+  //             accomodations,
+  //             created_by,
+  //             _id,
+  //             updated_at,
+  //             questions,
+  //           } = master;
 
-            const transportObj = await transports
-              ?.map((transport, i) => ({
-                [`Route ${i + 1}`]: transport?.route,
-                [`Mode ${i + 1} `]: transport?.mode,
-                [`Route ${i + 1} cost`]: transport?.cost,
-              }))
-              ?.reduce((acc, obj) => {
-                return { ...acc, ...obj };
-              }, {});
+  //           const clothingsObj = await clothings
+  //             ?.map((cloth, i) => ({
+  //               [`Cloth category`]: cloth?.category,
+  //               [`Cloth subcategory`]: cloth?.sub_category,
+  //               [`Cloth size`]: cloth?.size,
+  //               [`Cloth Price`]: cloth?.price === 0 ? "N/A" : cloth?.price,
+  //             }))
+  //             ?.reduce((acc, obj) => {
+  //               return {
+  //                 ...acc,
+  //                 ...obj,
+  //               };
+  //             }, {});
 
-            const electricityObj =
-              electricity.length > 0 &&
-              (await electricity?.reduce((acc, obj) => {
-                let key = Object.keys(obj)[0];
-                let value = Object.values(obj);
+  //           const foodObj = await foodItems
+  //             ?.map((food, i) => ({
+  //               [`Price of ${food?.name}`]:
+  //                 food?.price === "0" ? "N/A" : food?.price,
+  //               [`Brand of ${food?.name}`]:
+  //                 food?.brand < 1 ? "N/A" : food?.brand,
+  //               [`Size of ${food?.name}`]: food?.size,
+  //             }))
+  //             .reduce((acc, obj) => {
+  //               return {
+  //                 ...acc,
+  //                 ...obj,
+  //               };
+  //             }, {});
 
-                acc[key] = value;
+  //           const accObj = await accomodations
+  //             ?.map((acc, i) => ({
+  //               [`${acc?.rooms} room`]:
+  //                 acc?.price === "0" ? "N/A" : `${acc?.price} (${acc?.type})`,
+  //             }))
+  //             .reduce((acc, obj) => {
+  //               return { ...acc, ...obj };
+  //             }, {});
 
-                return acc;
-              }));
+  //           const transportObj = await transports
+  //             ?.map((transport, i) => ({
+  //               [`Route ${i + 1}`]: transport?.route,
+  //               [`Mode ${i + 1} `]: transport?.mode,
+  //               [`Route ${i + 1} cost`]: transport?.cost,
+  //             }))
+  //             ?.reduce((acc, obj) => {
+  //               return { ...acc, ...obj };
+  //             }, {});
 
-            const othersObj = await others
-              .map((item, i) => ({
-                [`Price of ${item?.name}`]:
-                  item?.price === "0"
-                    ? "N/A"
-                    : item?.price
-                    ? item?.price
-                    : "N/A",
-                [`Brand of ${item?.name}`]:
-                  item?.brand?.length < 1 ? "N/A" : item?.brand,
-              }))
-              .reduce((acc, obj) => {
-                return { ...acc, ...obj };
-              }, {});
+  //           const electricityObj =
+  //             electricity.length > 0 &&
+  //             (await electricity?.reduce((acc, obj) => {
+  //               let key = Object.keys(obj)[0];
+  //               let value = Object.values(obj);
 
-            const question = questions?.[0];
-            const note = question?.note || "N/A";
+  //               acc[key] = value;
 
-            const transformedObj = {
-              // S_N: i + 1,
-              Date: arrangeTime(updated_at),
-              _id,
-              ID: created_by?.id,
-              State,
-              LGA,
-              Food: "food",
-              ...foodObj,
-              Transport: "transport",
-              ...transportObj,
-              Accomodation: "accomodation",
-              ...accObj,
-              Clothing: "Clothing",
-              ...clothingsObj,
-              Electricity: "electricity",
-              ...electricityObj,
-              Others: "commodities",
-              ...othersObj,
-              Note: note,
-            };
+  //               return acc;
+  //             }));
 
-            return transformedObj;
-          })
-        );
-        setNewMaster(waitedData);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    masterList ? transformData() : null;
-  }, [masterList]);
+  //           const othersObj = await others
+  //             .map((item, i) => ({
+  //               [`Price of ${item?.name}`]:
+  //                 item?.price === "0"
+  //                   ? "N/A"
+  //                   : item?.price
+  //                   ? item?.price
+  //                   : "N/A",
+  //               [`Brand of ${item?.name}`]:
+  //                 item?.brand?.length < 1 ? "N/A" : item?.brand,
+  //             }))
+  //             .reduce((acc, obj) => {
+  //               return { ...acc, ...obj };
+  //             }, {});
+
+  //           const question = questions?.[0];
+  //           const note = question?.note || "N/A";
+
+  //           const transformedObj = {
+  //             // S_N: i + 1,
+  //             Date: arrangeTime(updated_at),
+  //             _id,
+  //             ID: created_by?.id,
+  //             State,
+  //             LGA,
+  //             Food: "food",
+  //             ...foodObj,
+  //             Transport: "transport",
+  //             ...transportObj,
+  //             Accomodation: "accomodation",
+  //             ...accObj,
+  //             Clothing: "Clothing",
+  //             ...clothingsObj,
+  //             Electricity: "electricity",
+  //             ...electricityObj,
+  //             Others: "commodities",
+  //             ...othersObj,
+  //             Note: note,
+  //           };
+
+  //           return transformedObj;
+  //         })
+  //       );
+  //       setNewMaster(waitedData);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
+  //   masterList ? transformData() : null;
+  // }, [masterList]);
 
   let paginationItems =
     totalDataCount &&
@@ -245,11 +279,13 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <MasterGrid data={newMaster ?? newMaster} />
+        <GeneralTable pageSize={115} data={mGridData} />
 
-        <div className="p-2 border ">
-          <div className="ml-auto flex items-center">{<PageNumbers />}</div>
-        </div>
+        {/* <div className="p-2 border ">
+          <div className="ml-auto flex items-center">{<PageNumbers />}
+          
+          </div>
+        </div> */}
       </div>
     </div>
   );

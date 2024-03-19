@@ -224,6 +224,13 @@ export const getAllDistricts = async () => {
   return data;
 };
 
+export const getMultipleDistricts = async (stateIds) => {
+  const data = await axios.post(`district/multiple`, {
+    states: stateIds,
+  });
+  return data;
+};
+
 export const getAllStateDistricts = async (stateId) => {
   const data = await axios.get(`district/state/${stateId}`);
   return data;

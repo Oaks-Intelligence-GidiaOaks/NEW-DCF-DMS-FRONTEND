@@ -20,6 +20,7 @@ const ProductsByCategoryTable = ({ categoryId }) => {
   });
 
   console.log("category id", categoryId);
+  console.log("all cat products", productData?.data);
 
   useEffect(() => {
     refetch();

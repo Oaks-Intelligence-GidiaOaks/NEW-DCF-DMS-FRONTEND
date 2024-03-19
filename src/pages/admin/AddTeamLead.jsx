@@ -3,6 +3,7 @@ import {
   FormInput,
   FormInputDropDown,
   FormInputNumber,
+  TextInput,
 } from "../../components/form";
 import { AllStates, lgasByState } from "../../data/form/states";
 import { allLgasByState } from "../../data/form/allLgasByState";
@@ -12,10 +13,86 @@ import FormMultipleSelect from "../../components/form/FormMultipleSelect";
 import { useAuth } from "../../context";
 import { EditNote, Email } from "@mui/icons-material";
 import { RingsCircle } from "../../components/reusable";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  createUser,
+  getAllCountryStates,
+  getAllStateDistricts,
+  getMultipleDistricts,
+  getMyProfile,
+} from "../../lib/service";
+import { toast } from "react-toastify";
 
 const AddTeamLead = () => {
   const { user } = useAuth();
   let avaterRef = useRef(null);
+
+  const [stateIds, setStateIds] = useState([]);
+  const [lgaIds, setLgaIds] = useState([]);
+  const [image, setImage] = useState(null);
+  const [avatar, setAvatar] = useState(null);
+  const [file, setFile] = useState(null);
+  const [identityImage, setIdentityImage] = useState(null);
+
+  const { mutate, isLoading: mutateLoading } = useMutation({
+    mutationKey: ["createUser"],
+    mutationFn: (data) => createUser(data),
+    onSuccess: (sx) => {
+      toast.success(sx.data.message);
+      // clear form
+      resetForm();
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
+  // get team lead profile
+  const {
+    data: profile,
+    isLoading: prLoading,
+    isSUccess: prSuccess,
+  } = useQuery({
+    queryKey: ["getMyProfile"],
+    queryFn: getMyProfile,
+  });
+
+  // get country states
+  const {
+    data: countryStates,
+    isLoading: stLoading,
+    isSUccess: stSuccess,
+  } = useQuery({
+    queryKey: ["getAllCountryStates"],
+    queryFn: () => getAllCountryStates(user.country),
+  });
+
+  // get state districts
+  const {
+    data: stateDistricts,
+    isLoading: dsLoading,
+    isSUccess: dsSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["getAllStateDistricts"],
+    queryFn: () => getMultipleDistricts(stateIds),
+    enabled: !!stateIds.length,
+  });
+
+  // component variables
+  let cStates = countryStates?.data.data.map((it) => ({
+    value: it._id,
+    label: it.name,
+  }));
+
+  let cDistricts = stateDistricts?.data.data.map((it) => ({
+    value: it._id,
+    label: it.name,
+  }));
+
+  useEffect(() => {
+    refetch();
+  }, [stateIds, refetch]);
 
   const [formFields, setFormFields] = useState({
     firstName: "",
@@ -25,26 +102,8 @@ const AddTeamLead = () => {
     idNo: "",
     idType: "",
   });
-  const [states, setStates] = useState([]);
-  const [lgas, setLgas] = useState([]);
-  const [image, setImage] = useState(null);
-  const [avatar, setAvatar] = useState(null);
-  const [file, setFile] = useState(null);
-  const [identityImage, setIdentityImage] = useState(null);
-  const [userCreated, setUserCreated] = useState(false);
-  const [error, setError] = useState(null);
-  const [lgaRoutes, setLgaRoutes] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [stateValues, setStateValues] = useState([]);
 
   const imageMimeType = /image\/(png|jpg|jpeg)/i;
-
-  useEffect(() => {
-    axios
-      .get(`lga_routes`)
-      .then((res) => setLgaRoutes(res.data.data))
-      .catch((err) => console.error(err));
-  }, []);
 
   useEffect(() => {
     let fileReader,
@@ -77,21 +136,6 @@ const AddTeamLead = () => {
     }
   }, [image, file]);
 
-  let coveredLgas = lgaRoutes && lgaRoutes.map((it) => it.lga);
-
-  let lgasArr = [];
-
-  states.length > 0 &&
-    states.map((item) => {
-      allLgasByState[item.value]
-        .filter((item) => coveredLgas.includes(item.value))
-        .map((i) => lgasArr.push(i));
-    });
-
-  if (lgasArr.length > 0) {
-    console.log(lgasArr);
-  }
-
   const resetForm = () => {
     setFormFields({
       firstName: "",
@@ -102,23 +146,19 @@ const AddTeamLead = () => {
       idType: "",
     });
 
-    setStates([]);
-    lgasArr = [];
-    setLgas([]);
-    setStateValues([]);
+    setStateIds([]);
+    setLgaIds([]);
     setIdentityImage(null);
     setAvatar(null);
-    setUserCreated(true);
-    setIsLoading(false);
   };
 
   const handleStateChange = (selectedOptions) => {
-    setStates(selectedOptions);
-    setLgas([]);
+    setStateIds(selectedOptions.map((it) => it.value));
+    setLgaIds([]);
   };
 
   const handleLgaChange = (selectedOptions) => {
-    setLgas(selectedOptions);
+    setLgaIds(selectedOptions.map((it) => it.value));
   };
 
   const handleIdTypeChange = (selectedValue) => {
@@ -151,7 +191,7 @@ const AddTeamLead = () => {
     avaterRef.current.click();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, tel, idNo, idType } = formFields;
 
@@ -164,57 +204,34 @@ const AddTeamLead = () => {
       !idType ||
       !identityImage ||
       !avatar ||
-      !states ||
-      !lgas
+      !stateIds.length ||
+      !lgaIds.length
     ) {
-      setError("Please input all fields");
+      toast.error("Please input all fields");
 
       return;
     }
 
-    let transformedStates = states.map((st) => st.value);
-
-    let transformedLgas = lgas.map((l) => l.value);
-
+    let transformedStates = stateIds;
+    let transformedLgas = lgaIds;
     const formData = new FormData();
 
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
     formData.append("email", email);
-    formData.append("phoneNumber", tel);
+    formData.append("phone_number", tel);
     formData.append("identityType", idType);
-    formData.append("identity", idNo);
-    formData.append("identityImage", identityImage);
-    formData.append("avatar", avatar);
-    formData.append("role", "team_lead");
+    formData.append("identity_number", idNo);
+    formData.append("identity_document", identityImage);
+    formData.append("profile_image", avatar);
+    formData.append("role", "TeamLead");
+    formData.append("country", user.country);
 
     // Append list items to form data
-    transformedLgas.forEach((lga) => formData.append("LGA", lga));
+    transformedLgas.forEach((lga) => formData.append("districts", lga));
     transformedStates.forEach((state) => formData.append("states", state));
 
-    try {
-      setIsLoading(true);
-      axios
-        .post("user/new", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((user) => {
-          if (!user) {
-            console.log("error while creating user");
-          } else {
-            resetForm();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoading(false);
-          setError("could not complete registration, try again...");
-        });
-    } catch (err) {
-      setError("Error occured, Please check your network connection");
-    }
+    await mutate(formData);
   };
 
   return (
@@ -249,7 +266,7 @@ const AddTeamLead = () => {
       </div>
 
       <form action="" className="lg:w-5/6" onSubmit={handleSubmit}>
-        <FormInput
+        <TextInput
           placeholder="First name"
           label="First name"
           value={formFields.firstName}
@@ -257,7 +274,7 @@ const AddTeamLead = () => {
             setFormFields((prev) => ({ ...prev, firstName: e.target.value }))
           }
         />
-        <FormInput
+        <TextInput
           placeholder="Last name"
           label="Last name"
           value={formFields.lastName}
@@ -265,7 +282,7 @@ const AddTeamLead = () => {
             setFormFields((prev) => ({ ...prev, lastName: e.target.value }))
           }
         />
-        <FormInput
+        <TextInput
           placeholder="Email"
           label="Email address"
           value={formFields.email}
@@ -286,19 +303,19 @@ const AddTeamLead = () => {
 
         <FormMultipleSelect
           label="States"
-          data={AllStates}
+          data={cStates}
           index="z-30"
           onChange={handleStateChange}
         />
 
-        {states.length > 0 && (
-          <FormMultipleSelect
-            label="LGAs"
-            onChange={handleLgaChange}
-            data={lgasArr}
-            index="z-20"
-          />
-        )}
+        {/* {states.length > 0 && ( */}
+        <FormMultipleSelect
+          label="Districts"
+          onChange={handleLgaChange}
+          data={cDistricts}
+          index="z-20"
+        />
+        {/* )} */}
 
         <FormInputDropDown
           label="Identification(ID) type"
@@ -335,36 +352,8 @@ const AddTeamLead = () => {
           )}
         </div>
 
-        {userCreated && (
-          <p className="p-2 my-3 flex items-center justify-between rounded bg-green-500">
-            <span className="text-white text-xs">
-              Team lead created successfully..
-            </span>
-
-            <span
-              onClick={() => setUserCreated(false)}
-              className="rounded-full w-6 h-6 text-center bg-white cursor-pointer"
-            >
-              x
-            </span>
-          </p>
-        )}
-
-        {error && (
-          <p className="p-2 my-3 flex items-center justify-between rounded bg-white">
-            <span className="text-red-500 text-xs">{error}</span>
-
-            <span
-              onClick={() => setError(null)}
-              className="rounded-full w-6 h-6 text-center bg-white cursor-pointer"
-            >
-              x
-            </span>
-          </p>
-        )}
-
         <button className="w-full mt-4 text-white grid place-items-center p-3 rounded bg-oaksgreen">
-          {isLoading ? <RingsCircle /> : "Submit"}
+          {mutateLoading ? <RingsCircle /> : "Submit"}
         </button>
       </form>
     </div>
