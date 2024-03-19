@@ -12,13 +12,16 @@ import { useAuth } from "../../context";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RingsCircle } from "../../components/reusable";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createUser, getAllEnumerators, getAllStates } from "../../lib/service";
+import {
+  createUser,
+  getAllEnumerators,
+  getAllStates,
+  getMyProfile,
+} from "../../lib/service";
 import { toast } from "react-toastify";
 
 const AddEnumerator = () => {
   const { user } = useAuth();
-
-  console.log("user", user);
 
   const {
     data: enumerators,
@@ -26,18 +29,18 @@ const AddEnumerator = () => {
     isSUccess: enumSuccess,
   } = useQuery({
     queryKey: ["getAllEnumerators"],
-    queryFn: getAllEnumerators,
+    queryFn: getMyProfile,
   });
 
   // replace with get user states
-  // const {
-  //   data: states,
-  //   isLoading: stLoading,
-  //   isSUccess: stSuccess,
-  // } = useQuery({
-  //   queryKey: ["getAllStates"],
-  //   queryFn: getAllStates,
-  // });
+  const {
+    data: profile,
+    isLoading: prLoading,
+    isSUccess: prSuccess,
+  } = useQuery({
+    queryKey: ["getMyProfile"],
+    queryFn: getMyProfile,
+  });
 
   const { mutate, isLoading: mutateLoading } = useMutation({
     mutationKey: ["createUser"],
@@ -61,11 +64,22 @@ const AddEnumerator = () => {
   const navigate = useNavigate();
   const ref = useRef(null);
 
+  console.log("profile user", profile?.data.user);
+
   // replace with get user states query
-  const teamLeadStates = user.states.map((st) => ({ label: st, value: st }));
+  let teamLeadStates = profile?.data.user.states.map((st) => ({
+    label: st.name,
+    value: st._id,
+  }));
 
   // replace with get user districts query
-  const teamLeadLgas = user.districts.map((st) => ({ label: st, value: st }));
+  let teamLeadLgas = profile?.data.user.districts.map((st) => ({
+    label: st.name,
+    value: st._id,
+  }));
+
+  console.log("get team lead lgas", teamLeadLgas);
+  console.log("get team lead lgas", teamLeadStates);
 
   const [formFields, setFormFields] = useState({
     firstName: "",
@@ -116,7 +130,6 @@ const AddEnumerator = () => {
     setLga([]);
     setImage(null);
     setFileDataUrl(null);
-    setIsLoading(false);
     ref.current.value = "";
     navigate("/add");
   };
@@ -189,6 +202,7 @@ const AddEnumerator = () => {
     bodyFormData.append("states", newUser.state);
     bodyFormData.append("identity_image_url", newUser.identityImage);
     bodyFormData.append("role", "Enumerator");
+    bodyFormData.append("country", user.country);
 
     newUser.LGA?.map((item) => bodyFormData.append("districts", `${item}`));
 

@@ -331,3 +331,7 @@ export const getProductResponsesByCategory = async (categoryId) => {
 };
 
 // Admin
+export const getAdminResponseTracker = async () => {
+  const data = await axios.get(`form_response/admin_response_tracker`);
+  return data;
+};

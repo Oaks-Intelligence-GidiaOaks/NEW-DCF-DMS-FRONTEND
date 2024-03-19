@@ -96,7 +96,7 @@ function App() {
     if (user.role.toLowerCase() === "enumerator") {
       return <Navigate replace to={"/form"} />;
     }
-    if (user.role === "team_lead") {
+    if (user.role === "TeamLead") {
       return <Navigate replace to={"/home"} />;
     }
 

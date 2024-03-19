@@ -4,11 +4,24 @@ import MeshedLineChart from "../../components/charts/MeshedLineChart";
 import axios from "axios";
 import { Loading } from "../../components/reusable";
 import { parseDate } from "../../lib/helpers";
+import { GeneralTable } from "../../components/charts";
+import { useQuery } from "@tanstack/react-query";
+import { getAdminResponseTracker, getResponseTracker } from "../../lib/service";
 
 const AdminTracker = () => {
   const [trackerData, setTrackerData] = useState(null);
   const [timeOfSub, setTimeOfSub] = useState(null);
   const [allTeamLeads, setAllTeamLeads] = useState(null);
+
+  // Query
+  const {
+    data: rtData,
+    isLoading: rtDataLoading,
+    isSuccess: rtSuccess,
+  } = useQuery({
+    queryKey: ["getAdminResponseTracker"],
+    queryFn: getAdminResponseTracker,
+  });
 
   let transChartTime = null;
 
@@ -103,7 +116,7 @@ const AdminTracker = () => {
             <Loading />
           </div>
         ) : (
-          <TrackerGrid data={trackerData.results} />
+          <GeneralTable data={rtData?.data.data} />
         )}
       </div>
 
