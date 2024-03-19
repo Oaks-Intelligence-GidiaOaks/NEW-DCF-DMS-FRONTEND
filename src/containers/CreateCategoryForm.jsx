@@ -10,8 +10,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { createCategory, getAllCountries } from "../lib/service";
 import { transformCountryFormData } from "../lib/utils";
 import { toast } from "react-toastify";
+import { useAuth } from "../context";
+import { RingsCircle } from "../components/reusable";
+import { queryClient } from "../App";
 
 const CreateCategoryForm = () => {
+  const { user } = useAuth();
+
   const {
     data: countries,
     isLoading,
@@ -22,16 +27,13 @@ const CreateCategoryForm = () => {
     queryFn: getAllCountries,
   });
 
-  const {
-    mutate,
-    isError: isCategoryError,
-    isLoading: isCategoryLooading,
-  } = useMutation({
+  const { mutate, isPending: isCategoryLooading } = useMutation({
     mutationKey: ["createCategory"],
     mutationFn: (catData) => createCategory(catData),
     onSuccess: (dt) => {
       toast.success(`Category Created SUccessfully`);
       clearFormFields();
+      queryClient.invalidateQueries({ queryKey: ["getCategoryByCountry"] });
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -39,7 +41,7 @@ const CreateCategoryForm = () => {
   });
 
   const [formFields, setFormFields] = useState({
-    country_id: "",
+    country_id: user.role === "SubAdmin" ? user.country : "",
     name: "",
     expected_inputs: [],
   });
@@ -58,7 +60,7 @@ const CreateCategoryForm = () => {
       ...formFields,
     };
 
-    console.log(categoryData);
+    console.log("categoryData", categoryData);
 
     if (isError) {
       return toast.error("Please fill all form fields");
@@ -73,7 +75,7 @@ const CreateCategoryForm = () => {
 
   const clearFormFields = () => {
     setFormFields({
-      country_id: "",
+      country_id: user.country,
       name: "",
       expected_inputs: [],
     });
@@ -86,22 +88,14 @@ const CreateCategoryForm = () => {
       </h2>
 
       <form action="" onSubmit={onSubmit}>
-        <select
-          onChange={(e) => handleChange(e.target.value, "country_id")}
-          placeholder="Choose country"
-          name=""
-          id=""
-          className="border active:outline-none w-full h-[40px] px-3 rounded-[5px]"
-        >
-          <option label="Choose country" />
-          {countryData?.map((item) => (
-            <option
-              key={item.value}
-              label={item.label}
-              value={item.value}
-            ></option>
-          ))}
-        </select>
+        {user.role === "SuperAdmin" && (
+          <FormInputDropDown
+            label="State"
+            data={countryData}
+            index="z-30"
+            onChange={(e) => handleChange(e, "country_id")}
+          />
+        )}
 
         <TextInput
           label={"Category Name"}
@@ -116,8 +110,19 @@ const CreateCategoryForm = () => {
           onChange={(e) => handleChange(e, "expected_inputs")}
         />
 
-        <button className="h-[54px] w-full my-[45px] text-center rounded-[5px] text-white bg-[#82B22E] font-[500] text-base leading-[24px]">
-          Create
+        <button
+          disabled={isCategoryLooading}
+          className={`  h-[54px] w-full my-[45px] text-center rounded-[5px] text-white ${
+            isCategoryLooading ? "bg-gray-400" : "bg-[#82B22E]"
+          }  font-[500] text-base leading-[24px]`}
+        >
+          {isCategoryLooading ? (
+            <div className="w-fit mx-auto">
+              <RingsCircle />
+            </div>
+          ) : (
+            "Create"
+          )}
         </button>
       </form>
     </div>

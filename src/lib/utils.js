@@ -1,8 +1,10 @@
 export const transformCategoryGridData = (data) => {
+  console.log(data, "bvdcgdvhb");
+
   const newData = data.map((item, index) => ({
     _id: item._id,
-    category_name: item.country.name,
-    input_name: item.expected_inputs,
+    "Category name": item.name,
+    "Expected Inputs": item.expected_inputs,
   }));
 
   return newData;

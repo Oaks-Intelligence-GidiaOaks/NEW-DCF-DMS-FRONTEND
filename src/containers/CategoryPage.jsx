@@ -26,7 +26,7 @@ const CategoryPage = ({
   //   queryFn: async () => await axios.get("category"),
   // });
 
-  const gridData = transformCategoryGridData(categoryData) || [];
+  const gridData = data?.length ? transformCategoryGridData(data) : [];
 
   const gridActions = {
     categoryGrid: [
@@ -56,14 +56,11 @@ const CategoryPage = ({
     true: <SkeletonLoaders count={3} />,
     false: (
       <GeneralTable
-        actions={gridActions["categoryGrid"]}
+        // actions={gridActions["categoryGrid"]}
         // commands={commands}
         data={gridData}
-        // pageSize={pageSize}
+        pageSize={30}
         title={tableTitle}
-        // flag={flag}
-        // handleQuery={handleQuery}
-        // handleSave={handleSave}
       />
     ),
   };

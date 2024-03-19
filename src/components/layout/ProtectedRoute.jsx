@@ -17,6 +17,8 @@ const ProtectedRoute = ({ component: Component, requiredRole }) => {
   const hasAccess =
     isLoggedIn && ACCESS_LEVELS[user.role] === ACCESS_LEVELS[requiredRole];
 
+  console.log("hasAccess", hasAccess);
+
   if (!hasAccess) {
     return <Navigate replace to={"/"} />;
   }

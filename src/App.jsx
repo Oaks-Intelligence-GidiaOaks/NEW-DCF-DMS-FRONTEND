@@ -30,6 +30,8 @@ import {
   TeamLeadProfile,
   History,
   AdminConfiguration,
+  AdminNewProduct,
+  AdminNewCategory,
 } from "./pages/admin";
 
 import TeamLead from "./components/layout/TeamLead";
@@ -115,6 +117,7 @@ function App() {
   //   (user.role === "admin" || user.role === "super_admin"  || user.role === "SuperAdmin");
 
   const adminRoleCheck = isLoggedIn && user && user.role === "SubAdmin";
+
   const superAdminRoleCheck = isLoggedIn && user && user.role === "SuperAdmin";
 
   return (
@@ -371,13 +374,42 @@ function App() {
           <Route
             path="/admin/configuration"
             element={
-              adminRoleCheck ? (
-                <Admin>
-                  <AdminConfiguration />
-                </Admin>
-              ) : (
-                <Navigate replace to={"/"} />
-              )
+              <ProtectedRoute
+                requiredRole="SubAdmin"
+                component={
+                  <Admin>
+                    <AdminConfiguration />
+                  </Admin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/admin/configuration/categories"
+            element={
+              <ProtectedRoute
+                requiredRole="SubAdmin"
+                component={
+                  <Admin>
+                    <AdminNewCategory />
+                  </Admin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/admin/configuration/products"
+            element={
+              <ProtectedRoute
+                requiredRole="SubAdmin"
+                component={
+                  <Admin>
+                    <AdminNewProduct />
+                  </Admin>
+                }
+              />
             }
           />
 
