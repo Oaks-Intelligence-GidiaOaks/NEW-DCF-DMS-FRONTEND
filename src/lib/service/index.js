@@ -261,7 +261,8 @@ export const getMasterDataByCountry = async (
   pageNo
 ) => {
   const data = await axios.get(
-    `master_list/${countryId}?startDateFilter=${startDate}&endDateFilter=${endDate}&page=${pageNo}`
+    // `master_list/${countryId}?startDateFilter=${startDate}&endDateFilter=${endDate}&page=${pageNo}`
+    `master_list/${countryId}`
   );
   return data;
 };
