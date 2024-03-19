@@ -75,7 +75,7 @@ function EnumeratorForm() {
   const enumeratorFormData = useQuery({
     queryKey: ["enumerator-form-data"],
     queryFn: async () => {
-      const res = await axios.get(`product/by_country/${user.country[0]}`);
+      const res = await axios.get(`product/by_country/${user.country}`);
       return res;
     },
     select: (data) => {
