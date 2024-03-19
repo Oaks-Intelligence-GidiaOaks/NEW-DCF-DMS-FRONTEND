@@ -247,14 +247,28 @@ export const deleteDistrict = async (districtId) => {
 // Form Submission
 
 // Master List
-export const getMasterDataByCountry = async (countryId) => {
-  const data = await axios.get(`master_list/${countryId}`);
+export const getMasterDataByCountry = async (
+  countryId,
+  startDate,
+  endDate,
+  pageNo
+) => {
+  const data = await axios.get(
+    `master_list/${countryId}?startDateFilter=${startDate}&endDateFilter=${endDate}&page=${pageNo}`
+  );
   return data;
 };
 
 // Team Lead Dashboard
 export const getTeamLeadSubmissionRate = async () => {
   const data = await axios.get(`team_lead_dashboard/submission_rate`);
+  return data;
+};
+
+export const getYearlyEnumerators = async (year) => {
+  const data = await axios.get(
+    `team_lead_dashboard/yearly_enumerators?yearFilter=${year}`
+  );
   return data;
 };
 
@@ -288,8 +302,31 @@ export const getProductDataByCountry = async (countryId) => {
   const data = await axios.get(`form_response/product/${countryId}`);
   return data;
 };
+
 export const getPrevProductDataByCountry = async (countryId) => {
   const data = await axios.get(`form_response/prev_product/${countryId}`);
+  return data;
+};
+
+export const getResponseTracker = async () => {
+  const data = await axios.get(`form_response/response_tracker`);
+  return data;
+};
+
+export const getSubmissionTime = async () => {
+  const data = await axios.get(`form_response/submission_time`);
+  return data;
+};
+
+export const approveFormResponse = async (ids) => {
+  const data = await axios.put(`form_response/approve_response`, ids);
+  return data;
+};
+
+export const getProductResponsesByCategory = async (categoryId) => {
+  const data = await axios.get(
+    `form_response/product/by_category/${categoryId}`
+  );
   return data;
 };
 

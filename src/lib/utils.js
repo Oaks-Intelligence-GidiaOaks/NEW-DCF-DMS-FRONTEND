@@ -36,6 +36,34 @@ export const transformSubAdminGridData = (data) => {
   return newData;
 };
 
+export const transformEnumeratorsGridData = (data) => {
+  const newData = data.map((item) => {
+    const {
+      identity_image_url,
+      photo_url,
+      role,
+      createdAt,
+      updatedAt,
+      firstUse,
+      disabled,
+      // states,
+      // districts,
+      ...rest
+    } = item;
+
+    const newD = {
+      ...rest,
+      states: rest.states.map((it) => it.name),
+      districts: rest.districts.map((it) => it.name),
+      country: rest.country?.name,
+    };
+
+    return newD;
+  });
+
+  return newData;
+};
+
 export const transformCountryFormData = (data) => {
   const newData = data.map((item) => ({
     label: item.name,
@@ -92,8 +120,6 @@ export const transformProductsGridData = (data) => {
     };
 
     return tData;
-
-    // console.log("tData", tData);
   });
 
   return newData;
@@ -138,6 +164,33 @@ export const transformProductsDataByCategory = (data) => {
 
   // console.log(categories, "from categries array");
   // console.log(productsByCategory, "products By Category");
+};
+
+export const transformProductGridData = (data) => {
+  const newData = data.map((item) => {
+    const inputs = item.inputs.reduce((acc, curr) => {
+      // change to value
+      acc[curr.title] = curr.input_type;
+
+      return acc;
+    }, {});
+
+    const tData = {
+      _id: item._id,
+      name: item.name,
+      ...inputs,
+      createdAt: item.createdAt,
+      created_by: item.created_by?.id,
+      district: item.district?.name,
+      flagged: item.flagged,
+    };
+
+    return tData;
+
+    // console.log("mu inputs", inputs);
+  });
+
+  return newData;
 };
 
 export const transformMasterGridData = (data) => {
@@ -196,12 +249,8 @@ const reduceProductsArrayToObject = (data) => {
       return { ...acc, ...objNew };
     }, {});
 
-    // console.log("new inputs", newInputs);
-
     transformedData.push(newInputs);
   });
-
-  // console.log("main transform", transformedData);
 
   return transformedData;
 };

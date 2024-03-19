@@ -4,11 +4,9 @@ import { IoMdArrowDropdown, IoMdArrowDropdownCircle } from "react-icons/io";
 import MetricsCard from "../../components/MetricsCard";
 import { SubmissionRateAdmin } from "../../components/charts";
 import CategoryRate from "../../components/charts/CategoryRate";
-import OaksSlider from "../../components/Slider";
-import axios from "axios";
 import { Loading, YearDropDown } from "../../components/reusable";
 import getCurrentYear from "../../lib/helpers";
-import { FluctuationRates } from "../../components/primitives";
+
 import { useQuery } from "@tanstack/react-query";
 import {
   getAllEnumerators,
@@ -20,6 +18,7 @@ import {
 import { queryClient } from "../../App";
 import { AddedRemovedChart } from "../../containers";
 import { MetricCard } from "../../components";
+import AddedRemovedChartTL from "../../containers/AddedRemovedTL";
 
 const Dashboard = () => {
   const {
@@ -71,9 +70,9 @@ const Dashboard = () => {
       }
     : null;
 
-  console.log("enumeratorsCount", enumeratorsCount);
-  console.log("districtsCount", districtsCount);
-  console.log("submissionsCount", srCount);
+  // console.log("enumeratorsCount", enumeratorsCount);
+  // console.log("districtsCount", districtsCount);
+  // console.log("submissionsCount", srCount);
 
   return (
     <div className="">
@@ -125,7 +124,7 @@ const Dashboard = () => {
           )}
         </div>
 
-        <AddedRemovedChart />
+        <AddedRemovedChartTL />
       </div>
     </div>
   );

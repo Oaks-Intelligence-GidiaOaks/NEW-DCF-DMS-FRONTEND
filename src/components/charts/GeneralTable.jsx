@@ -228,7 +228,7 @@ const GeneralTable = ({
           allowGrouping={true}
           allowTextWrap={true}
           textWrapSettings={{ wrapMode: "Content" }}
-          // height={380}
+          height={350}
           queryCellInfo={handleQuery}
           actionComplete={handleSave}
         >

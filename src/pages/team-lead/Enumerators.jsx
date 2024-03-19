@@ -6,6 +6,11 @@ import EnumeratorGrid from "../../components/grid/EnumeratorGrid";
 import { Loading, NoData } from "../../components/reusable";
 import { useQuery } from "@tanstack/react-query";
 import { getAllEnumerators } from "../../lib/service";
+import {
+  transformEnumeratorsGridData,
+  transformSubAdminGridData,
+} from "../../lib/utils";
+import { GeneralTable } from "../../components/charts";
 
 const Enumerators = () => {
   const [tableData, setTableData] = useState(null);
@@ -21,7 +26,9 @@ const Enumerators = () => {
   });
 
   // component variables
-  let enumData = enumSuccess ? enumerators.data.users : null;
+  let enumData = enumSuccess
+    ? transformEnumeratorsGridData(enumerators.data.users)
+    : null;
 
   let enumCount = enumSuccess
     ? {
@@ -48,7 +55,7 @@ const Enumerators = () => {
         </div>
 
         <div
-          // onClick={() => navigate("/add", { state: tableData })}
+          onClick={() => navigate("/add")}
           className="rounded bg-white border border-primary text-primary flex items-center p-3 gap-12 sm:ml-auto cursor-pointer sm:flex-initial xs:flex-1 xs:justify-between"
         >
           <p>Add new</p>
@@ -61,7 +68,7 @@ const Enumerators = () => {
         {enumLoading ? (
           <Loading />
         ) : enumData ? (
-          <EnumeratorGrid data={enumData} />
+          <GeneralTable pageSize={30} data={enumData} actions={[]} />
         ) : (
           <div className="h-32">
             <NoData text="You have no enumerators yet" />

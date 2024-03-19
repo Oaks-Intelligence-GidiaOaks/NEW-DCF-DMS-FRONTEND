@@ -4,183 +4,73 @@ import MasterGrid from "../../components/grid/MasterGrid";
 import axios from "axios";
 import { arrangeTime } from "../../lib/helpers";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
+import { useQuery } from "@tanstack/react-query";
+import { getMasterDataByCountry } from "../../lib/service";
+import { transformMasterGridData } from "../../lib/utils";
+import { GeneralTable } from "../../components/charts";
 
 const MasterList = () => {
-  const [masterList, setMasterList] = useState(null);
-  const [newMaster, setNewMaster] = useState(null);
+  const [countryId, setCountryId] = useState(`65e344bff0eab8c4f2552abe`);
+
   const [startDateValue, setStartDateValue] = useState("");
   const [endDateValue, setEndDateValue] = useState("");
-  let [totalDataCount, setTotalDataCount] = useState(null);
   let [pageNo, setPageNo] = useState(1);
 
-
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 7);
+
   const maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), 27);
 
+  const {
+    data: masterData,
+    isLoading: masterLoading,
+    isSuccess: masterSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["getMasterDataByCountry"],
+    queryFn: () =>
+      getMasterDataByCountry(countryId, startDateValue, endDateValue, pageNo),
+  });
+
   useEffect(() => {
-    try {
-      setMasterList(null);
-      setNewMaster(null);
-      axios
-        .get(
-          `form_response/master_list_data?startDateFilter=${startDateValue}&endDateFilter=${endDateValue}&page=${pageNo}`
-        )
-        .then((res) => {
-          setMasterList(res.data.forms);
-          setTotalDataCount(res.data.total);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.error(err);
-    }
+    refetch();
   }, [endDateValue, pageNo]);
 
-  useEffect(() => {
-    async function transformData() {
-      try {
-        let waitedData = await Promise.all(
-          masterList.map(async (master, i) => {
-            const {
-              foodItems,
-              others,
-              state: State,
-              transports,
-              electricity,
-              lga: LGA,
-              accomodations,
-              clothings,
-              created_by,
-              updated_at,
-              _id,
-            } = master;
+  // component variables
+  let mGridData = masterSuccess
+    ? transformMasterGridData(masterData.data.data)
+    : null;
 
-            const foodObj = await foodItems
-              ?.map((food, i) => ({
-                [`Price of ${food?.name}`]:
-                  food?.price === "0" ? "N/A" : food?.price,
-                [`Brand of ${food?.name}`]:
-                  food?.brand < 1 ? "N/A" : food?.brand,
-                [`Size of ${food?.name}`]: food?.size,
-              }))
-              ?.reduce((acc, obj) => {
-                return {
-                  ...acc,
-                  ...obj,
-                };
-              }, {});
+  console.log("master data", mGridData);
 
-            const clothingsObj = await clothings
-              ?.map((cloth, i) => ({
-                [`Cloth category`]: cloth?.category,
-                [`Cloth subcategory`]: cloth?.sub_category,
-                [`Cloth size`]: cloth?.size,
-                [`Cloth Price`]: cloth?.price === 0 ? "N/A" : cloth?.price,
-              }))
-              ?.reduce((acc, obj) => {
-                return {
-                  ...acc,
-                  ...obj,
-                };
-              }, {});
+  // let paginationItems =
+  //   totalDataCount &&
+  //   masterList &&
+  //   Math.floor(totalDataCount / masterList.length);
 
-            const accObj = await accomodations
-              ?.map((acc, i) => ({
-                [`${acc?.rooms} room`]:
-                  acc?.price === "0" ? "N/A" : `${acc?.price} (${acc?.type})`,
-              }))
-              ?.reduce((acc, obj) => {
-                return { ...acc, ...obj };
-              }, {});
+  // let PageNumbers = ({ totalPages, currentPage, onPageChange }) => {
+  //   let numArr = [];
 
-            const transportObj = await transports
-              ?.map((transport, i) => ({
-                [`Route ${i + 1}`]: transport?.route,
-                [`Mode ${i + 1}`]: transport?.mode,
-                [`Route ${i + 1} cost`]: transport?.cost,
-              }))
-              ?.reduce((acc, obj) => {
-                return { ...acc, ...obj };
-              }, {});
+  //   for (let i = 0; i < paginationItems; i++) {
+  //     numArr.push(i + 1);
+  //   }
 
-            const electricityObj =
-              electricity.length > 0 &&
-              (await electricity?.reduce((acc, obj) => {
-                return { ...acc, ...obj };
-              }, {}));
-
-            const othersObj = await others
-              ?.map((item, i) => ({
-                [`Price of ${item?.name}`]: item.price ?? "N/A",
-                [`Brand of ${item?.name}`]:
-                  item?.brand?.length < 1 ? "N/A" : item?.brand,
-                [`Size of ${item.name}`]: item?.size ?? "N/A",
-              }))
-              ?.reduce((acc, obj) => {
-                return { ...acc, ...obj };
-              }, {});
-
-            const transformedObj = {
-              // S_N: i + 1,
-              _id,
-              Date: arrangeTime(updated_at),
-              ID: created_by?.id,
-              State,
-              LGA,
-              Food: "food",
-              ...foodObj,
-              Transport: "transport",
-              ...transportObj,
-              Accomodation: "accomodation",
-              ...accObj,
-              Clothing: "Clothing",
-              ...clothingsObj,
-              Electricity: "electricity",
-              ...electricityObj,
-              Others: "commodities",
-              ...othersObj,
-            };
-
-            return transformedObj;
-          })
-        );
-
-        setNewMaster(waitedData);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    masterList ? transformData() : null;
-  }, [masterList]);
-
-  let paginationItems =
-    totalDataCount &&
-    masterList &&
-    Math.floor(totalDataCount / masterList.length);
-
-  let PageNumbers = ({ totalPages, currentPage, onPageChange }) => {
-    let numArr = [];
-
-    for (let i = 0; i < paginationItems; i++) {
-      numArr.push(i + 1);
-    }
-
-    return (
-      <div className="flex flex-wrap space-x-2">
-        {numArr.length > 0 &&
-          numArr.map((singleNo) => (
-            <button
-              className={`grid place-items-center my-1 text-xs text-gray-800 h-5 w-5  rounded-full ${singleNo === pageNo ? "bg-oaksgreen text-white" : "bg-gray-200"
-                } `}
-              key={singleNo}
-              onClick={() => setPageNo(singleNo)}
-            >
-              <span>{singleNo}</span>
-            </button>
-          ))}
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="flex flex-wrap space-x-2">
+  //       {numArr.length > 0 &&
+  //         numArr.map((singleNo) => (
+  //           <button
+  //             className={`grid place-items-center my-1 text-xs text-gray-800 h-5 w-5  rounded-full ${
+  //               singleNo === pageNo ? "bg-oaksgreen text-white" : "bg-gray-200"
+  //             } `}
+  //             key={singleNo}
+  //             onClick={() => setPageNo(singleNo)}
+  //           >
+  //             <span>{singleNo}</span>
+  //           </button>
+  //         ))}
+  //     </div>
+  //   );
+  // };
 
   const handleStartDateChange = (args) => {
     let formatDate = new Date(args.value).toISOString().split("T")[0];
@@ -229,7 +119,7 @@ const MasterList = () => {
             <DatePickerComponent
               change={handleEndDateChange}
               id="datepicker"
-            // value={endDateValue}
+              // value={endDateValue}
             />
           </div>
         </div>
@@ -237,9 +127,11 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <MasterGrid data={newMaster ?? newMaster} />
+        <GeneralTable pageSize={115} data={mGridData} />
         <div className="p-2 border ">
-          <div className="ml-auto flex items-center">{<PageNumbers />}</div>
+          <div className="ml-auto flex items-center">
+            {/* {<PageNumbers />} */}
+          </div>
         </div>
       </div>
     </div>

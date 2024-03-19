@@ -8,101 +8,110 @@ import { Download, ClearOutlined } from "@mui/icons-material";
 import { useAuth } from "../../context";
 import { Loading } from "../../components/reusable";
 import { ClipLoader } from "react-spinners";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  approveFormResponse,
+  getResponseTracker,
+  getSubmissionTime,
+} from "../../lib/service";
+import { GeneralTable } from "../../components/charts";
 
 const Tracker = () => {
   const {
     user: { token },
   } = useAuth();
-  const [trackerData, setTrackerData] = useState(null);
+
+  // mutation
+  const { mutate, isLoading: mtLoading } = useMutation({
+    mutationKey: ["approveFormResponse"],
+    mutationFn: (dt) => approveFormResponse(dt),
+    onSuccess: (sx) => {
+      setShowModal(false);
+      toast.success(sx.data.message);
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
+  // query
+  const {
+    data: rtData,
+    isLoading: rtDataLoading,
+    isSuccess: rtSuccess,
+  } = useQuery({
+    queryKey: ["getResponseTracker"],
+    queryFn: getResponseTracker,
+  });
+
+  const {
+    data: stData,
+    isLoading: stLoading,
+    isSuccess: stSuccess,
+  } = useQuery({
+    queryKey: ["getSubmissionTime"],
+    queryFn: getSubmissionTime,
+  });
+
+  // component variables
+  let trackerData = rtSuccess
+    ? {
+        enumerators: rtData.data.data,
+        totalEnumerators: rtData.data.totalEnumerators,
+        totalSubmission: rtData.data.totalSubmission,
+      }
+    : null;
+
+  let submissionTimeData = stSuccess ? {} : null;
+
+  console.log("sub time", stData?.data);
+
   const [timeOfSub, setTimeOfSub] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-
-  // console.log(trackerData);
 
   let submitted = trackerData && trackerData.totalSubmision;
 
   let noResponse =
     trackerData && trackerData.totalEnumerators - trackerData.totalSubmision;
 
-  if (timeOfSub) {
-    
-  }
+  // if (timeOfSub) {
+  // }
 
-  let firstChart = timeOfSub && timeOfSub.slice(0, 10);
-  let secondChart =
-    timeOfSub && timeOfSub.length > 10 && timeOfSub.slice(10, 20);
-  let thirdChart =
-    timeOfSub && timeOfSub.length > 20 && timeOfSub.slice(20, 30);
-  let fourthChart = timeOfSub && timeOfSub.length > 30 && timeOfSub.slice(30);
+  // let firstChart = timeOfSub && timeOfSub.slice(0, 10);
+  // let secondChart =
+  //   timeOfSub && timeOfSub.length > 10 && timeOfSub.slice(10, 20);
+  // let thirdChart =
+  //   timeOfSub && timeOfSub.length > 20 && timeOfSub.slice(20, 30);
+  // let fourthChart = timeOfSub && timeOfSub.length > 30 && timeOfSub.slice(30);
 
-  const handleSubmit = () => {
-    let data = trackerData.results;
+  const handleSubmit = async () => {
+    let data = trackerData.enumerators;
 
+    const formattedData = data
+      .filter((value) => value.form_id)
+      .map((val) => val.form_id);
 
-    const formattedData = data.filter((value) => value.form_id).map((val) => val.form_id );
-  
+    console.log("formattedData", formattedData);
 
-    try {
-      setIsLoading(true);
-      axios
-        .post(
-          "form_response/approve_response",
-          { ids: formattedData },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
-        .then((data) => {
-          console.log(data);
-          const message = data.data.message;
-          console.log('Success:', message);
-          toast.success("Data submitted successfully");
-        })
-        .catch((error) => {
-          if (error.response.status === 500) {
-            toast.error("You have already submitted your data.");
-          } else {
-            toast.error(error.response.data || error.response.statusText);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-      setShowModal(false);
-    }
+    await mutate({ ids: formattedData });
   };
-
-  useEffect(() => {
-    axios
-      .get("form_response/response_tracker")
-      .then((res) => setTrackerData(res.data))
-      .catch((err) => console.log(err));
-
-    axios
-      .get("form_response/submission_time")
-      .then((res) => setTimeOfSub(res.data))
-      .catch((err) => console.error(err));
-  }, []);
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6 relative">
       <div className="flex items-center flex-wrap gap-3">
         <div className="rounded bg-primary p-3 flex items-center justify-between  xs:flex-1 md:flex-initial gap-6 xs:gap-16 shrink-0 text-xs">
           <p className="text-white">Submitted</p>
-          <p className="rounded p-1 text-primary bg-white">{submitted}</p>
+          <p className="rounded p-1 text-primary bg-white">
+            {trackerData?.totalSubmission}
+          </p>
         </div>
 
         <div className="flex p-3 lg:ml-8 items-center gap-6 w-fit rounded bg-white">
           <p className="">No response</p>
           <p className="text-primary p-1 bg-gray-200 rounded text-sm">
-            {noResponse}
+            {trackerData?.totalEnumerators - trackerData?.totalSubmission}
           </p>
         </div>
       </div>
@@ -150,35 +159,36 @@ const Tracker = () => {
         {!trackerData ? (
           <Loading />
         ) : (
-          <TrackerGrid data={trackerData.results} />
+          <GeneralTable data={trackerData?.enumerators} />
         )}
       </div>
 
       {/* chart */}
       <div className="p-3 flex flex-col lg:flex-row lg:overflow-x-auto gap-3 rounded-xl drop-shadow-lg ">
-        {firstChart && (
+        {/* {firstChart && (
           <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
             <MeshedLineChart data={firstChart} />
           </div>
-        )}
+        )} */}
 
-        {secondChart && (
+        {/* {secondChart && (
           <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
             <MeshedLineChart data={secondChart} />
           </div>
-        )}
+        )} */}
 
+        {/* 
         {thirdChart && (
           <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
             <MeshedLineChart data={thirdChart} />
           </div>
-        )}
+        )} */}
 
-        {fourthChart && (
+        {/* {fourthChart && (
           <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
             <MeshedLineChart data={fourthChart} />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
