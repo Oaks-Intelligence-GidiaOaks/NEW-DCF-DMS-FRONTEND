@@ -39,7 +39,7 @@ export const transformSubAdminGridData = (data) => {
 };
 
 export const transformEnumeratorsGridData = (data) => {
-  const newData = data.map((item) => {
+  const newData = data?.map((item) => {
     const {
       identity_image_url,
       photo_url,
@@ -138,13 +138,15 @@ export const transformProductsGridData = (data) => {
       return acc;
     });
 
+    console.log("check here", item);
+
     const tData = {
-      category: item.category.name,
-      product: item.product.name,
-      district: item.district.name,
-      state: item.state.name,
-      created_by: item.created_by.first_name + item.created_by.last_name,
-      flagged: item.flagged,
+      category: item?.category?.name,
+      product: item?.product?.name,
+      district: item?.district?.name,
+      state: item?.state?.name,
+      created_by: item?.created_by?.first_name + item?.created_by?.last_name,
+      flagged: item?.flagged,
 
       ...inputs,
     };

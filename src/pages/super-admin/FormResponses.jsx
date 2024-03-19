@@ -70,6 +70,10 @@ const FormResponses = () => {
 
   console.log("prod by cat", productsByCategory);
 
+  if (true) {
+    return <div>Form Responses Super Admin</div>;
+  }
+
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
       <div className="flex items-center gap-3 flex-wrap">
@@ -107,7 +111,7 @@ const FormResponses = () => {
             onClick={() => setActiveTab(it._id)}
           >
             <CategoryTab
-              text={it.name}
+              text={it?.name}
               Icon={Restaurant}
               activeTab={activeTab}
             />
