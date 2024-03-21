@@ -15,7 +15,7 @@ const FormMultipleSelect = ({
   index,
   onChange,
   defaultValue,
-  ref,
+  reff,
 }) => {
   const [value, setValue] = useState(defaultValue ?? []);
 
@@ -32,7 +32,7 @@ const FormMultipleSelect = ({
         className={`w-full ${index} bg-white text-xs rounded drop-shadow-sm`}
       >
         <Select
-          ref={ref}
+          ref={reff}
           isMulti
           options={data}
           value={value}

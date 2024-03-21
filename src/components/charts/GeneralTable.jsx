@@ -29,6 +29,7 @@ const GeneralTable = ({
   commands,
   handleQuery,
   handleSave,
+  height = 350,
 }) => {
   if (!data) return;
   const masterRow = data;
@@ -228,7 +229,7 @@ const GeneralTable = ({
           allowGrouping={true}
           allowTextWrap={true}
           textWrapSettings={{ wrapMode: "Content" }}
-          // height={380}
+          height={height}
           queryCellInfo={handleQuery}
           actionComplete={handleSave}
         >

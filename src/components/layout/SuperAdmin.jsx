@@ -16,7 +16,7 @@ const SuperAdmin = ({ children }) => {
 
       <div className="flex-1 flex-col overflow-y-scroll">
         <TopBar />
-        <ToastContainer />
+        {/* <ToastContainer /> */}
 
         {/* main content */}
         <div className=" z-10 px-3 relative">{children}</div>

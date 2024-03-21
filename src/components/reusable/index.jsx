@@ -10,3 +10,4 @@ export { default as CustomInput } from "./CustomInput";
 
 export { default as SkeletonLoaders } from "./SkeletonLoaders";
 export { default as BackButton } from "./BackButton";
+export { default as CountCard } from "./CountCard";

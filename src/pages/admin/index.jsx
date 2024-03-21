@@ -10,3 +10,5 @@ export { default as AddTeamLead } from "./AddTeamLead";
 export { default as TeamLeadProfile } from "./TeamLeadProfile";
 export { default as History } from "./History";
 export { default as AdminConfiguration } from "./Configuration";
+export { default as AdminNewCategory } from "./NewCategory";
+export { default as AdminNewProduct } from "./NewProduct";

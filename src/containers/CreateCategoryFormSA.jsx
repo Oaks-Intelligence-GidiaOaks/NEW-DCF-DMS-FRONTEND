@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  FormInput,
-  FormInputDropDown,
-  TagsInput,
-  TextInput,
-} from "../components/form";
-import { useController, useForm } from "react-hook-form";
+import React, { useRef, useState } from "react";
+import { FormInputDropDown, TagsInput, TextInput } from "../components/form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createCategory, getAllCountries } from "../lib/service";
 import { transformCountryFormData } from "../lib/utils";
@@ -14,8 +8,11 @@ import { useAuth } from "../context";
 import { RingsCircle } from "../components/reusable";
 import { queryClient } from "../App";
 
-const CreateCategoryForm = () => {
+const CreateCategoryFormSA = () => {
   const { user } = useAuth();
+
+  const countryRef = useRef();
+  const tagsRef = useRef();
 
   const {
     data: countries,
@@ -41,7 +38,7 @@ const CreateCategoryForm = () => {
   });
 
   const [formFields, setFormFields] = useState({
-    country_id: user.role === "SubAdmin" ? user.country : "",
+    country_id: "",
     name: "",
     expected_inputs: [],
   });
@@ -60,8 +57,6 @@ const CreateCategoryForm = () => {
       ...formFields,
     };
 
-    console.log("categoryData", categoryData);
-
     if (isError) {
       return toast.error("Please fill all form fields");
     }
@@ -75,10 +70,12 @@ const CreateCategoryForm = () => {
 
   const clearFormFields = () => {
     setFormFields({
-      country_id: user.country,
+      country_id: "",
       name: "",
       expected_inputs: [],
     });
+
+    countryRef.current.setValue("");
   };
 
   return (
@@ -90,7 +87,8 @@ const CreateCategoryForm = () => {
       <form action="" onSubmit={onSubmit}>
         {user.role === "SuperAdmin" && (
           <FormInputDropDown
-            label="State"
+            reff={countryRef}
+            label="Country *"
             data={countryData}
             index="z-30"
             onChange={(e) => handleChange(e, "country_id")}
@@ -129,4 +127,4 @@ const CreateCategoryForm = () => {
   );
 };
 
-export default CreateCategoryForm;
+export default CreateCategoryFormSA;

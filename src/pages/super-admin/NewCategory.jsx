@@ -1,17 +1,38 @@
-import React from "react";
-import { CreateCategoryForm } from "../../containers";
-import { IoIosArrowBack } from "react-icons/io";
-import { BackButton } from "../../components/reusable";
+import React, { useEffect, useState } from "react";
+import { BackButton, CountCard } from "../../components/reusable";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getCategoryByCountry } from "../../lib/service";
+import CreateCategoryFormSA from "../../containers/CreateCategoryFormSA";
 
 const NewCategory = () => {
+  const [countryId, setCountryId] = useState(null);
+
+  const {
+    data: categoryData,
+    isLoading: catLoading,
+    isSuccess: catSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["getCategoryByCountry"],
+    queryFn: () => getCategoryByCountry(countryId),
+    enabled: !!countryId,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [countryId, refetch]);
+
+  let catCount = catSuccess ? categoryData?.data.data.length : 0;
+
   return (
-    <div className="pt-[40px] md:pl-[70px]">
+    <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
       <div className="flex justify-between items-center">
-        <button className="h-[48px] px-[22px] gap-6 flex items-center bg-white font-[500] text-xs leading-[18px]">
-          <span className="">Total Categories</span>
-          <span>78</span>
-        </button>
+        <CountCard
+          count={catCount}
+          text="Total Categories"
+          styles=" bg-white"
+        />
 
         <Link to="/super_admin/configuration">
           <BackButton />
@@ -19,7 +40,7 @@ const NewCategory = () => {
       </div>
 
       <div className="">
-        <CreateCategoryForm />
+        <CreateCategoryFormSA />
       </div>
     </div>
   );

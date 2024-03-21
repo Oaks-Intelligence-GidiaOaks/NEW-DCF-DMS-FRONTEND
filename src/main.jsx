@@ -7,6 +7,7 @@ import { registerLicense } from "@syncfusion/ej2-base";
 import { AuthProvider, AppProvider } from "./context";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ToastContainer } from "react-toastify";
 
 // register syncfusion lincense
 registerLicense(
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <AuthProvider>
         <AppProvider>
           <App />
+          {/* <ToastContainer /> */}
         </AppProvider>
       </AuthProvider>
     </Router>

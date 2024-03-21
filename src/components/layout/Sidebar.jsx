@@ -51,7 +51,7 @@ const Sidebar = () => {
           <div className="flex items-start ">
             <img
               src={
-                user.avatar.url ||
+                user.photo_url ||
                 `https://res.cloudinary.com/emmaotuonye1/image/upload/v1687122736/avatars/cmogk2u8cxngvjcenow2.png`
               }
               className="h-10 w-10 border rounded-full mr-2"
@@ -102,24 +102,6 @@ const Sidebar = () => {
 
           <LogoutButton />
         </div>
-
-        {/* recent activities */}
-        {/* <div className="mt-auto pb-2 h-56 flex flex-col ">
-          <p className="mb-3 font-bold">Recent Actvities</p>
-
-          <div
-            className="space-y-3 overflow-y-scroll scrollbar-hidee text-xs "
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            <RecentActivity key="1" Icon={user} />
-            <RecentActivity key="2" Icon={user} />
-            <RecentActivity key="3" Icon={user} />
-            <RecentActivity key="4" Icon={user} />
-            <RecentActivity key="5" Icon={user} />
-            <RecentActivity key="6" Icon={user} />
-            <RecentActivity key="7" Icon={user} />
-          </div>
-        </div> */}
       </div>
     </div>
   );

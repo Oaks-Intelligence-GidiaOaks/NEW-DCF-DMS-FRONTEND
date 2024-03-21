@@ -4,24 +4,86 @@ import {
   FormInputDropDown,
   FormInputNumber,
   FormMultipleSelect,
+  TextInput,
 } from "../../components/form";
 import { IdTypes } from "../../data/form/others";
 import axios from "axios";
 import { useAuth } from "../../context";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RingsCircle } from "../../components/reusable";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  createUser,
+  getAllEnumerators,
+  getAllStates,
+  getMyProfile,
+} from "../../lib/service";
+import { toast } from "react-toastify";
 
 const AddEnumerator = () => {
   const { user } = useAuth();
+
+  const statesInputRef = useRef();
+  const districtsInputRef = useRef();
+  const idInputRef = useRef();
+
+  const {
+    data: enumerators,
+    isLoading: enumLoading,
+    isSUccess: enumSuccess,
+  } = useQuery({
+    queryKey: ["getAllEnumerators"],
+    queryFn: getMyProfile,
+  });
+
+  // replace with get user states
+  const {
+    data: profile,
+    isLoading: prLoading,
+    isSUccess: prSuccess,
+  } = useQuery({
+    queryKey: ["getMyProfile"],
+    queryFn: getMyProfile,
+  });
+
+  const { mutate, isPending: mutateLoading } = useMutation({
+    mutationKey: ["createUser"],
+    mutationFn: (data) => createUser(data),
+    onSuccess: (sx) => {
+      toast.success(sx.data.message);
+      // clear form
+      resetForm();
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
+  // component variables
+  let enumCount = enumSuccess && {
+    totalEnumerators: enumerators.data.totalEnumerators,
+    newlyAdded: enumerators.data.newlyAdded,
+  };
+
   const navigate = useNavigate();
-  const location = useLocation();
   const ref = useRef(null);
 
-  let totalEnumerators = location.state?.totalEnumerators;
-  let recentlyAdded = location.state?.newlyAdded;
+  console.log("profile user", profile?.data.user);
 
-  const teamLeadStates = user.states.map((st) => ({ label: st, value: st }));
-  const teamLeadLgas = user.LGA.map((st) => ({ label: st, value: st }));
+  // replace with get user states query
+  let teamLeadStates = profile?.data.user.states.map((st) => ({
+    label: st.name,
+    value: st._id,
+  }));
+
+  // replace with get user districts query
+  let teamLeadLgas = profile?.data.user.districts.map((st) => ({
+    label: st.name,
+    value: st._id,
+  }));
+
+  console.log("get team lead lgas", teamLeadLgas);
+  console.log("get team lead lgas", teamLeadStates);
 
   const [formFields, setFormFields] = useState({
     firstName: "",
@@ -38,11 +100,6 @@ const AddEnumerator = () => {
   const [image, setImage] = useState(null);
   const [fileDataUrl, setFileDataUrl] = useState(null);
   const imageMimeType = /image\/(png|jpg|jpeg)/i;
-
-  const [userCreated, setUserCreated] = useState(false);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
- 
 
   useEffect(() => {
     let fileReader,
@@ -77,18 +134,19 @@ const AddEnumerator = () => {
     setLga([]);
     setImage(null);
     setFileDataUrl(null);
-    setIsLoading(false);
-    ref.current.value = ""
+    ref.current.value = "";
+    statesInputRef.current.setValue([]);
+    districtsInputRef.current.setValue([]);
+    idInputRef.current.setValue("");
     navigate("/add");
   };
 
   const handleStateChange = (selectedValue) => {
-    setState(selectedValue);
+    setState([selectedValue]);
     setLga(null);
   };
 
   const handleLgaChange = (selectedValue) => {
-
     setLga(selectedValue.map((item) => item.value));
   };
 
@@ -107,7 +165,7 @@ const AddEnumerator = () => {
     setImage(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { firstName, lastName, email, tel, idNo, idType } = formFields;
@@ -123,7 +181,7 @@ const AddEnumerator = () => {
       !state ||
       !lga
     ) {
-      setError("Error in form fields, please input all fields");
+      toast.error("Error in form fields, please input all fields");
 
       return;
     }
@@ -142,37 +200,20 @@ const AddEnumerator = () => {
 
     let bodyFormData = new FormData();
 
-    bodyFormData.append("firstName", newUser.firstName);
-    bodyFormData.append("lastName", newUser.lastName);
+    bodyFormData.append("first_name", newUser.firstName);
+    bodyFormData.append("last_name", newUser.lastName);
     bodyFormData.append("email", newUser.email);
-    bodyFormData.append("phoneNumber", newUser.phoneNumber);
+    bodyFormData.append("phone_number", newUser.phoneNumber);
     bodyFormData.append("identityType", newUser.identityType);
-    bodyFormData.append("identity", newUser.identity);
-    bodyFormData.append("state", newUser.state);
-    // bodyFormData.append("LGA", newUser.LGA);
-    bodyFormData.append("identityImage", newUser.identityImage);
-    newUser.LGA?.map((item) => bodyFormData.append("LGA", `${item}`));
+    bodyFormData.append("identity_number", newUser.identity);
+    bodyFormData.append("states", newUser.state);
+    bodyFormData.append("identity_image_url", newUser.identityImage);
+    bodyFormData.append("role", "Enumerator");
+    bodyFormData.append("country", user.country);
 
-    // console.log("clicked submit");
+    newUser.LGA?.map((item) => bodyFormData.append("districts", `${item}`));
 
-    setIsLoading(true);
-    axios
-      .post(`enumerator/new`, bodyFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setUserCreated(true);
-        resetForm();
-      })
-      .catch((err) => {
-        const error = err.response?.data?.message  || err.message;
-        setIsLoading(false);
-        setUserCreated(false);
-        setError(error);
-        
-      });
+    await mutate(bodyFormData);
   };
 
   return (
@@ -180,13 +221,15 @@ const AddEnumerator = () => {
       <div className="flex items-center gap-3">
         <div className="flex items-center text-xs gap-6 bg-white p-2 rounded">
           <p>Total Enumerators</p>
-          <p className="p-2 bg-gray-100 rounded">{totalEnumerators}</p>
+          <p className="p-2 bg-gray-100 rounded">
+            {enumCount?.totalEnumerators}
+          </p>
         </div>
 
         {/* recently added */}
         <div className="flex items-center text-xs gap-6 bg-white p-2 rounded">
           <p>Recently added</p>
-          <p className="p-2 bg-gray-100 rounded">{recentlyAdded}</p>
+          <p className="p-2 bg-gray-100 rounded">{enumCount?.newlyAdded}</p>
         </div>
       </div>
 
@@ -195,7 +238,7 @@ const AddEnumerator = () => {
       </div>
 
       <form action="" className="lg:w-5/6" onSubmit={handleSubmit}>
-        <FormInput
+        <TextInput
           placeholder="First name"
           label="First name"
           value={formFields.firstName}
@@ -204,7 +247,7 @@ const AddEnumerator = () => {
           }
         />
 
-        <FormInput
+        <TextInput
           placeholder="Last name"
           label="Last name"
           value={formFields.lastName}
@@ -233,6 +276,7 @@ const AddEnumerator = () => {
         />
 
         <FormInputDropDown
+          reff={statesInputRef}
           label="State"
           data={teamLeadStates}
           index="z-30"
@@ -240,13 +284,15 @@ const AddEnumerator = () => {
         />
 
         <FormMultipleSelect
-          label="LGA"
+          reff={districtsInputRef}
+          label="Districts"
           onChange={handleLgaChange}
           data={teamLeadLgas}
           index="z-20"
         />
 
         <FormInputDropDown
+          reff={idInputRef}
           label="Identification(ID) type"
           data={IdTypes}
           index="z-10"
@@ -282,39 +328,14 @@ const AddEnumerator = () => {
           )}
         </div>
 
-        {error && (
-          <p className="p-2 my-3 flex items-center justify-between rounded bg-gray-200">
-            <span className="text-red-500 text-xs">{error}</span>
-
-            <span
-              onClick={() => setError(false)}
-              className="rounded-full w-6 h-6 cursor-pointer text-center bg-white "
-            >
-              x
-            </span>
-          </p>
-        )}
-
-        {userCreated && (
-          <p className="p-2 my-3 flex items-center justify-between rounded bg-green-500">
-            <span className="text-white text-xs">
-              Enumerator created successfully..
-            </span>
-
-            <span
-              onClick={() => setUserCreated(false)}
-              className="rounded-full w-6 h-6 text-center bg-white "
-            >
-              x
-            </span>
-          </p>
-        )}
-
         <button
+          disabled={mutateLoading}
           type="submit"
-          className="w-full mt-4 grid place-items-center text-white p-3 rounded bg-oaksgreen"
+          className={`w-full mt-4 grid place-items-center text-white p-3 rounded  ${
+            mutateLoading ? "bg-gray-400" : "bg-oaksgreen"
+          } `}
         >
-          {isLoading ? <RingsCircle /> : `Submit`}
+          {mutateLoading ? <RingsCircle /> : `Submit`}
         </button>
       </form>
     </div>
