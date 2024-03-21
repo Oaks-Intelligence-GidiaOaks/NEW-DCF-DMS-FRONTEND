@@ -56,8 +56,7 @@ const CategoryPage = ({
     true: <SkeletonLoaders count={3} />,
     false: (
       <GeneralTable
-        // actions={gridActions["categoryGrid"]}
-        // commands={commands}
+        height={200}
         data={gridData}
         pageSize={30}
         title={tableTitle}
@@ -67,12 +66,7 @@ const CategoryPage = ({
 
   return (
     <div className=" px-3 md:px-7 pt-[35px]">
-      <div className="flex justify-between">
-        <button className=" px-5 border border-[#FFAD10] flex items-center gap-6">
-          <span>Recently added</span>
-          <span>52</span>
-        </button>
-
+      <div className="flex items-center justify-between flex-wrap gap-2 xs:text-[10px]">
         <Link to={categoryPath}>
           <button className="border border-[#82B22E] flex items-center py-3 px-5 rounded-[5px] gap-6">
             <span>Add new Category</span>
@@ -80,17 +74,17 @@ const CategoryPage = ({
             <TiPlus color="#82B22E" />
           </button>
         </Link>
+
+        <Link className="ml-auto" to={productPath}>
+          <button className="px-5 flex items-center py-3 border bg-white rounded-[5px] gap-6">
+            <span>Add new Product</span>
+
+            <TiPlus color="black" />
+          </button>
+        </Link>
       </div>
 
-      <Link to={productPath}>
-        <button className="px-5 ml-auto mt-3 flex items-center py-3 border bg-white rounded-[5px] gap-6">
-          <span>Add new Product</span>
-
-          <TiPlus color="black" />
-        </button>
-      </Link>
-
-      <div>
+      <div className="mt-6">
         {/* table */}
         {/* {activeState[categoryData.isLoading]} */}
         {activeState[false]}

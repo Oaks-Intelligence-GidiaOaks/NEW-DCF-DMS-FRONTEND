@@ -63,6 +63,7 @@ import {
 } from "./pages/super-admin";
 import SuperAdmin from "./components/layout/SuperAdmin";
 import { ProtectedRoute } from "./components/layout";
+import { ToastContainer } from "react-toastify";
 
 export const queryClient = new QueryClient();
 
@@ -123,6 +124,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="h-screen">
+        <ToastContainer />
         <Routes>
           <Route
             path="/"

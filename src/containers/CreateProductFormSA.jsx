@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FormDropdown,
   FormInput,
@@ -15,8 +15,18 @@ import { transformCategoryFormData } from "../lib/utils";
 import FormProductInputs from "./FormProductInputs";
 import { toast } from "react-toastify";
 
-const CreateProductForm = ({ countryData }) => {
-  const { user } = useAuth();
+const CreateProductFormSA = ({ countryData }) => {
+  const [formFields, setFormFields] = useState({
+    country_id: "",
+    category_id: "",
+    name: "",
+    inputs: [],
+  });
+
+  const countryInputRef = useRef();
+  const categoryInputRef = useRef();
+  const titleInputRef = useRef();
+  const typesInputRef = useRef();
 
   const { mutate, isPending: mtPending } = useMutation({
     mutationKey: ["createProduct"],
@@ -24,6 +34,7 @@ const CreateProductForm = ({ countryData }) => {
     onSuccess: (sx) => {
       toast.success(`Product created succesfuuly`);
       clearFormFields();
+      location.reload();
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -34,25 +45,22 @@ const CreateProductForm = ({ countryData }) => {
     data: catByCountry,
     isLoading: catLoading,
     isSuccess: catSuccess,
+    refetch,
   } = useQuery({
     queryKey: ["getCategoryByCountry"],
-    queryFn: () => getCategoryByCountry(user.country),
-    enabled: !!user.country,
+    queryFn: () => getCategoryByCountry(formFields.country_id),
+    enabled: formFields.country_id.length > 0,
   });
 
-  const [formFields, setFormFields] = useState({
-    country_id: user.country,
-    category_id: "",
-    name: "",
-    inputs: [],
-  });
+  useEffect(() => {
+    refetch();
+  }, [refetch, formFields.country_id]);
 
   // component variables
-  const categoryInputRef = useRef();
-
   const [allExpectedInputs, setAllExpectedInputs] = useState();
   const [expectedInputs, setExpectedInputs] = useState([]);
   const [categories, setCategories] = useState(null);
+
   let caInputData =
     catSuccess &&
     catByCountry?.data?.data?.map((it) => ({ label: it.name, value: it._id }));
@@ -81,17 +89,20 @@ const CreateProductForm = ({ countryData }) => {
     setFormFields({ ...formFields, inputs: newInputs });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     // e.preventDefault();
 
     const mutationData = {
       ...formFields,
     };
 
+    console.log("mutation data", mutationData);
+
     const isError = Object.values(formFields).filter((it) => !it.length).length;
 
     if (isError) {
       console.log(isError, "isError");
+
       return toast.error(`Please fill all inputs`);
     }
 
@@ -101,12 +112,13 @@ const CreateProductForm = ({ countryData }) => {
 
   const clearFormFields = () => {
     setFormFields({
-      country_id: user.country,
+      country_id: "",
       category_id: "",
       name: "",
       inputs: [],
     });
 
+    countryInputRef.current.setValue("");
     categoryInputRef.current.setValue("");
   };
 
@@ -121,19 +133,9 @@ const CreateProductForm = ({ countryData }) => {
   };
 
   const handleCountryChange = async (val) => {
-    const { data: categoryByCountry } = await user.country(val);
-
-    const tData = transformCategoryFormData(
-      categoryByCountry.data.length ? categoryByCountry.data : []
-    );
-
-    console.log(tData);
-
-    setCategories(tData.categoryIds);
-    setAllExpectedInputs(tData.expectedInputs);
+    categoryInputRef.current.setValue("");
 
     setFormFields({ ...formFields, country_id: val, category_id: "" });
-    // clearInputs();
   };
 
   const handleCategoryChange = async (val) => {
@@ -150,7 +152,20 @@ const CreateProductForm = ({ countryData }) => {
     <div className="font-poppins">
       <h2 className="text-[20px] font-[500]  pb-4">Create New Product</h2>
 
-      <div className="mt-4 md:w-3/5 xl:w-2/3 space-y-4">
+      <div
+        // action=""
+        // onSubmit={handleSubmit}
+        className="mt-4 md:w-3/5 xl:w-2/3 space-y-4"
+      >
+        <FormInputDropDown
+          reff={countryInputRef}
+          placeholder={"Choose country"}
+          data={countryData}
+          value={formFields.country_id}
+          onChange={(e) => handleChange(e, "country_id")}
+          label={"Country"}
+        />
+
         <FormInputDropDown
           reff={categoryInputRef}
           placeholder={"Choose category"}
@@ -188,8 +203,6 @@ const CreateProductForm = ({ countryData }) => {
                     );
 
                     setFormFields({ ...formFields, inputs: newInputs });
-
-                    // console.log("row clicked", row);
                   },
                 }}
                 data={formFields.inputs}
@@ -200,7 +213,10 @@ const CreateProductForm = ({ countryData }) => {
 
         <button
           onClick={handleSubmit}
-          className="h-[54px] my-[45px] rounded-[5px] text-center bg-[#82B22E] font-[500] text-base text-white w-full leading-[24px]"
+          disabled={mtPending}
+          className={`h-[54px] my-[45px] rounded-[5px] text-center ${
+            mtPending ? "bg-gray-400" : "bg-[#82B22E]"
+          }  font-[500] text-base text-white w-full leading-[24px]`}
         >
           Create
         </button>
@@ -209,4 +225,4 @@ const CreateProductForm = ({ countryData }) => {
   );
 };
 
-export default CreateProductForm;
+export default CreateProductFormSA;

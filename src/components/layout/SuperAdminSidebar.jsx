@@ -1,6 +1,6 @@
 import React from "react";
 import right from "../../assets/icons/right.svg";
-import user from "../../assets/icons/user.svg";
+// import user from "../../assets/icons/user.svg";
 
 import SidebarItem from "./SidebarItem";
 import RecentActivity from "../RecentActivity";
@@ -19,7 +19,7 @@ import { FaCrown } from "react-icons/fa";
 import { MdOutlineCollectionsBookmark } from "react-icons/md";
 
 const SuperAdminSidebar = () => {
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const { setCurrentPage, sidebarShown, setSidebarShown } = useApp();
 
   const activeStyle = "bg-gray-200 p-3 mt-3";
@@ -40,8 +40,8 @@ const SuperAdminSidebar = () => {
     >
       <div className="ml-10 flex flex-col h-full">
         <p className="mt-2 capitalize p-1 px-2 text-white bg-oaksgreen w-fit flex items-center gap-2 rounded">
-          {/* {user?.role === "admin" ? <MdAdminPanelSettings /> : <FaCrown />} */}
-          {/* {user.role.replace("_", " ")} */}
+          {user?.role === "SubAdmin" ? <MdAdminPanelSettings /> : <FaCrown />}
+          {user.role.replace("_", " ")}
         </p>
 
         <NavLink
@@ -63,10 +63,9 @@ const SuperAdminSidebar = () => {
 
             <div className="text-[12px] p-1">
               <p className="text-[16px]">
-                {/* {user.firstName + " " + user.lastName} */}
-                Emmanuel Otu
+                {user.first_name + " " + user.last_name}
               </p>
-              <span>7654689</span>
+              <span>{user.id}</span>
             </div>
 
             <img src={right} alt="" className="ml-auto p-2 rounded" />

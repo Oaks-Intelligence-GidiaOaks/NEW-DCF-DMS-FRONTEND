@@ -1,8 +1,6 @@
 import React from "react";
-import { CreateProductForm } from "../../containers";
-import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { BackButton } from "../../components/reusable";
+import { BackButton, CountCard } from "../../components/reusable";
 import { useQuery } from "@tanstack/react-query";
 import {
   getAllCategory,
@@ -10,14 +8,10 @@ import {
   getAllProduct,
 } from "../../lib/service";
 import { transformCountryFormData } from "../../lib/utils";
+import CreateProductFormSA from "../../containers/CreateProductFormSA";
 
 const NewProduct = () => {
-  const {
-    data: countryData,
-    isLoading: countryLoading,
-    isSuccess: isCountrySuccess,
-    isError: isCountryError,
-  } = useQuery({
+  const { data: countryData, isSuccess: isCountrySuccess } = useQuery({
     queryKey: ["getAllCountries"],
     queryFn: getAllCountries,
   });
@@ -32,12 +26,7 @@ const NewProduct = () => {
     queryFn: getAllCategory,
   });
 
-  const {
-    data: allProducts,
-    isLoading: isProdLoading,
-    isSuccess: isProdSuccess,
-    isError: isProdError,
-  } = useQuery({
+  const { data: allProducts } = useQuery({
     queryKey: ["getAllProduct"],
     queryFn: getAllProduct,
   });
@@ -53,24 +42,26 @@ const NewProduct = () => {
     : [];
 
   return (
-    <div className="pt-[40px] md:pl-[70px] ">
-      <div className="flex items-center flex-wrap gap-7 mb-[36px]">
-        <button className="h-[48px] px-[22px] gap-6 flex items-center bg-white font-[500] text-xs leading-[18px]">
-          <span className="">Total Categories</span>
-          <span>{categoriesCount}</span>
-        </button>
+    <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
+      <div className="flex items-center flex-wrap gap-2 xs:text-[10px]">
+        <CountCard
+          count={categoriesCount}
+          text="Total Categories"
+          styles=" bg-white"
+        />
 
-        <button className="h-[48px] px-[22px] gap-6 flex items-center bg-white font-[500] text-xs leading-[18px]">
-          <span className="">Total Products</span>
-          <span>{productsCount}</span>
-        </button>
+        <CountCard
+          count={productsCount}
+          text="Total Products"
+          styles=" bg-white"
+        />
 
-        <Link to="/super_admin/configuration">
+        <Link className="md:ml-auto" to="/super_admin/configuration">
           <BackButton />
         </Link>
       </div>
 
-      <CreateProductForm countryData={transCountryData} />
+      <CreateProductFormSA countryData={transCountryData} />
     </div>
   );
 };

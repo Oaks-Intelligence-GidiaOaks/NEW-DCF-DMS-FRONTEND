@@ -1,28 +1,26 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BackButton, CountCard } from "../../components/reusable";
 import { Link } from "react-router-dom";
 import {
   FormInput,
   FormInputDropDown,
+  FormInputNumber,
   FormMultipleSelect,
+  TextInput,
 } from "../../components/form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { createUser, getAllCountries, getAllSubAdmin } from "../../lib/service";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import { ClipLoader } from "react-spinners";
 import { transformCountryFormData } from "../../lib/utils";
 import axios from "axios";
 import { IdTypes } from "../../data/form/others";
+import { EditNote } from "@mui/icons-material";
 
 const NewSubAdmin = () => {
   // tanstack
-  const {
-    data: countries,
-    isLoading,
-    isError,
-    isSuccess: isCountryQuerySuccess,
-  } = useQuery({
+  const { data: countries, isSuccess: isCountryQuerySuccess } = useQuery({
     queryKey: ["getAllCountries"],
     queryFn: getAllCountries,
   });
@@ -32,32 +30,29 @@ const NewSubAdmin = () => {
     queryFn: getAllSubAdmin,
   });
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      role: "SubAdmin",
-      country: "",
-      phone_number: "",
-      identity_number: "",
-      identity_document: "",
-      profile_image: "",
+  const { mutate, mtPending: mtPending } = useMutation({
+    mutationFn: (formData) => createUser(formData),
+    onSuccess: () => {
+      toast.success(`created sub admin successfully..`);
+      clearFormFields();
+      location.reload();
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
     },
   });
 
   const [formFields, setFormFields] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    role: "SubAdmin",
     country: "",
+    phone_number: "",
+    identity_number: "",
+    identity_document: "",
     states: [],
     districts: [],
-    identity_document: "",
-    profile_image: "",
     identityType: "",
   });
 
@@ -66,6 +61,7 @@ const NewSubAdmin = () => {
   const stateRef = useRef("");
   const districtsRef = useRef("");
   const identityRef = useRef("");
+  const ref = useRef(null);
 
   // all component variables
   const [statesData, setStatesData] = useState([]);
@@ -73,55 +69,71 @@ const NewSubAdmin = () => {
 
   const totalAdmins = subAdmins?.data ? subAdmins.data.totalSubAdmin : 0;
   const newAdmins = subAdmins?.data ? subAdmins.data.newlyAdded : 0;
-  const isBtnActive = Object.keys(errors).length < 1;
+  const imageMimeType = /image\/(png|jpg|jpeg)/i;
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    let fileReader,
+      isCancel = false;
+
+    if (image) {
+      fileReader = new FileReader();
+
+      fileReader.onload = (e) => {
+        const { result } = e.target;
+
+        if (result && !isCancel) {
+          setFormFields({
+            ...formFields,
+            identity_document: result,
+          });
+        }
+      };
+
+      fileReader.readAsDataURL(image);
+    }
+  }, [image]);
+
   let countryData = isCountryQuerySuccess
     ? transformCountryFormData(countries.data.data)
     : [];
 
-  const {
-    mutate,
-    isPending,
-    isSuccess: isMutateSuccess,
-  } = useMutation({
-    mutationFn: (formData) => createUser(formData),
-    onSuccess: () => {
-      toast.success(`created sub admin successfully..`);
-      reset();
-    },
-    onError: (ex) => {
-      toast.error(ex.message);
-    },
-  });
-
   const clearFormFields = () => {
     setFormFields({
+      first_name: "",
+      last_name: "",
+      email: "",
+      role: "SubAdmin",
       country: "",
+      phone_number: "",
+      identity_number: "",
+      identity_document: "",
       states: [],
       districts: [],
-      identity_document: "",
-      profile_image: "",
       identityType: "",
     });
 
+    setImage(null);
     countryRef.current.setValue([]);
     stateRef.current.setValue([]);
     districtsRef.current.setValue([]);
     identityRef.current.clearValue();
   };
 
-  const onSubmit = async (data) => {
-    // const isError = Object.values(formFields).filter((it) => !it.length);
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-    // if (isError) {
-    //   console.log(isError);
-    //   return toast.error(`Please fill all inputs`);
-    // }
+    const isError = Object.values(formFields).filter((it) => !it.length).length;
 
     const mutationData = {
-      ...data,
       ...formFields,
     };
 
+    // console.log(mutationData, "mutationData");
+
+    if (isError) {
+      return toast.error(`Please fill all inputs`);
+    }
     const formData = new FormData();
 
     formData.append("country", mutationData.country);
@@ -132,18 +144,13 @@ const NewSubAdmin = () => {
     formData.append("identity_document", mutationData.identity_document);
     formData.append("identity_number", mutationData.identity_number);
     formData.append("phone_number", mutationData.phone_number);
-    formData.append("profile_image", mutationData.profile_image);
     formData.append("role", mutationData.role);
 
     mutationData.states.forEach((st) => formData.append("states", st));
+
     mutationData.districts.forEach((dst) => formData.append("districts", dst));
 
-    try {
-      await mutate(formData);
-      clearFormFields();
-    } catch (ex) {
-      console.log("error");
-    }
+    await mutate(formData);
   };
 
   const handleChange = (val, fieldName) => {
@@ -184,6 +191,17 @@ const NewSubAdmin = () => {
     setFormFields({ ...formFields, districts: tData });
   };
 
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+
+    if (!file.type.match(imageMimeType)) {
+      alert("image mime type is not valid");
+      return;
+    }
+
+    setImage(file);
+  };
+
   return (
     <div className="mx-2 lg:mx-[50px] my-[30px] font-poppins">
       {/*  */}
@@ -212,101 +230,100 @@ const NewSubAdmin = () => {
           Create New Sub Admin Profile
         </h3>
 
-        <form action="" onSubmit={handleSubmit(onSubmit)} className="lg:w-3/5">
+        <form action="" onSubmit={onSubmit} className="lg:w-3/5">
           {/* image upload input */}
 
-          <FormInput
-            formProps={register("first_name", {
-              required: "First name is required",
-            })}
-            errorMessage={errors.first_name?.message}
+          <TextInput
+            onChange={(e) => handleChange(e.target.value, "first_name")}
+            value={formFields.first_name}
             label="First name"
             placeholder="First name"
           />
 
-          <FormInput
+          <TextInput
             label="Last name"
-            placeholder="First name"
-            formProps={register("last_name", {
-              required: "Last name is reqiuired",
-            })}
-            errorMessage={errors.last_name?.message}
+            placeholder="Last name"
+            value={formFields.last_name}
+            onChange={(e) => handleChange(e.target.value, "last_name")}
           />
 
           <FormInput
-            formProps={register("email", {
-              required: "email is reqiuired",
-            })}
-            errorMessage={errors.email?.message}
             label="Email address"
             placeholder="Email"
             type="email"
+            value={formFields.email}
+            onChange={(e) => handleChange(e.target.value, "email")}
           />
 
-          <FormInput
-            formProps={register("phone_number", {
-              required: "contact number is reqiuired",
-            })}
-            errorMessage={errors.phone_number?.message}
+          <FormInputNumber
             label="Contact number *"
             placeholder="Contact number"
+            value={formFields.phone_number}
+            onChange={(e) => handleChange(e.target.value, "phone_number")}
           />
 
-          <div className="z-[99]">
-            <FormInputDropDown
-              reff={countryRef}
-              label="Country *"
-              data={countryData}
-              onChange={(e) => handleChange(e, "country")}
-            />
-          </div>
+          <FormInputDropDown
+            reff={countryRef}
+            label="Country *"
+            data={countryData}
+            onChange={(e) => handleChange(e, "country")}
+          />
 
-          <div className="z-40">
-            <FormMultipleSelect
-              reff={stateRef}
-              label="State *"
-              data={statesData}
-              onChange={(e) => handleChange(e, "states")}
-            />
-          </div>
+          <FormMultipleSelect
+            reff={stateRef}
+            label="State *"
+            data={statesData}
+            onChange={(e) => handleChange(e, "states")}
+          />
 
-          <div className="z-30">
-            <FormMultipleSelect
-              reff={districtsRef}
-              label="Districts *"
-              data={districtsData}
-              onChange={(e) => handleChange(e, "districts")}
-            />
-          </div>
+          <FormMultipleSelect
+            reff={districtsRef}
+            label="Districts *"
+            data={districtsData}
+            onChange={(e) => handleChange(e, "districts")}
+          />
 
-          <div className="z-20">
-            <FormInputDropDown
-              reff={identityRef}
-              label="Identification(ID) type "
-              data={IdTypes}
-              onChange={(e) => handleChange(e, "identityType")}
-            />
-          </div>
+          <FormInputDropDown
+            reff={identityRef}
+            label="Identification(ID) type "
+            data={IdTypes}
+            onChange={(e) => handleChange(e, "identityType")}
+          />
 
           {/* upload id preview */}
           <div className=""></div>
 
-          <FormInput
-            formProps={register("identity_number", {
-              required: "identity number is reqiuired",
-            })}
-            errorMessage={errors.identity_number?.message}
+          <FormInputNumber
+            value={formFields.identity_number}
+            onChange={(e) => handleChange(e.target.value, "identity_number")}
             label="Identification(ID) number"
             placeholder="ID number"
           />
 
+          <input
+            type="file"
+            name=""
+            id=""
+            ref={ref}
+            onChange={handleImageSelect}
+            accept="image/*"
+          />
+
+          <div className="h-24 w-full rounded-lg bg-white drop-shadow-md">
+            {formFields.identity_document && (
+              <img
+                src={formFields.identity_document}
+                alt="file data url"
+                className="h-full w-full bg-black"
+              />
+            )}
+          </div>
+
           <button
-            disabled={!isBtnActive || isPending}
-            className={`h-[54px] mt-[42px] w-full text-center text-white bg-oaksgreen  rounded-[5px]
-            ${!isBtnActive && " !cursoor-not-allowed !bg-gray-200"}
-            `}
+            disabled={mtPending}
+            className={`h-[54px] mt-[42px] w-full text-center text-white bg-oaksgreen  rounded-[5px]`}
           >
-            {isPending ? (
+            {mtPending ? (
               <ClipLoader size={20} color="#fff" />
             ) : (
               <span>Submit</span>

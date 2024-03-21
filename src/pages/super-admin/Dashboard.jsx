@@ -1,24 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { IoMdArrowDropdown, IoMdArrowDropdownCircle } from "react-icons/io";
-
-import MetricsCard from "../../components/MetricsCard";
-import { SubmissionRateAdmin } from "../../components/charts";
-import CategoryRate from "../../components/charts/CategoryRate";
-import OaksSlider from "../../components/Slider";
-import axios from "axios";
-import { Loading, YearDropDown } from "../../components/reusable";
-import getCurrentYear from "../../lib/helpers";
-import { FluctuationRates } from "../../components/primitives";
+import { Loading } from "../../components/reusable";
 import { useQuery } from "@tanstack/react-query";
 import {
   getAllEnumerators,
   getAllSubAdmin,
   getDistrictsCount,
-  getEnumeratorCount,
   getSubmissionCount,
   getTeamLeadsCount,
 } from "../../lib/service";
-import { queryClient } from "../../App";
 import { AddedRemovedChart } from "../../containers";
 import { MetricCard } from "../../components";
 
@@ -33,21 +21,21 @@ const Dashboard = () => {
   });
 
   const {
-    data: allEnumerators,
-    isLoading: loadingEnumerators,
-    isSuccess: successEnumerators,
-  } = useQuery({
-    queryKey: ["getAllEnumerators"],
-    queryFn: getAllEnumerators,
-  });
-
-  const {
     data: allTeamLeads,
     isLoading: loadingTeamLeads,
     isSuccess: successTeamLeads,
   } = useQuery({
     queryKey: ["getTeamLeadsCount"],
     queryFn: getTeamLeadsCount,
+  });
+
+  const {
+    data: allEnumerators,
+    isLoading: loadingEnumerators,
+    isSuccess: successEnumerators,
+  } = useQuery({
+    queryKey: ["getAllEnumerators"],
+    queryFn: getAllEnumerators,
   });
 
   const {
@@ -93,12 +81,6 @@ const Dashboard = () => {
   let districtsCount = districtsSuccess ? {} : null;
   let submissionsCount = srSuccess ? {} : null;
 
-  console.log("subadmin", subAdminsCount);
-  console.log("enumeratorsCount", enumeratorsCount);
-  console.log("teamLeadsCount", teamLeadsCount);
-  console.log("districtsCount", districtsCount);
-  console.log("submissionsCount", submissionsCount);
-
   return (
     <div className="">
       <div className="mx-auto  mt-8 pb-4 md:w-[]">
@@ -121,9 +103,9 @@ const Dashboard = () => {
           {submissionRate ? (
             <MetricCard
               leadText="Team Leads"
-              leadCount={teamLeadsCount.totalTeamLead}
+              leadCount={teamLeadsCount?.totalTeamLead}
               subText="Newly Added"
-              subCount={teamLeadsCount.newlyAdded}
+              subCount={teamLeadsCount?.newlyAdded}
               legendOne="Total"
               legendTwo="Newly added"
             />
@@ -151,8 +133,6 @@ const Dashboard = () => {
 
         <AddedRemovedChart />
       </div>
-
-      {/* <FluctuationRates admin /> */}
     </div>
   );
 };

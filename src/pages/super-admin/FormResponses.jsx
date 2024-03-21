@@ -11,31 +11,22 @@ import {
   Download,
 } from "@mui/icons-material";
 
-import { FoodGrid } from "../../components/grid";
-import OaksSlider from "../../components/Slider";
-import axios from "axios";
-import { Loading } from "../../components/reusable";
+import { Loading, NoData } from "../../components/reusable";
 import { useQuery } from "@tanstack/react-query";
-import { queryClient } from "../../App";
-import { GeneralTable } from "../../components/charts";
-import { FormDropdown } from "../../components/form";
+import { FormInputDropDown } from "../../components/form";
 import {
+  getAllCategory,
   getAllCountries,
-  getPrevProductDataByCountry,
-  getProductDataByCountry,
+  getCategoryByCountry,
+  getSubmissionCount,
 } from "../../lib/service";
-import {
-  transformCountryFormData,
-  transformProductsDataByCategory,
-  transformProductsGridData,
-} from "../../lib/utils";
+import { transformCountryFormData } from "../../lib/utils";
+import { ProductsByCategoryTable } from "../../containers";
 
 const FormResponses = () => {
   const [activeTab, setActiveTab] = useState(null);
   const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552abe");
-
-  // SA
-  // const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552ac5");
+  const [categoryId, setCategoryId] = useState(null);
 
   // styles
   const activeStyle = "bg-oaksgreen text-white";
@@ -46,33 +37,42 @@ const FormResponses = () => {
     queryFn: getAllCountries,
   });
 
-  const { data: productData, isSuccess: pdSuccess } = useQuery({
-    queryKey: ["getProductDataByCountry"],
-    queryFn: () => getProductDataByCountry(countryId),
+  const {
+    data: categoryData,
+    isLoading: catLoading,
+    isSuccess: catSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["getCategoryByCountry"],
+    queryFn: () => getCategoryByCountry(countryId),
+    enabled: !!countryId,
   });
 
-  // const { data: prevProductData, isSuccess: prevPdSuccess } = useQuery({
-  //   queryKey: ["getProductDataByCountry"],
-  //   queryFn: () => getPrevProductDataByCountry(countryId),
-  // });
+  useEffect(() => {
+    refetch();
+  }, [countryId, refetch]);
 
+  // component variables
   let countriesData = cSuccess
     ? transformCountryFormData(countries.data.data)
     : [];
 
-  let productsData = pdSuccess
-    ? transformProductsGridData(productData.data.data)
-    : [];
+  let categories = catSuccess
+    ? categoryData.data.data.map((it) => ({
+        name: it.name,
+        _id: it._id,
+        country: it.country._id,
+      }))
+    : null;
 
-  let productsByCategory = pdSuccess
-    ? transformProductsDataByCategory(productData.data.data)
-    : [];
+  const handleCountryChange = (e) => {
+    console.log("country value", e);
+    setCountryId(e);
+  };
 
-  console.log("prod by cat", productsByCategory);
-
-  if (true) {
-    return <div>Form Responses Super Admin</div>;
-  }
+  const handleCategoryClick = (id) => {
+    setCategoryId(id);
+  };
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
@@ -93,48 +93,41 @@ const FormResponses = () => {
         </div>
       </div>
 
-      <div className="w-fit border">
-        <FormDropdown
-          onChange={(e) => setCountryId(e.target.value)}
+      <div className="w-[230px]">
+        <FormInputDropDown
+          onChange={handleCountryChange}
           label="Select country"
           data={countriesData}
         />
       </div>
 
-      <OaksSlider slideDefault={5} break1={3} break2={2} break3={2}>
-        {productsByCategory.categories?.map((it, i) => (
+      {/* categories */}
+      <div className="flex items-center gap-2 overflow-x-scroll metrics-scrollbar">
+        {categories?.map((it, i) => (
           <div
             key={i}
-            className={`rounded w-fit mr-3 ${
-              activeTab === it._id ? "bg-oaksgreen text-white" : "bg-white"
+            className={`rounded ${
+              categoryId === it._id ? activeStyle : nonActiveStyle
             }`}
-            onClick={() => setActiveTab(it._id)}
+            onClick={() => handleCategoryClick(it._id)}
           >
-            <CategoryTab
-              text={it?.name}
-              Icon={Restaurant}
-              activeTab={activeTab}
-            />
+            <CategoryTab text={it.name} Icon={Home} activeTab={activeTab} />
           </div>
         ))}
-      </OaksSlider>
+      </div>
 
+      {/* table */}
       <div className="bg-white h-80 w-full">
-        {false ? (
+        {!categoryId ? (
+          <div className="h-32">
+            <NoData text="No Catgeory Selected" />
+          </div>
+        ) : catLoading ? (
           <div className="h-32">
             <Loading />
           </div>
         ) : (
-          <>
-            <GeneralTable
-              avgData={productsByCategory.productsByCategory}
-              data={
-                activeTab
-                  ? productsByCategory.productsByCategory[activeTab]
-                  : []
-              }
-            />
-          </>
+          <ProductsByCategoryTable categoryId={categoryId} />
         )}
       </div>
     </div>

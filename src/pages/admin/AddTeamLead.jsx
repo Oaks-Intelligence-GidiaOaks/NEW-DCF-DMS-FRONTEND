@@ -34,13 +34,13 @@ const AddTeamLead = () => {
   const [file, setFile] = useState(null);
   const [identityImage, setIdentityImage] = useState(null);
 
-  const { mutate, isLoading: mutateLoading } = useMutation({
+  const { mutate, isPending: mutateLoading } = useMutation({
     mutationKey: ["createUser"],
     mutationFn: (data) => createUser(data),
     onSuccess: (sx) => {
       toast.success(sx.data.message);
-      // clear form
       resetForm();
+      // location.reload();
     },
     onError: (ex) => {
       toast.error(ex.message);

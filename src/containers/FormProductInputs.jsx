@@ -1,19 +1,33 @@
-import React, { useState } from "react";
-import { FormDropdown, TagsInput } from "../components/form";
+import React, { useRef, useState } from "react";
+import { FormDropdown, FormInputDropDown, TagsInput } from "../components/form";
 
 import productInputs from "../data/form/productInputs.json";
+import { toast } from "react-toastify";
 
 const FormProductInputs = ({ onAddInput, expectedInputs }) => {
   const [inputs, setInputs] = useState({
     title: "",
     input_type: "",
+    options: [],
   });
 
+  const titleRef = useRef();
+  const typeRef = useRef();
+
   const clearInputs = () => {
-    setInputs({ title: "", input_type: "" });
+    setInputs({ title: "", input_type: "", options: [] });
+
+    titleRef.current.setValue("");
+    typeRef.current.setValue("");
   };
 
   const addInput = (inputObj) => {
+    console.log(inputObj.title.length, "inpinrns");
+
+    if (inputObj.title?.length < 1 || inputObj.input_type?.length < 1) {
+      return toast.error(`Please complete input fields`);
+    }
+
     clearInputs();
     onAddInput(inputObj);
   };
@@ -24,26 +38,28 @@ const FormProductInputs = ({ onAddInput, expectedInputs }) => {
 
   return (
     <div className="space-y-4">
-      <FormDropdown
+      <FormInputDropDown
+        reff={titleRef}
         label={"Input Title"}
         value={inputs.input_title}
-        onChange={(e) => handleInputChange(e.target.value, "title")}
+        onChange={(e) => handleInputChange(e, "title")}
         placeholder="select input title"
         data={expectedInputs}
       />
 
-      <FormDropdown
+      <FormInputDropDown
+        reff={typeRef}
         label={"Input Type"}
         value={inputs.input_type}
-        onChange={(e) => handleInputChange(e.target.value, "input_type")}
+        onChange={(e) => handleInputChange(e, "input_type")}
         placeholder="select input type"
         data={productInputs}
       />
 
       <TagsInput
         defaultValue={[]}
-        onChange={(val) => handleInputChange(val)}
-        disabled={true}
+        onChange={(val) => handleInputChange(val, "options")}
+        disabled={inputs.input_type !== "dropdown"}
         label={"Option(s)"}
       />
 

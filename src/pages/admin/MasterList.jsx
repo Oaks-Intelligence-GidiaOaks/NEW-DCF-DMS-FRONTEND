@@ -16,16 +16,9 @@ import { GeneralTable } from "../../components/charts";
 const MasterList = () => {
   const { user } = useAuth();
 
-  const [masterList, setMasterList] = useState(null);
-  const [newMaster, setNewMaster] = useState(null);
   const [startDateValue, setStartDateValue] = useState("");
-  const [endDateValue, setEndDateValue] = useState("");
-  let [totalDataCount, setTotalDataCount] = useState(null);
   let [pageNo, setPageNo] = useState(1);
-
-  const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 7);
-
-  const maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), 27);
+  const [endDateValue, setEndDateValue] = useState("");
 
   const {
     data: masterData,
@@ -47,16 +40,24 @@ const MasterList = () => {
     refetch();
   }, [endDateValue, pageNo]);
 
+  // component variables
+  const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 7);
+
+  const maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), 27);
+
   let mGridData = masterSuccess
     ? transformMasterGridData(masterData.data.data)
     : null;
 
+  let totalDataCount = mGridData?.length;
+
+  console.log(totalDataCount, "totalDataCount");
   console.log("mGridData", mGridData);
 
   let paginationItems =
     totalDataCount &&
-    masterList &&
-    Math.floor(totalDataCount / masterList.length);
+    mGridData &&
+    Math.floor(totalDataCount / mGridData.length);
 
   let PageNumbers = ({ totalPages, currentPage, onPageChange }) => {
     let numArr = [];
@@ -95,9 +96,9 @@ const MasterList = () => {
     setEndDateValue(`${formatDate}`);
   };
 
-  const handlePageNumberChange = (no) => {
-    setPageNo(no);
-  };
+  // const handlePageNumberChange = (no) => {
+  //   setPageNo(no);
+  // };
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-3">
@@ -133,11 +134,9 @@ const MasterList = () => {
       <div className="bg-white h-80 w-full text-[6px]">
         <GeneralTable pageSize={115} data={mGridData} />
 
-        {/* <div className="p-2 border ">
-          <div className="ml-auto flex items-center">{<PageNumbers />}
-          
-          </div>
-        </div> */}
+        <div className="p-2 border ">
+          <div className="ml-auto flex items-center">{<PageNumbers />}</div>
+        </div>
       </div>
     </div>
   );

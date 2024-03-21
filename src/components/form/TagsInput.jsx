@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useController } from "react-hook-form";
 import { IoCloseSharp } from "react-icons/io5";
-// import { FaPlus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { CiCirclePlus } from "react-icons/ci";
 
 const TagsInput = ({ label, disabled, defaultValue = [], onChange }) => {
   const [value, setValue] = useState("");
@@ -65,10 +66,10 @@ const TagsInput = ({ label, disabled, defaultValue = [], onChange }) => {
         </div>
 
         <div
-          className="h-[24px] w-[24px] ml-auto border border-red-500"
+          className="h-[26px] w-[26px] ml-auto"
           onClick={() => addTag(value)}
         >
-          {/* <FaPlus /> */}
+          <CiCirclePlus size={26} />
         </div>
       </div>
     </div>

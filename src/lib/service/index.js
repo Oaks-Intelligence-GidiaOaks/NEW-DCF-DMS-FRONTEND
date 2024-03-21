@@ -256,14 +256,30 @@ export const deleteDistrict = async (districtId) => {
 // Master List
 export const getMasterDataByCountry = async (
   countryId,
-  startDate,
-  endDate,
-  pageNo
+  startDate = null,
+  endDate = null,
+  pageNo = null
 ) => {
-  const data = await axios.get(
-    // `master_list/${countryId}?startDateFilter=${startDate}&endDateFilter=${endDate}&page=${pageNo}`
-    `master_list/${countryId}`
-  );
+  const urlParams = new URLSearchParams();
+
+  if (startDate) {
+    urlParams.append("startDateFilter", startDate);
+  }
+
+  if (endDate) {
+    urlParams.append("endDateFilter", endDate);
+  }
+
+  // if (pageNo) {
+  //   urlParams.append("page", pageNo);
+  // }
+
+  // const url = `master_list/${countryId}?${urlParams.toString()}`;
+  const url = `master_list/${countryId}`;
+
+  console.log("url", url);
+
+  const data = await axios.get(url);
   return data;
 };
 

@@ -19,7 +19,6 @@ const TextInput = ({
       readOnly={readOnly}
       className="p-3 active:outline-none border-none outline-none rounded bg-white drop-shadow-sm text-gray-500"
     />
-    {/* <span className="text-[10px] text-red-300">{errorMessage}</span> */}
   </div>
 );
 

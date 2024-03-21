@@ -1,7 +1,6 @@
 import React from "react";
 import { CountCard } from "../../components/reusable";
 import { GeneralTable } from "../../components/charts";
-import subAdminsData from "../../data/grid/subAdminData.json";
 import { transformSubAdminGridData } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -18,8 +17,6 @@ const SubAdmins = () => {
     queryKey: ["getAllSubAdmin"],
     queryFn: getAllSubAdmin,
   });
-
-  // console.log(subAdmins.data.totalSubAdmin);
 
   const tableActions = [
     {
@@ -45,9 +42,9 @@ const SubAdmins = () => {
   ];
 
   return (
-    <div>
+    <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
       {/* headers */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-[30px] w-full">
+      <div className="flex items-center flex-wrap gap-2 xs:text-[10px]">
         <CountCard
           text="Total Sub Admin"
           styles=" bg-[#FFAD10] text-white"

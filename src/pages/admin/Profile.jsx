@@ -4,23 +4,43 @@ import { FormInput } from "../../components/form";
 import { useAuth } from "../../context";
 import axios from "axios";
 import { Rings } from "react-loader-spinner";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getMyProfile, updateMyProfile } from "../../lib/service";
+import { toast } from "react-toastify";
+import { SkeletonLoaders } from "../../components/reusable";
 
 const Profile = () => {
-  const { user } = useAuth();
   const avaterRef = useRef(null);
 
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [email, setEmail] = useState(user.email);
-  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  const { mutate, isPending: mtPending } = useMutation({
+    mutationKey: ["updateMyProfile"],
+    mutationFn: (dt) => updateMyProfile(dt),
+    onSuccess: (sx) => {
+      toast.success(`Successfullu updated user profile`);
+    },
+  });
+
+  const {
+    data: profile,
+    isLoading: prLoading,
+    isSuccess: prSuccess,
+  } = useQuery({
+    queryKey: ["getMyProfile"],
+    queryFn: getMyProfile,
+  });
+
+  // component variables
+  let user = profile?.data.user;
+
+  const [firstName, setFirstName] = useState(user?.first_name);
+  const [lastName, setLastName] = useState(user?.last_name);
+  const [email, setEmail] = useState(user?.email);
+  const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(
-    user.avatar.url ||
+    user?.photo_url ||
       `https://res.cloudinary.com/emmaotuonye1/image/upload/v1686759696/avatars/Avatar-2_lmptpe.png`
   );
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
@@ -44,57 +64,20 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!firstName || !lastName || !email || !phoneNumber) {
-      setError("Please fill all form fields...");
-      return;
-    }
 
-    const updatedUser = {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      id: user.id,
-      avatar: imageUrl,
-      role: user.role,
-      states: [],
-      LGA: [],
-    };
+    if (!firstName || !lastName || !email || !phoneNumber) {
+      return toast.error("Please fill all form fields...");
+    }
 
     let formData = new FormData();
 
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
     formData.append("email", email);
-    formData.append("phoneNumber", phoneNumber);
-    formData.append("id", user.id);
-    formData.append("avatar", imageUrl);
+    formData.append("phone_number", phoneNumber);
+    formData.append("photo_url", imageUrl);
 
-    user.states.forEach((state) => formData.append("states", state));
-    user.LGA.forEach((lga) => formData.append("LGA", lga));
-
-    try {
-      setIsLoading(true);
-      axios
-        .put(`me/update`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          if (res.data) {
-            console.log(res.data);
-            setSuccess("Successfully updated profile");
-            setIsLoading(false);
-          } else {
-            setSuccess("Error updating profile");
-            setIsLoading(false);
-          }
-        })
-        .catch((err) => console.error(err));
-    } catch (err) {
-      console.error(err);
-    }
+    await mutate(formData);
   };
 
   const handlePhotoClick = () => {
@@ -111,6 +94,14 @@ const Profile = () => {
 
     setImage(selectedFile);
   };
+
+  if (prLoading) {
+    return (
+      <div className="sm:mx-6 mt-6 lg:mx-auto lg:w-[90%]">
+        <SkeletonLoaders count={5} />
+      </div>
+    );
+  }
 
   return (
     <div className="h-full sm:mx-6 mt-6 lg:mx-auto lg:w-[90%]">
@@ -144,19 +135,19 @@ const Profile = () => {
           <FormInput
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            placeholder="Maria"
+            placeholder="first name"
             label="First name"
           />
           <FormInput
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            placeholder="Grey"
+            placeholder="last name"
             label="Last name"
           />
           <FormInput
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="mariagrey@demo.com"
+            placeholder="email"
             label="Email"
           />
           <FormInput
@@ -166,37 +157,13 @@ const Profile = () => {
             label="Contact number"
           />
 
-          {error && (
-            <div className="p-2 px-4 rounded flex items-center justify-between bg-white">
-              <span className="text-red-500">{error}</span>
-
-              <span
-                onClick={() => setError(null)}
-                className="h-6 w-6 bg-gray-400 rounded-full text-white cursor-pointer grid place-items-center"
-              >
-                x
-              </span>
-            </div>
-          )}
-
-          {success && (
-            <div className="p-2 px-4 rounded flex items-center justify-between bg-white">
-              <span className="text-green-500">{success}</span>
-              <span
-                onClick={() => setSuccess(null)}
-                className="h-6 w-6 bg-gray-400 rounded-full text-white cursor-pointer grid place-items-center"
-              >
-                x
-              </span>
-            </div>
-          )}
-
           <button
+            disabled={mtPending}
             type="submit"
             value="Update"
-            className="w-full mt-4 text-white grid place-items-center p-3 rounded bg-oaksgreen cursor-pointer"
+            className={`w-full mt-4 text-white grid place-items-center p-3 rounded bg-oaksgreen cursor-pointer`}
           >
-            {isLoading ? (
+            {prLoading ? (
               <Rings
                 height="30"
                 width="30"

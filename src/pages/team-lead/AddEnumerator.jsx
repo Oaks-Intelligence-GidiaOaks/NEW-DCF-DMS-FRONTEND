@@ -23,6 +23,10 @@ import { toast } from "react-toastify";
 const AddEnumerator = () => {
   const { user } = useAuth();
 
+  const statesInputRef = useRef();
+  const districtsInputRef = useRef();
+  const idInputRef = useRef();
+
   const {
     data: enumerators,
     isLoading: enumLoading,
@@ -42,7 +46,7 @@ const AddEnumerator = () => {
     queryFn: getMyProfile,
   });
 
-  const { mutate, isLoading: mutateLoading } = useMutation({
+  const { mutate, isPending: mutateLoading } = useMutation({
     mutationKey: ["createUser"],
     mutationFn: (data) => createUser(data),
     onSuccess: (sx) => {
@@ -131,6 +135,9 @@ const AddEnumerator = () => {
     setImage(null);
     setFileDataUrl(null);
     ref.current.value = "";
+    statesInputRef.current.setValue([]);
+    districtsInputRef.current.setValue([]);
+    idInputRef.current.setValue("");
     navigate("/add");
   };
 
@@ -269,6 +276,7 @@ const AddEnumerator = () => {
         />
 
         <FormInputDropDown
+          reff={statesInputRef}
           label="State"
           data={teamLeadStates}
           index="z-30"
@@ -276,6 +284,7 @@ const AddEnumerator = () => {
         />
 
         <FormMultipleSelect
+          reff={districtsInputRef}
           label="Districts"
           onChange={handleLgaChange}
           data={teamLeadLgas}
@@ -283,6 +292,7 @@ const AddEnumerator = () => {
         />
 
         <FormInputDropDown
+          reff={idInputRef}
           label="Identification(ID) type"
           data={IdTypes}
           index="z-10"
@@ -319,8 +329,11 @@ const AddEnumerator = () => {
         </div>
 
         <button
+          disabled={mutateLoading}
           type="submit"
-          className="w-full mt-4 grid place-items-center text-white p-3 rounded bg-oaksgreen"
+          className={`w-full mt-4 grid place-items-center text-white p-3 rounded  ${
+            mutateLoading ? "bg-gray-400" : "bg-oaksgreen"
+          } `}
         >
           {mutateLoading ? <RingsCircle /> : `Submit`}
         </button>

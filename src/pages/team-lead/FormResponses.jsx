@@ -64,13 +64,13 @@ const FormResponses = () => {
         submited: 0,
       };
 
-  console.log("SrCount", sRCount);
+  // console.log("SrCount", sRCount);
 
   const handleCategoryClick = (id) => {
     setCategoryId(id);
   };
 
-  console.log("all categories", categories);
+  // console.log("all categories", categories);
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">

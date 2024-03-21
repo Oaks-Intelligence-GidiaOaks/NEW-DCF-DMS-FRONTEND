@@ -6,8 +6,9 @@ import { queryClient } from "../App";
 import { useQuery } from "@tanstack/react-query";
 import { getEnumeratorCount } from "../lib/service";
 
-const AddedRemovedChart = () => {
+const AddedRemovedChartSA = () => {
   const [yearDropdown, setYearDropdown] = useState("");
+  const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552abe"); //default NG
 
   const {
     data: enumeratorsChartCount,
@@ -30,7 +31,7 @@ const AddedRemovedChart = () => {
   //   component variables
   let ecCount = eccSuccess ? enumeratorsChartCount.data.data : null;
 
-  // console.log("ecCount", ecCount);
+  //   console.log("ecCount", ecCount);
 
   return (
     <div className="bg-white drop-shadow-sm p-3 mt-6 text-sm rounded-sm w-full lg:px-16">
@@ -64,4 +65,4 @@ const AddedRemovedChart = () => {
   );
 };
 
-export default AddedRemovedChart;
+export default AddedRemovedChartSA;

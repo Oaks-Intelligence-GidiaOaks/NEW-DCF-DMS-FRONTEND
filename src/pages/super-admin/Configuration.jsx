@@ -1,51 +1,98 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CategoryPage,
   CreateCategoryForm,
   CreateProductForm,
 } from "../../containers";
 import { IoIosArrowBack } from "react-icons/io";
+import { FormInputDropDown } from "../../components/form";
+import { useQuery } from "@tanstack/react-query";
+import { getAllCountries, getCategoryByCountry } from "../../lib/service";
+import {
+  transformCategoryGridData,
+  transformCountryFormData,
+} from "../../lib/utils";
+import { TiPlus } from "react-icons/ti";
+import { Link } from "react-router-dom";
+import { GeneralTable } from "../../components/charts";
+import { CountCard } from "../../components/reusable";
 
 const Configuration = () => {
-  // for create category
-  const [activeForm, setActiveForm] = useState("category");
+  const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552abe");
 
-  const currentForm = {
-    category: <CreateCategoryForm />,
-    product: <CreateProductForm />,
+  const { data: countries, isSuccess: cSuccess } = useQuery({
+    queryKey: ["getAllCountries"],
+    queryFn: getAllCountries,
+  });
+
+  const {
+    data: categoryData,
+    isLoading: catLoading,
+    isSuccess: catSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["getCategoryByCountry"],
+    queryFn: () => getCategoryByCountry(countryId),
+    enabled: !!countryId,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [countryId, refetch]);
+
+  // component variables
+  let catGridData = catSuccess
+    ? transformCategoryGridData(categoryData.data.data)
+    : [];
+
+  let countriesData = cSuccess
+    ? transformCountryFormData(countries.data.data)
+    : [];
+
+  const handleCountryChange = (e) => {
+    setCountryId(e);
   };
 
-  if (true) {
-    return (
-      <CategoryPage
-        productPath="/super_admin/configuration/products"
-        categoryPath="/super_admin/configuration/categories"
-      />
-    );
-  }
+  return (
+    <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
+      <div className="flex items-center justify-between flex-wrap gap-2 xs:text-[10px]">
+        <Link to="/super_admin/configuration/categories">
+          <CountCard
+            plus
+            plusColor="#82B22E"
+            styles=" bg-white border border-oaks-green"
+            text="Add new category"
+          />
+        </Link>
 
-  // return (
-  //   <div className="font-poppins mx-auto lg:ml-[30px] py-6 text-sm">
-  //     <div className="flex  items-center justify-between">
-  //       <div className="h-[48px] w-fit px-[22px] bg-white flex gap-[22px] items-center radius-[5px]">
-  //         <span>Total Categories</span>
-  //         <span>78</span>
-  //       </div>
+        <Link className="ml-auto" to="/super_admin/configuration/products">
+          <CountCard
+            text="Add new Product"
+            styles=" bg-white border border-oaks-green"
+            plus
+            plusColor="#82B22E"
+          />
+        </Link>
+      </div>
 
-  //       <button className="h-[48px] rounded-[5px] bg-[#82B22E] flex items-center  py-5 gap-7 pl-6 pr-11">
-  //         <span className="h-6 w-6 bg-white rounded-[5px] grid place-items-center">
-  //           <IoIosArrowBack />
-  //         </span>
+      <div className="w-[230px]">
+        <FormInputDropDown
+          onChange={handleCountryChange}
+          label="Select country"
+          data={countriesData}
+        />
+      </div>
 
-  //         <span className="font-[500] text-xs leading-[18px]  text-white">
-  //           Back
-  //         </span>
-  //       </button>
-  //     </div>
-
-  //     <div className="lg:w-3/5">{currentForm[activeForm]}</div>
-  //   </div>
-  // );
+      <div>
+        <GeneralTable
+          height={200}
+          data={catGridData}
+          pageSize={30}
+          title="Categories By Country"
+        />
+      </div>
+    </div>
+  );
 };
 
 export default Configuration;

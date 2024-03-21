@@ -2,7 +2,7 @@ import React from "react";
 import { CreateProductForm } from "../../containers";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { BackButton } from "../../components/reusable";
+import { BackButton, CountCard } from "../../components/reusable";
 import { useQuery } from "@tanstack/react-query";
 import {
   getAllCategory,
@@ -50,15 +50,17 @@ const NewProduct = () => {
   return (
     <div className="pt-[40px] md:pl-[70px] ">
       <div className="flex items-center flex-wrap gap-7 mb-[36px]">
-        <button className="h-[48px] px-[22px] gap-6 flex items-center bg-white font-[500] text-xs leading-[18px]">
-          <span className="">Total Categories</span>
-          <span>{categoriesCount}</span>
-        </button>
+        <CountCard
+          text="Total Categories"
+          count={categoriesCount}
+          styles=" bg-white"
+        />
 
-        <button className="h-[48px] px-[22px] gap-6 flex items-center bg-white font-[500] text-xs leading-[18px]">
-          <span className="">Total Products</span>
-          <span>{productsCount}</span>
-        </button>
+        <CountCard
+          text="Total Products"
+          count={productsCount}
+          styles=" bg-white"
+        />
 
         <Link to="/admin/configuration">
           <BackButton />

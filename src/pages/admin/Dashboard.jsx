@@ -15,8 +15,6 @@ import {
   getSubmissionCount,
   getTeamLeadSubmissionRate,
 } from "../../lib/service";
-import { queryClient } from "../../App";
-import { AddedRemovedChart } from "../../containers";
 import { MetricCard } from "../../components";
 import AddedRemovedChartTL from "../../containers/AddedRemovedTL";
 
