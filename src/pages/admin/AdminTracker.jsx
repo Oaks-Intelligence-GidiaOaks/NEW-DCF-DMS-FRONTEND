@@ -8,12 +8,18 @@ import { GeneralTable } from "../../components/charts";
 import { useQuery } from "@tanstack/react-query";
 import {
   getAdminResponseTracker,
+  getAdminSubmissionTime,
   getResponseTracker,
   getTeamLeadSubmissionRate,
 } from "../../lib/service";
+import NewMeshedLineChart from "../../components/charts/NewMeshedLineChart";
+import {
+  formatChartDate,
+  tooltipConfig,
+  transformAdminSubmissionTime,
+} from "../../lib/utils";
 
 const AdminTracker = () => {
-  // const [trackerData, setTrackerData] = useState(null);
   const [timeOfSub, setTimeOfSub] = useState(null);
   const [allTeamLeads, setAllTeamLeads] = useState(null);
 
@@ -27,65 +33,18 @@ const AdminTracker = () => {
     queryFn: getAdminResponseTracker,
   });
 
-  let transChartTime = null;
+  const {
+    data: stData,
+    isLoading: stLoading,
+    isSuccess: stSuccess,
+  } = useQuery({
+    queryKey: ["getAdminSubmissionTime"],
+    queryFn: getAdminSubmissionTime,
+  });
 
-  if (timeOfSub && allTeamLeads) {
-    transChartTime = [];
-
-    allTeamLeads.map((lead) => {
-      let leadData = timeOfSub.filter((submission) =>
-        lead?.LGA.includes(submission?.lga)
-      );
-
-      if (leadData.length > 0) {
-        let newLeadData = leadData.map((item) => ({
-          ...item,
-          lga: lead.firstName,
-        }))[0];
-
-        const sortedWeeklyValues = newLeadData.weeklyValues.sort((a, b) => {
-          const dateA = new Date(a.submissionTime);
-          const dateB = new Date(b.submissionTime);
-
-          if (dateA.getFullYear() !== dateB.getFullYear()) {
-            return dateA.getFullYear() - dateB.getFullYear();
-          }
-
-          return dateA - dateB;
-        });
-
-        let sortedNewLeadData = {
-          ...newLeadData,
-          weeklyValues: sortedWeeklyValues,
-        };
-
-        transChartTime.push(sortedNewLeadData);
-      }
-    });
-  }
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`admin/team_lead`)
-  //     .then((res) => {
-  //       setAllTeamLeads(res.data.users);
-  //     })
-  //     .catch((err) => console.error(err));
-
-  //   axios
-  //     .get("form_response/admin_response_tracker")
-  //     .then((res) => {
-  //       setTrackerData(res.data);
-  //     })
-  //     .catch((err) => console.error(err));
-
-  //   axios
-  //     .get("form_response/all_submission_time")
-  //     .then((res) => {
-  //       setTimeOfSub(res.data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, []);
+  let transChartTime = stSuccess
+    ? transformAdminSubmissionTime(stData.data.data)
+    : [];
 
   let submitted =
     rtSuccess &&
@@ -94,6 +53,9 @@ const AdminTracker = () => {
   let noResponse =
     rtSuccess &&
     rtData?.data?.data.filter((item) => item.status === false).length;
+
+  const xScale = { type: "point" };
+  const yScale = { type: "time" };
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
@@ -118,16 +80,26 @@ const AdminTracker = () => {
             <Loading />
           </div>
         ) : (
-          <GeneralTable data={rtData?.data.data} />
+          <GeneralTable height={200} data={rtData?.data.data} />
         )}
       </div>
 
       {/* chart */}
-      {/* <div className="p-3 flex flex-col lg:flex-row overflow-x-scroll gap-3 rounded-xl drop-shadow-lg ">
-        <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg p-2">
-          {transChartTime && <MeshedLineChart data={transChartTime} />}
+      <div className="p-3 flex flex-col lg:flex-row overflow-x-scroll gap-3 rounded-xl drop-shadow-lg ">
+        <div className="h-[350px] w-full bg-white rounded drop-shadow-lg p-2">
+          {transChartTime && (
+            <NewMeshedLineChart
+              xScale={xScale}
+              yScale={yScale}
+              formatDate={formatChartDate}
+              tooltipConfig={tooltipConfig}
+              xLabel={"submission week"}
+              yLabel={"submission time"}
+              data={transChartTime}
+            />
+          )}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

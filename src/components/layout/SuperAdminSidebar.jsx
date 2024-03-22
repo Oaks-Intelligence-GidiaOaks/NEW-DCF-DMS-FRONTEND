@@ -93,6 +93,12 @@ const SuperAdminSidebar = () => {
             Icon={FilterNone}
             link="super_admin/responses"
           />
+          <SidebarItem
+            key="4"
+            text="Response Tracker"
+            Icon={FilterNone}
+            link="super_admin/tracker"
+          />
 
           <SidebarItem
             key="5"
@@ -106,6 +112,14 @@ const SuperAdminSidebar = () => {
             Icon={MdOutlineCollectionsBookmark}
             link="super_admin/configuration"
           />
+
+          <SidebarItem
+            key="7"
+            text="History"
+            Icon={FilterNone}
+            link="super_admin/history"
+          />
+
           <LogoutButton />
         </div>
       </div>

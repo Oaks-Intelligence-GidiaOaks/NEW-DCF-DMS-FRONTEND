@@ -117,12 +117,12 @@ const AdminSidebar = () => {
             link="admin/configuration"
           />
 
-          {/* <SidebarItem
+          <SidebarItem
             key="7"
             text="History"
             Icon={FilterNone}
             link="admin/history"
-          /> */}
+          />
           <LogoutButton />
         </div>
       </div>

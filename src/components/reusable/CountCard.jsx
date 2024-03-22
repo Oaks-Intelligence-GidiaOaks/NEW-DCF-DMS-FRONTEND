@@ -21,7 +21,9 @@ const CountCard = ({
         {text}
       </span>
 
-      {count && <span className={countStyles}>{count}</span>}
+      <span className={countStyles + " py-1 px-[6px] rounded-[5px]"}>
+        {count}
+      </span>
 
       {plus && <TiPlus color={plusColor} />}
     </div>

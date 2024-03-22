@@ -342,8 +342,18 @@ export const getSubmissionTime = async () => {
   return data;
 };
 
+export const getAdminSubmissionTime = async () => {
+  const data = await axios.get(`form_response/admin_submission_time`);
+  return data;
+};
+
 export const approveFormResponse = async (ids) => {
   const data = await axios.put(`form_response/approve_response`, ids);
+  return data;
+};
+
+export const flagResponse = async (ids) => {
+  const data = await axios.put(`form_response/flag_response`, ids);
   return data;
 };
 
@@ -354,8 +364,46 @@ export const getProductResponsesByCategory = async (categoryId) => {
   return data;
 };
 
+export const resubmitProductData = async (productId) => {
+  const data = await axios.put(`form_response/resubmit_product/${productId}`);
+
+  return data;
+};
+
 // Admin
 export const getAdminResponseTracker = async () => {
   const data = await axios.get(`form_response/admin_response_tracker`);
+  return data;
+};
+
+// District Routes
+export const createRoute = async (routeData) => {
+  const data = await axios.post(`district_route/`, routeData);
+  return data;
+};
+
+export const getRoutesByCountry = async (countryId) => {
+  const data = await axios.get(`district_route/by_country/${countryId}`);
+  return data;
+};
+
+export const getRoutesByDistrict = async (districtId) => {
+  const data = await axios.get(`district_route/by_district/${districtId}`);
+  return data;
+};
+
+export const updateRoute = async (districtId) => {
+  const data = await axios.put(`district_route/${districtId}`);
+  return data;
+};
+
+export const deleteRoute = async (districtId) => {
+  const data = await axios.delete(`district_route/${districtId}`);
+  return data;
+};
+
+// Audit Log
+export const getAllLog = async () => {
+  const data = await axios.get(`audit_log`);
   return data;
 };

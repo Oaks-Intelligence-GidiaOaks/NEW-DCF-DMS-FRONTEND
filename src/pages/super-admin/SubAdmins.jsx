@@ -4,7 +4,9 @@ import { GeneralTable } from "../../components/charts";
 import { transformSubAdminGridData } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getAllSubAdmin } from "../../lib/service";
+import { disableUser, getAllSubAdmin, resetPassword } from "../../lib/service";
+import { toast } from "react-toastify";
+import { queryClient } from "../../App";
 
 const SubAdmins = () => {
   const navigate = useNavigate();
@@ -19,25 +21,44 @@ const SubAdmins = () => {
   });
 
   const tableActions = [
-    {
-      title: "Edit",
-      action: (row) => console.log(row),
-    },
+    // {
+    //   title: "Edit",
+    //   action: (row) => console.log(row),
+    // },
     {
       title: "Reset Password",
-      action: (row) => console.log(row),
+      action: async (row) => {
+        const tData = {
+          id: row.id,
+        };
+
+        try {
+          const res = await resetPassword(tData);
+          toast.success(`Passeord reset successfully`);
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
     },
     {
       title: "See more",
       action: (row) => {
         navigate(`/super_admin/country_team_leads/:countryId`);
-
-        console.log(row);
       },
     },
     {
       title: "Delete",
-      action: (row) => console.log(row),
+      action: async (row) => {
+        let userId = row._id;
+
+        try {
+          const res = await disableUser(userId);
+          toast.success(`password update successful`);
+          queryClient.invalidateQueries({ queryKey: ["getAllSubAdmin"] });
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
     },
   ];
 

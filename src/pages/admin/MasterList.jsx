@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import * as XLSX from "xlsx";
-
-import MasterGrid from "../../components/grid/MasterGrid";
-import axios from "axios";
 
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
-import { BiDownload } from "react-icons/bi";
 import { arrangeTime } from "../../lib/helpers";
 import { useAuth } from "../../context";
 import { getMasterDataByCountry } from "../../lib/service";
@@ -132,7 +127,12 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <GeneralTable pageSize={115} data={mGridData} />
+        <GeneralTable
+          title="Master List"
+          height={260}
+          pageSize={115}
+          data={mGridData}
+        />
 
         <div className="p-2 border ">
           <div className="ml-auto flex items-center">{<PageNumbers />}</div>
