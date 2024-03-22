@@ -30,17 +30,16 @@ const CategoryPage = ({
 
   const gridActions = {
     categoryGrid: [
-      {
-        title: "Edit",
-        action: (row) => {
-          console.log("Edit clicked", row);
-        },
-      },
+      // {
+      //   title: "Edit",
+      //   action: (row) => {
+      //     console.log("Edit clicked", row);
+      //   },
+      // },
       {
         title: "See more",
         action: (row) => {
-          // console.log("See more clicked", row);
-          navigate(`/super_admin/configuration/category_products/${row._id}`);
+          navigate(`/admin/configuration/category_products/${row._id}`);
         },
       },
       {
@@ -60,6 +59,7 @@ const CategoryPage = ({
         data={gridData}
         pageSize={30}
         title={tableTitle}
+        actions={gridActions.categoryGrid}
       />
     ),
   };
