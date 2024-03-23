@@ -112,6 +112,15 @@ export const transformStateFormData = (data) => {
   return newData;
 };
 
+export const transformDistrictsFormData = (data) => {
+  const newData = data.map((item) => ({
+    label: item.name,
+    value: item._id,
+  }));
+
+  return newData;
+};
+
 export const transformCategoryFormData = (data) => {
   let expectedInputs = {};
   let categoryIds = [];
@@ -285,4 +294,72 @@ const reduceProductsArrayToObject = (data) => {
   });
 
   return transformedData;
+};
+
+// charts
+export const transformAdminSubmissionTime = (data) => {
+  console.log("transformAdminSubmissionTime", data);
+  const newData = [];
+
+  data.forEach((it, i) => {
+    const newObj = {
+      id: it.district?.name,
+      data: it.weeklyValues?.map((wv, wi) => ({
+        x: wv?.weekNo,
+        y: new Date(wv?.submissionTime),
+      })),
+    };
+
+    newData.push(newObj);
+  });
+
+  console.log(newData, "new Data");
+
+  return newData;
+};
+
+// Audit Logs
+export const transformLogsGridData = (data) => {
+  const newData = [...data].map((item) => {
+    return {
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      time: formatGridDate(item.createdAt),
+    };
+  });
+
+  return newData;
+};
+
+export const formatChartDate = (date) => {
+  const options = {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    year: "numeric",
+    timeZone: "Africa/Lagos",
+    hour12: true,
+  };
+
+  return date.toLocaleDateString("en-US", options);
+};
+
+export const tooltipConfig = {
+  format: (value) => formatChartDate(value),
+};
+
+export const formatGridDate = (dateData) => {
+  let newData = new Date(dateData).toLocaleDateString("en-NG", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true, // Adjust for 12-hour format (pm/am)
+  });
+
+  return newData;
 };

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import TrackerGrid from "../../components/grid/TrackerGrid";
+
 import MeshedLineChart from "../../components/charts/MeshedLineChart";
 import CategoryTab from "../../components/CategoryTab";
 import { MeshedLineChartData } from "../../data/charts";
-import axios from "axios";
-import { Download, ClearOutlined } from "@mui/icons-material";
+
+import { Download } from "@mui/icons-material";
 import { useAuth } from "../../context";
 import { Loading } from "../../components/reusable";
 import { ClipLoader } from "react-spinners";
@@ -16,14 +16,16 @@ import {
   getSubmissionTime,
 } from "../../lib/service";
 import { GeneralTable } from "../../components/charts";
+import NewMeshedLineChart from "../../components/charts/NewMeshedLineChart";
+import {
+  formatChartDate,
+  tooltipConfig,
+  transformAdminSubmissionTime,
+} from "../../lib/utils";
 
 const Tracker = () => {
-  const {
-    user: { token },
-  } = useAuth();
-
   // mutation
-  const { mutate, isLoading: mtLoading } = useMutation({
+  const { mutate, isPending: mtLoading } = useMutation({
     mutationKey: ["approveFormResponse"],
     mutationFn: (dt) => approveFormResponse(dt),
     onSuccess: (sx) => {
@@ -67,7 +69,6 @@ const Tracker = () => {
 
   console.log("sub time", stData?.data);
 
-  const [timeOfSub, setTimeOfSub] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -76,15 +77,9 @@ const Tracker = () => {
   let noResponse =
     trackerData && trackerData.totalEnumerators - trackerData.totalSubmision;
 
-  // if (timeOfSub) {
-  // }
-
-  // let firstChart = timeOfSub && timeOfSub.slice(0, 10);
-  // let secondChart =
-  //   timeOfSub && timeOfSub.length > 10 && timeOfSub.slice(10, 20);
-  // let thirdChart =
-  //   timeOfSub && timeOfSub.length > 20 && timeOfSub.slice(20, 30);
-  // let fourthChart = timeOfSub && timeOfSub.length > 30 && timeOfSub.slice(30);
+  let transChartTime = stSuccess
+    ? transformAdminSubmissionTime(stData.data.data)
+    : [];
 
   const handleSubmit = async () => {
     let data = trackerData.enumerators;
@@ -97,6 +92,9 @@ const Tracker = () => {
 
     await mutate({ ids: formattedData });
   };
+
+  const xScale = { type: "point" };
+  const yScale = { type: "time" };
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6 relative">
@@ -159,36 +157,29 @@ const Tracker = () => {
         {!trackerData ? (
           <Loading />
         ) : (
-          <GeneralTable data={trackerData?.enumerators} />
+          <GeneralTable
+            height={200}
+            title="Response Tracker"
+            data={trackerData?.enumerators}
+          />
         )}
       </div>
 
       {/* chart */}
       <div className="p-3 flex flex-col lg:flex-row lg:overflow-x-auto gap-3 rounded-xl drop-shadow-lg ">
-        {/* {firstChart && (
-          <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
-            <MeshedLineChart data={firstChart} />
-          </div>
-        )} */}
-
-        {/* {secondChart && (
-          <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
-            <MeshedLineChart data={secondChart} />
-          </div>
-        )} */}
-
-        {/* 
-        {thirdChart && (
-          <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
-            <MeshedLineChart data={thirdChart} />
-          </div>
-        )} */}
-
-        {/* {fourthChart && (
-          <div className="h-72 lg:w-1/2 bg-white rounded drop-shadow-lg">
-            <MeshedLineChart data={fourthChart} />
-          </div>
-        )} */}
+        {/* {firstChart && ( */}
+        <div className="h-[350px] w-full bg-white rounded drop-shadow-lg">
+          <NewMeshedLineChart
+            xScale={xScale}
+            yScale={yScale}
+            formatDate={formatChartDate}
+            tooltipConfig={tooltipConfig}
+            xLabel={"submission week"}
+            yLabel={"submission time"}
+            data={transChartTime}
+          />
+        </div>
+        {/* )} */}
       </div>
     </div>
   );

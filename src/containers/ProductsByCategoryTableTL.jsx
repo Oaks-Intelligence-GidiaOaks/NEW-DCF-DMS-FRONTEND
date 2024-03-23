@@ -1,16 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import {
-  flagResponse,
   getProductResponsesByCategory,
-  getProductsByCategory,
+  resubmitProductData,
 } from "../lib/service";
 import { GeneralTable } from "../components/charts";
 import { transformProductGridData } from "../lib/utils";
 import { toast } from "react-toastify";
 import { queryClient } from "../App";
 
-const ProductsByCategoryTable = ({ categoryId }) => {
+const ProductsByCategoryTableTL = ({ categoryId }) => {
   const {
     data: productData,
     isLoading: prodLoading,
@@ -31,31 +30,27 @@ const ProductsByCategoryTable = ({ categoryId }) => {
     ? transformProductGridData(productData.data.data)
     : [];
 
-  const AdminActions = [];
-
-  const AdminFlag = {
-    title: "Flag",
+  const Flag = {
+    title: "Submit",
     action: async (row) => {
-      const tRow = {
-        ids: [row._id],
-      };
+      let productId = row._id;
 
-      console.log(tRow, "tRow");
+      console.log(row, "tRow");
 
       try {
-        await flagResponse(tRow);
+        const res = await resubmitProductData(productId);
         queryClient.invalidateQueries({
           queryKey: ["getProductResponsesByCategory"],
         });
 
-        toast.success(`response flagged successfully`);
+        toast.success(`product submitted successfully`);
       } catch (ex) {
         toast.error(ex.message);
       }
     },
   };
 
-  const AdminCommands = [
+  const Commands = [
     {
       type: "Edit",
       buttonOption: { cssClass: "e-flat", iconCss: "e-edit e-icons" },
@@ -87,12 +82,12 @@ const ProductsByCategoryTable = ({ categoryId }) => {
         title="Form Responses"
         pageSize={60}
         data={prodGridData}
-        commands={AdminCommands}
+        commands={Commands}
         handleSave={handleSave}
-        flag={AdminFlag}
+        flag={Flag}
       />
     </div>
   );
 };
 
-export default ProductsByCategoryTable;
+export default ProductsByCategoryTableTL;

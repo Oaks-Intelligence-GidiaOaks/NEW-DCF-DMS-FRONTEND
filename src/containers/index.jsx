@@ -5,3 +5,4 @@ export { default as ProductsPage } from "./ProductsPage";
 export { default as FormProductInputs } from "./FormProductInputs";
 export { default as AddedRemovedChart } from "./AddedRemovedChart";
 export { default as ProductsByCategoryTable } from "./ProductsByCategoryTable";
+export { default as ProductsByCategoryTableTL } from "./ProductsByCategoryTableTL";

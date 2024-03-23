@@ -50,6 +50,7 @@ import {
   SuperAdminDashboard,
   SuperAdminEnumerators,
   SuperAdminFormResponses,
+  SuperAdminHistory,
   SuperAdminMasterList,
   SuperAdminNewCategory,
   SuperAdminNewCountry,
@@ -59,6 +60,7 @@ import {
   SuperAdminProfile,
   SuperAdminSubAdmins,
   SuperAdminTeamLeadProfile,
+  SuperAdminTracker,
   SuperAdminViewProducts,
 } from "./pages/super-admin";
 import SuperAdmin from "./components/layout/SuperAdmin";
@@ -557,7 +559,20 @@ function App() {
             }
           />
 
-          {/* Super admin sub admin */}
+          <Route
+            path="/super_admin/history"
+            element={
+              <ProtectedRoute
+                requiredRole="SuperAdmin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminHistory />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
           <Route
             path="/super_admin/admins"
             element={
@@ -635,7 +650,7 @@ function App() {
                 requiredRole="SuperAdmin"
                 component={
                   <SuperAdmin>
-                    <SuperAdminTeamLeadProfile />
+                    <SuperAdminTracker />
                   </SuperAdmin>
                 }
               />

@@ -18,7 +18,10 @@ import { GeneralTable } from "../../components/charts";
 import { useAuth } from "../../context";
 import { transformProductsDataByCategory } from "../../lib/utils";
 import { getAllCategory, getTeamLeadSubmissionRate } from "../../lib/service";
-import { ProductsByCategoryTable } from "../../containers";
+import {
+  ProductsByCategoryTable,
+  ProductsByCategoryTableTL,
+} from "../../containers";
 
 const FormResponses = () => {
   const { user } = useAuth();
@@ -121,7 +124,7 @@ const FormResponses = () => {
             <Loading />
           </div>
         ) : (
-          <ProductsByCategoryTable categoryId={categoryId} />
+          <ProductsByCategoryTableTL categoryId={categoryId} />
         )}
       </div>
     </div>
