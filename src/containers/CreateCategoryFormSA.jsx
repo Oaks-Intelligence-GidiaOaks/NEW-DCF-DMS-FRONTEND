@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react";
 import { FormInputDropDown, TagsInput, TextInput } from "../components/form";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createCategory, getAllCountries } from "../lib/service";
 import { transformCountryFormData } from "../lib/utils";
 import { toast } from "react-toastify";
 import { useAuth } from "../context";
 import { RingsCircle } from "../components/reusable";
-import { queryClient } from "../App";
 
 const CreateCategoryFormSA = () => {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const countryRef = useRef();
   const tagsRef = useRef();
@@ -30,7 +30,7 @@ const CreateCategoryFormSA = () => {
     onSuccess: (dt) => {
       toast.success(`Category Created SUccessfully`);
       clearFormFields();
-      queryClient.invalidateQueries({ queryKey: ["getCategoryByCountry"] });
+      queryClient.invalidateQueries({ queryKey: ["getAllCategory"] });
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -75,7 +75,11 @@ const CreateCategoryFormSA = () => {
       expected_inputs: [],
     });
 
-    countryRef.current.setValue("");
+    try {
+      countryRef.current.clearValue();
+    } catch (ex) {
+      toast.success(`Successful`);
+    }
   };
 
   return (
@@ -103,6 +107,7 @@ const CreateCategoryFormSA = () => {
         />
 
         <TagsInput
+          tags={formFields.expected_inputs}
           defaultValue={formFields.expected_inputs}
           label={"Expected Input Name(s)"}
           onChange={(e) => handleChange(e, "expected_inputs")}

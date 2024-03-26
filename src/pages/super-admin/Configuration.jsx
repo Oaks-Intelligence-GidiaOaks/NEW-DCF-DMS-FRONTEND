@@ -113,6 +113,7 @@ const Configuration = () => {
 
       <div className="w-[230px]">
         <FormInputDropDown
+          index="z-20"
           onChange={handleCountryChange}
           label="Select country"
           data={countriesData}

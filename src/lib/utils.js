@@ -30,6 +30,7 @@ export const transformSubAdminGridData = (data) => {
       // states: rest.states.map((it) => it.name),
       // districts: rest.districts.map((it) => it.name),
       country: rest.country.name,
+      country_id: rest.country._id,
     };
 
     return newD;
@@ -67,6 +68,8 @@ export const transformEnumeratorsGridData = (data) => {
 };
 
 export const transformTeamLedsGridData = (data) => {
+  console.log("team leads", data);
+
   const newData = data.map((item) => {
     const {
       identity_image_url,
@@ -86,6 +89,7 @@ export const transformTeamLedsGridData = (data) => {
       states: rest.states.map((it) => it.name),
       // districts: rest.districts.map((it) => it.name),
       country: rest.country?.name,
+      _id: rest._id,
     };
 
     return newD;
@@ -362,4 +366,15 @@ export const formatGridDate = (dateData) => {
   });
 
   return newData;
+};
+
+export const filterExpectedInputs = (allExpectedInputs, selectedInputs) => {
+  const selectedValues = new Set(selectedInputs.map(({ title }) => title));
+  let data = allExpectedInputs.filter(
+    ({ value }) => !selectedValues.has(value)
+  );
+
+  console.log(data, "data");
+
+  return data;
 };

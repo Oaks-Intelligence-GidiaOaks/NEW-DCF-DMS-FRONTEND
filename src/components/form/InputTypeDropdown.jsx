@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 
-const FormInputDropDown = ({
+const InputTypeDropdown = ({
   label,
   data,
   index,
@@ -12,9 +12,13 @@ const FormInputDropDown = ({
   const [value, setValue] = useState("");
 
   const handleChange = (selectedOption) => {
+    console.log(selectedOption, "selectedOption");
+
     setValue(selectedOption);
     onChange(selectedOption.value);
   };
+
+  let availableData = data?.filter((it) => it.value !== value.value);
 
   return (
     <div className="flex flex-col gap-2 py-3 px-2 text-sm">
@@ -25,7 +29,7 @@ const FormInputDropDown = ({
       >
         <Select
           {...formProps}
-          options={data}
+          options={availableData}
           value={value}
           setValue={setValue}
           onChange={handleChange}
@@ -36,4 +40,4 @@ const FormInputDropDown = ({
   );
 };
 
-export default FormInputDropDown;
+export default InputTypeDropdown;

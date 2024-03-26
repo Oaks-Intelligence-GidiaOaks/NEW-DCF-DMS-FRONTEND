@@ -9,3 +9,4 @@ export { default as TagsInput } from "./TagsInput";
 export { default as FormButton } from "./FormButton";
 export { default as TextInput } from "./TextInput";
 export { default as FormDropdown } from "./FormDropdown";
+export { default as InputTypeDropdown } from "./InputTypeDropdown";

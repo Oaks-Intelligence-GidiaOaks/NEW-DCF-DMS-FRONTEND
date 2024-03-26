@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useController } from "react-hook-form";
 import { IoCloseSharp } from "react-icons/io5";
-import { FaPlus } from "react-icons/fa6";
 import { CiCirclePlus } from "react-icons/ci";
 
-const TagsInput = ({ label, disabled, defaultValue = [], onChange }) => {
+const TagsInput = ({ label, disabled, tags = [], onChange, clear }) => {
   const [value, setValue] = useState("");
-  const [tags, setTags] = useState(defaultValue);
+  // const [tags, setTags] = useState(defaultValue);
 
-  const Tag = ({ text, formProps }) => {
+  const Tag = ({ text }) => {
     const removeSkill = () => {
       const newSkills = tags?.filter((it, i) => it !== text);
-      setTags(newSkills);
       onChange(newSkills);
     };
 
@@ -40,7 +37,6 @@ const TagsInput = ({ label, disabled, defaultValue = [], onChange }) => {
 
     setValue("");
     const setData = Array.from([...set]);
-    setTags(setData);
     onChange(setData);
   };
 
