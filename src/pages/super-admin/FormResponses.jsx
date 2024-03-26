@@ -95,6 +95,7 @@ const FormResponses = () => {
 
       <div className="w-[230px]">
         <FormInputDropDown
+          index="z-50"
           onChange={handleCountryChange}
           label="Select country"
           data={countriesData}

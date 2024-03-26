@@ -1,24 +1,38 @@
 import React from "react";
-import { CountCard } from "../../components/reusable";
+import { BackButton, CountCard } from "../../components/reusable";
 import { GeneralTable } from "../../components/charts";
-import { transformSubAdminGridData } from "../../lib/utils";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  transformSubAdminGridData,
+  transformTeamLedsGridData,
+} from "../../lib/utils";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { disableUser, getAllSubAdmin, resetPassword } from "../../lib/service";
+import {
+  disableUser,
+  getAllSubAdmin,
+  getTeamLeadsByCountry,
+  resetPassword,
+} from "../../lib/service";
 import { toast } from "react-toastify";
 import { queryClient } from "../../App";
 
-const SubAdmins = () => {
+const SuperAdminTeamLeads = () => {
   const navigate = useNavigate();
 
+  const { countryId } = useParams();
+
   const {
-    data: subAdmins,
-    isLoading: saLoading,
-    isSuccess: saSuccess,
+    data: teamLeads,
+    isLoading: tlLoading,
+    isSuccess: tlSuccess,
   } = useQuery({
-    queryKey: ["getAllSubAdmin"],
-    queryFn: getAllSubAdmin,
+    queryKey: ["getTeamLeadsByCountry"],
+    queryFn: () => getTeamLeadsByCountry(countryId),
   });
+
+  let tlGridData = tlSuccess
+    ? transformTeamLedsGridData(teamLeads?.data.users)
+    : [];
 
   const tableActions = [
     // {
@@ -35,6 +49,9 @@ const SubAdmins = () => {
         try {
           const res = await resetPassword(tData);
           toast.success(`Passeord reset successfully`);
+          queryClient.invalidateQueries({
+            queryKey: ["getTeamLeadsByCountry"],
+          });
         } catch (ex) {
           toast.error(ex.message);
         }
@@ -43,8 +60,7 @@ const SubAdmins = () => {
     {
       title: "See more",
       action: (row) => {
-        navigate(`/super_admin/admins/country_team_leads/${row.country_id}`);
-        // console.log(row);
+        navigate(`/super_admin/admins/team_lead_enumerators/${row._id}`);
       },
     },
     {
@@ -55,7 +71,9 @@ const SubAdmins = () => {
         try {
           const res = await disableUser(userId);
           toast.success(`user disabled successful`);
-          queryClient.invalidateQueries({ queryKey: ["getAllSubAdmin"] });
+          queryClient.invalidateQueries({
+            queryKey: ["getTeamLeadsByCountry"],
+          });
         } catch (ex) {
           toast.error(ex.message);
         }
@@ -66,21 +84,28 @@ const SubAdmins = () => {
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
       {/* headers */}
-      <div className="grid grid-cols-2 md:grid-cols-3 items-center flex-wrap gap-2 xs:text-[10px]">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 xs:text-[10px]">
         <CountCard
-          text="Total Sub Admin"
+          text="Total Team leads"
           styles=" bg-[#FFAD10] text-white"
           countStyles=" bg-white text-[#4A4848] p-1 text-xs rounded-[5px]"
-          count={subAdmins?.data.totalSubAdmin}
+          count={teamLeads?.data.totalTeamLead}
         />
 
         <CountCard
           text="Recently added"
           styles="border border-[#FFAD10]"
-          count={subAdmins?.data.newlyAdded}
+          count={teamLeads?.data.newlyAdded}
         />
 
-        <Link className="!ml-auto" to="/super_admin/admins/add">
+        <Link className="ml-auto" to="/super_admin/admins">
+          <BackButton />
+        </Link>
+
+        <Link
+          className="md:col-span-3 md:ml-auto"
+          to={`/super_admin/admins/${countryId}/add_team_lead`}
+        >
           <CountCard
             text="Add new"
             styles=" border border-[#82B22E] text-[#82B22E]"
@@ -89,30 +114,13 @@ const SubAdmins = () => {
             plusColor={"#82B22E"}
           />
         </Link>
-
-        {/* <Link
-          className="!ml-auto col-span-3"
-          to="/super_admin/admins/assign_country"
-        >
-          <CountCard
-            text="Assign Country"
-            styles="  border border-[#82B22E] text-[#82B22E]"
-            textStyles="bg-[#FAF9F9]"
-            plus
-            plusColor={"#82B22E"}
-          />
-        </Link> */}
       </div>
 
       {/* table */}
       <div>
         <GeneralTable
-          title="Sub Admin Table"
-          data={
-            subAdmins?.data
-              ? transformSubAdminGridData(subAdmins?.data.users)
-              : []
-          }
+          title="Team Leads Table"
+          data={tlGridData}
           actions={tableActions}
         />
       </div>
@@ -122,4 +130,4 @@ const SubAdmins = () => {
   );
 };
 
-export default SubAdmins;
+export default SuperAdminTeamLeads;

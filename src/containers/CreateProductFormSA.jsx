@@ -9,13 +9,15 @@ import {
 import { GeneralTable } from "../components/charts";
 import productInputs from "../../src/data/form/productInputs.json";
 import { createProduct, getCategoryByCountry } from "../lib/service";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/useAuth";
-import { transformCategoryFormData } from "../lib/utils";
+import { transformCategoryFormData, filterExpectedInputs } from "../lib/utils";
 import FormProductInputs from "./FormProductInputs";
 import { toast } from "react-toastify";
 
 const CreateProductFormSA = ({ countryData }) => {
+  const queryClient = useQueryClient();
+
   const [formFields, setFormFields] = useState({
     country_id: "",
     category_id: "",
@@ -34,7 +36,7 @@ const CreateProductFormSA = ({ countryData }) => {
     onSuccess: (sx) => {
       toast.success(`Product created succesfuuly`);
       clearFormFields();
-      location.reload();
+      queryClient.invalidateQueries({ queryKey: ["getAllProduct"] });
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -57,7 +59,6 @@ const CreateProductFormSA = ({ countryData }) => {
   }, [refetch, formFields.country_id]);
 
   // component variables
-  const [allExpectedInputs, setAllExpectedInputs] = useState();
   const [expectedInputs, setExpectedInputs] = useState([]);
   const [categories, setCategories] = useState(null);
 
@@ -82,14 +83,42 @@ const CreateProductFormSA = ({ countryData }) => {
         return acc;
       }, {});
 
+  // console.log(mExpectedInputs, "mExpectedInputs");
+
   const addInput = (inputObj) => {
+    console.log(inputObj, "input object");
+    console.log(expectedInputs, "expectedInputs");
+
+    const updatedExpectedInputs = expectedInputs.filter(
+      (flt) => flt.value !== inputObj.title
+    );
+
+    setExpectedInputs(updatedExpectedInputs);
+
     let newInputs = [...formFields.inputs];
     newInputs.push(inputObj);
 
     setFormFields({ ...formFields, inputs: newInputs });
   };
 
-  const handleSubmit = () => {
+  const removeInput = (row) => {
+    let catId = formFields.category_id;
+    let input_title = row.title;
+
+    let newInputs = [...formFields.inputs].filter(
+      (item) => item.title !== input_title
+    );
+    setFormFields({ ...formFields, inputs: newInputs });
+
+    const newObj = {
+      label: input_title,
+      value: input_title,
+    };
+
+    setExpectedInputs((prev) => [...prev, newObj]);
+  };
+
+  const handleSubmit = async () => {
     // e.preventDefault();
 
     const mutationData = {
@@ -102,12 +131,10 @@ const CreateProductFormSA = ({ countryData }) => {
 
     if (isError) {
       console.log(isError, "isError");
-
       return toast.error(`Please fill all inputs`);
     }
 
-    mutate(mutationData);
-    clearFormFields();
+    await mutate(mutationData);
   };
 
   const clearFormFields = () => {
@@ -118,8 +145,12 @@ const CreateProductFormSA = ({ countryData }) => {
       inputs: [],
     });
 
-    countryInputRef.current.setValue("");
-    categoryInputRef.current.setValue("");
+    try {
+      countryInputRef.current.clearValue();
+      categoryInputRef.current.clearValue();
+    } catch (ex) {
+      toast.success(`successful`);
+    }
   };
 
   const handleChange = (val, fieldName) => {
@@ -139,10 +170,6 @@ const CreateProductFormSA = ({ countryData }) => {
   };
 
   const handleCategoryChange = async (val) => {
-    console.log("change", val);
-    console.log("change 2", mExpectedInputs[val]);
-    console.log("change 3", mExpectedInputs);
-
     setExpectedInputs(mExpectedInputs[val]);
 
     setFormFields({ ...formFields, category_id: val });
@@ -152,12 +179,9 @@ const CreateProductFormSA = ({ countryData }) => {
     <div className="font-poppins">
       <h2 className="text-[20px] font-[500]  pb-4">Create New Product</h2>
 
-      <div
-        // action=""
-        // onSubmit={handleSubmit}
-        className="mt-4 md:w-3/5 xl:w-2/3 space-y-4"
-      >
+      <div className="mt-4 md:w-3/5 xl:w-2/3 space-y-4">
         <FormInputDropDown
+          index="z-50"
           reff={countryInputRef}
           placeholder={"Choose country"}
           data={countryData}
@@ -167,6 +191,7 @@ const CreateProductFormSA = ({ countryData }) => {
         />
 
         <FormInputDropDown
+          index="z-40"
           reff={categoryInputRef}
           placeholder={"Choose category"}
           data={caInputData || []}
@@ -198,11 +223,7 @@ const CreateProductFormSA = ({ countryData }) => {
                 flag={{
                   title: "Remove",
                   action: (row) => {
-                    let newInputs = [...formFields.inputs].filter(
-                      (item) => item.title !== row.title
-                    );
-
-                    setFormFields({ ...formFields, inputs: newInputs });
+                    removeInput(row);
                   },
                 }}
                 data={formFields.inputs}

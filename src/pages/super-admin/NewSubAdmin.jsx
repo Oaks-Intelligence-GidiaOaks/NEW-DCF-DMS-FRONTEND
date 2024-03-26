@@ -11,10 +11,9 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { createUser, getAllCountries, getAllSubAdmin } from "../../lib/service";
-// import { useForm } from "react-hook-form";
 import { ClipLoader } from "react-spinners";
 import { transformCountryFormData } from "../../lib/utils";
-import axios from "axios";
+// import axios from "axios";
 import { IdTypes } from "../../data/form/others";
 import { EditNote } from "@mui/icons-material";
 
@@ -30,12 +29,11 @@ const NewSubAdmin = () => {
     queryFn: getAllSubAdmin,
   });
 
-  const { mutate, mtPending: mtPending } = useMutation({
+  const { mutate, isPending: mtPending } = useMutation({
     mutationFn: (formData) => createUser(formData),
     onSuccess: () => {
       toast.success(`created sub admin successfully..`);
       clearFormFields();
-      location.reload();
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -51,21 +49,21 @@ const NewSubAdmin = () => {
     phone_number: "",
     identity_number: "",
     identity_document: "",
-    states: [],
-    districts: [],
+    // states: [],
+    // districts: [],
     identityType: "",
   });
 
   // reference variables
   const countryRef = useRef("");
-  const stateRef = useRef("");
-  const districtsRef = useRef("");
+  // const stateRef = useRef("");
+  // const districtsRef = useRef("");
   const identityRef = useRef("");
   const ref = useRef(null);
 
   // all component variables
-  const [statesData, setStatesData] = useState([]);
-  const [districtsData, setDistrictsData] = useState([]);
+  // const [statesData, setStatesData] = useState([]);
+  // const [districtsData, setDistrictsData] = useState([]);
 
   const totalAdmins = subAdmins?.data ? subAdmins.data.totalSubAdmin : 0;
   const newAdmins = subAdmins?.data ? subAdmins.data.newlyAdded : 0;
@@ -108,28 +106,33 @@ const NewSubAdmin = () => {
       phone_number: "",
       identity_number: "",
       identity_document: "",
-      states: [],
-      districts: [],
+      // states: [],
+      // districts: [],
       identityType: "",
     });
 
+    try {
+      countryRef.current.clearValue();
+      // identityRef.current.clearValue();
+    } catch (err) {
+      toast.success(`successfull`);
+    }
+
+    // stateRef.current.setValue([]);
+    // districtsRef.current.setValue([]);
     setImage(null);
-    countryRef.current.setValue([]);
-    stateRef.current.setValue([]);
-    districtsRef.current.setValue([]);
-    identityRef.current.clearValue();
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const isError = Object.values(formFields).filter((it) => !it.length).length;
+    const isError = Object.values(formFields)?.filter(
+      (it) => !it.length
+    )?.length;
 
     const mutationData = {
       ...formFields,
     };
-
-    // console.log(mutationData, "mutationData");
 
     if (isError) {
       return toast.error(`Please fill all inputs`);
@@ -146,10 +149,8 @@ const NewSubAdmin = () => {
     formData.append("phone_number", mutationData.phone_number);
     formData.append("role", mutationData.role);
 
-    mutationData.states.forEach((st) => formData.append("states", st));
-
-    mutationData.districts.forEach((dst) => formData.append("districts", dst));
-
+    // mutationData.states.forEach((st) => formData.append("states", st));
+    // mutationData.districts.forEach((dst) => formData.append("districts", dst));
     await mutate(formData);
   };
 
@@ -157,39 +158,39 @@ const NewSubAdmin = () => {
     if (fieldName === "country") {
       handleCountryChange(val);
     } else if (fieldName === "states") {
-      handleStateChange(val);
+      // handleStateChange(val);
     } else if (fieldName === "districts") {
-      handleDistrictsChange(val);
+      // handleDistrictsChange(val);
     } else {
       setFormFields({ ...formFields, [fieldName]: val });
     }
   };
 
   const handleCountryChange = async (countryId) => {
-    const { data } = await axios.get(`state/country/${countryId}`);
-    const tData = data?.data.length ? transformCountryFormData(data.data) : [];
-    console.log(tData, "tData");
-    setStatesData(tData);
+    // const { data } = await axios.get(`state/country/${countryId}`);
+    // const tData = data?.data.length ? transformCountryFormData(data.data) : [];
+    // console.log(tData, "states data");
+    // setStatesData(tData);
     setFormFields({ ...formFields, country: countryId });
   };
 
-  const handleStateChange = async (states) => {
-    const stateIds = states.length ? states.map((item) => item.value) : [];
+  // const handleStateChange = async (states) => {
+  //   const stateIds = states.length ? states.map((item) => item.value) : [];
 
-    // get all districts for all states passed.
-    const { data } = await axios.post(`district/multiple`, {
-      states: stateIds,
-    });
+  //   // get all districts for all states passed.
+  //   const { data } = await axios.post(`district/multiple`, {
+  //     states: stateIds,
+  //   });
 
-    const tData = data?.data.length ? transformCountryFormData(data.data) : [];
-    setDistrictsData(tData);
-    setFormFields({ ...formFields, states: stateIds });
-  };
+  //   const tData = data?.data.length ? transformCountryFormData(data.data) : [];
+  //   setDistrictsData(tData);
+  //   setFormFields({ ...formFields, states: stateIds });
+  // };
 
-  const handleDistrictsChange = async (lgas) => {
-    const tData = lgas.map((item) => item.value);
-    setFormFields({ ...formFields, districts: tData });
-  };
+  // const handleDistrictsChange = async (lgas) => {
+  //   const tData = lgas.map((item) => item.value);
+  //   setFormFields({ ...formFields, districts: tData });
+  // };
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
@@ -263,35 +264,36 @@ const NewSubAdmin = () => {
           />
 
           <FormInputDropDown
+            index="z-50"
             reff={countryRef}
             label="Country *"
             data={countryData}
             onChange={(e) => handleChange(e, "country")}
           />
 
-          <FormMultipleSelect
+          {/* <FormMultipleSelect
+            index="z-40"
             reff={stateRef}
             label="State *"
             data={statesData}
             onChange={(e) => handleChange(e, "states")}
-          />
+          /> */}
 
-          <FormMultipleSelect
+          {/* <FormMultipleSelect
+            index="z-30"
             reff={districtsRef}
             label="Districts *"
             data={districtsData}
             onChange={(e) => handleChange(e, "districts")}
-          />
+          /> */}
 
           <FormInputDropDown
+            index="z-20"
             reff={identityRef}
             label="Identification(ID) type "
             data={IdTypes}
             onChange={(e) => handleChange(e, "identityType")}
           />
-
-          {/* upload id preview */}
-          <div className=""></div>
 
           <FormInputNumber
             value={formFields.identity_number}
@@ -321,7 +323,9 @@ const NewSubAdmin = () => {
 
           <button
             disabled={mtPending}
-            className={`h-[54px] mt-[42px] w-full text-center text-white bg-oaksgreen  rounded-[5px]`}
+            className={`h-[54px] mt-[42px] w-full text-center text-white   ${
+              mtPending ? "bg-gray-400" : "bg-oaksgreen"
+            }   rounded-[5px]`}
           >
             {mtPending ? (
               <ClipLoader size={20} color="#fff" />

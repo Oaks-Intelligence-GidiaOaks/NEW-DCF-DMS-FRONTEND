@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BackButton, CountCard } from "../../components/reusable";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getCategoryByCountry } from "../../lib/service";
+import { getAllCategory, getCategoryByCountry } from "../../lib/service";
 import CreateCategoryFormSA from "../../containers/CreateCategoryFormSA";
 
 const NewCategory = () => {
@@ -12,16 +12,14 @@ const NewCategory = () => {
     data: categoryData,
     isLoading: catLoading,
     isSuccess: catSuccess,
-    refetch,
   } = useQuery({
-    queryKey: ["getCategoryByCountry"],
-    queryFn: () => getCategoryByCountry(countryId),
-    enabled: !!countryId,
+    queryKey: ["getAllCategory"],
+    queryFn: () => getAllCategory(),
   });
 
-  useEffect(() => {
-    refetch();
-  }, [countryId, refetch]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [countryId, refetch]);
 
   let catCount = catSuccess ? categoryData?.data.data.length : 0;
 

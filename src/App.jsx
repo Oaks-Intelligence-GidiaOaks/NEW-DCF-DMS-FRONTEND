@@ -58,6 +58,7 @@ import {
   SuperAdminNewRoute,
   SuperAdminNewSubAdmin,
   SuperAdminProfile,
+  SuperAdminSubAdminTeamLeads,
   SuperAdminSubAdmins,
   SuperAdminTeamLeadProfile,
   SuperAdminTracker,
@@ -419,7 +420,7 @@ function App() {
 
           {/* super admin configuration */}
           <Route
-            path="/super_admin/:countryId/add_team_lead"
+            path="/super_admin/admins/:countryId/add_team_lead"
             element={
               <ProtectedRoute
                 requiredRole="SuperAdmin"
@@ -588,6 +589,20 @@ function App() {
           />
 
           <Route
+            path="/super_admin/admins/country_team_leads/:countryId"
+            element={
+              <ProtectedRoute
+                requiredRole="SuperAdmin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminSubAdminTeamLeads />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
             path="/super_admin/admins/add"
             element={
               <ProtectedRoute
@@ -630,7 +645,7 @@ function App() {
           />
 
           <Route
-            path="/super_admin/:countryId/enumerators"
+            path="/super_admin/admins/team_lead_enumerators/:teamLeadId"
             element={
               <ProtectedRoute
                 requiredRole="SuperAdmin"
