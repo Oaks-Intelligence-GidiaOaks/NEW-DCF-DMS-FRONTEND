@@ -113,7 +113,7 @@ const Profile = () => {
     bodyFormData.append("phone_number", newUser.phone_number);
     bodyFormData.append("photo_url", newUser.photo_url);
 
-    await mutate(formData);
+    await mutate(bodyFormData);
   };
 
   const handlePhotoClick = () => {
