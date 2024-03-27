@@ -63,7 +63,7 @@ const ViewProducts = () => {
       action={action}
       flag={flag}
       data={prodData}
-      backNavPath="/super_admin/configuration"
+      backNavPath="/admin/configuration"
     />
   );
 };

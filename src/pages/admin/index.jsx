@@ -12,3 +12,4 @@ export { default as History } from "./History";
 export { default as AdminConfiguration } from "./Configuration";
 export { default as AdminNewCategory } from "./NewCategory";
 export { default as AdminNewProduct } from "./NewProduct";
+export { default as AdminViewProducts } from "./ViewProducts";

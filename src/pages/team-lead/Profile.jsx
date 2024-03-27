@@ -111,7 +111,7 @@ const Profile = () => {
     bodyFormData.append("last_name", newUser.last_name);
     bodyFormData.append("email", newUser.email);
     bodyFormData.append("phone_number", newUser.phone_number);
-    bodyFormData.append("photo_url", newUser.photo_url);
+    bodyFormData.append("profile_image", newUser.photo_url);
 
     await mutate(bodyFormData);
   };

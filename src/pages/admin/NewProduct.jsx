@@ -43,10 +43,6 @@ const NewProduct = () => {
     : 0;
   let productsCount = allProducts?.data ? allProducts.data.data.length : 0;
 
-  //   let transCountryData = isCountrySuccess
-  //     ? transformCountryFormData(countryData.data.data)
-  //     : [];
-
   return (
     <div className="pt-[40px] md:pl-[70px] ">
       <div className="flex items-center flex-wrap gap-7 mb-[36px]">

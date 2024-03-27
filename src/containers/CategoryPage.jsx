@@ -30,12 +30,6 @@ const CategoryPage = ({
 
   const gridActions = {
     categoryGrid: [
-      // {
-      //   title: "Edit",
-      //   action: (row) => {
-      //     console.log("Edit clicked", row);
-      //   },
-      // },
       {
         title: "See more",
         action: (row) => {
