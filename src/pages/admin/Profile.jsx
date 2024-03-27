@@ -75,7 +75,7 @@ const Profile = () => {
     formData.append("last_name", lastName);
     formData.append("email", email);
     formData.append("phone_number", phoneNumber);
-    formData.append("photo_url", imageUrl);
+    formData.append("profile_image", imageUrl);
 
     await mutate(formData);
   };

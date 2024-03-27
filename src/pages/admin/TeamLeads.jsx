@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import { TeamLeadGrid } from "../../components/grid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loading, NoData } from "../../components/reusable";
-import { useQuery } from "@tanstack/react-query";
-import { getTeamLeadsByCountry } from "../../lib/service";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getTeamLeadsByCountry, resetPassword } from "../../lib/service";
 import { useAuth } from "../../context";
 import { transformTeamLedsGridData } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
+import { toast } from "react-toastify";
 
 const TeamLeads = () => {
-  const [tableData, setTableData] = useState(null);
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
 
   const {
     data: teamLeads,
@@ -32,6 +35,49 @@ const TeamLeads = () => {
     totalTeamLead: teamLeads?.data.totalTeamLead,
     newlyAdded: teamLeads?.data.newlyAdded,
   };
+
+  const actions = [
+    {
+      title: "Reset Password",
+      action: async (row) => {
+        const tData = {
+          id: row.id,
+        };
+
+        try {
+          const res = await resetPassword(tData);
+          toast.success(`Passeord reset successfully`);
+          queryClient.invalidateQueries({
+            queryKey: ["getTeamLeadsByCountry"],
+          });
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
+    },
+    {
+      title: "See more",
+      action: (row) => {
+        navigate(`/admin/team_leads/${row._id}`);
+      },
+    },
+    {
+      title: "Delete",
+      action: async (row) => {
+        let userId = row._id;
+
+        try {
+          const res = await disableUser(userId);
+          toast.success(`user disabled successful`);
+          queryClient.invalidateQueries({
+            queryKey: ["getTeamLeadsByCountry"],
+          });
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
+    },
+  ];
 
   console.log("team leads data", tlGridData);
 
@@ -76,7 +122,7 @@ const TeamLeads = () => {
         {tlLoading ? (
           <Loading />
         ) : tlSuccess && tlGridData.length ? (
-          <GeneralTable data={tlGridData} actions={[]} />
+          <GeneralTable data={tlGridData} actions={actions} />
         ) : (
           <NoData text="No team leads yet" />
         )}

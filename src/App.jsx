@@ -32,6 +32,7 @@ import {
   AdminConfiguration,
   AdminNewProduct,
   AdminNewCategory,
+  AdminViewProducts,
 } from "./pages/admin";
 
 import TeamLead from "./components/layout/TeamLead";
@@ -265,7 +266,7 @@ function App() {
             }
           />
           <Route
-            path="/admin/team_leads/:id"
+            path="/admin/team_leads/:teamLeadId"
             element={
               adminRoleCheck ? (
                 <Admin>
@@ -384,6 +385,19 @@ function App() {
                 component={
                   <Admin>
                     <AdminConfiguration />
+                  </Admin>
+                }
+              />
+            }
+          />
+          <Route
+            path="admin/configuration/category_products/:categoryId"
+            element={
+              <ProtectedRoute
+                requiredRole="SubAdmin"
+                component={
+                  <Admin>
+                    <AdminViewProducts />
                   </Admin>
                 }
               />

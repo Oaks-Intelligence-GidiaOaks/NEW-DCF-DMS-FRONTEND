@@ -1,31 +1,18 @@
-import React, { useState } from "react";
-import {
-  FormInput,
-  FormInputDropDown,
-  TagsInput,
-  TextInput,
-} from "../components/form";
-import { useController, useForm } from "react-hook-form";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import React, { useRef, useState } from "react";
+import { FormInputDropDown, TagsInput, TextInput } from "../components/form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createCategory, getAllCountries } from "../lib/service";
 import { transformCountryFormData } from "../lib/utils";
 import { toast } from "react-toastify";
 import { useAuth } from "../context";
 import { RingsCircle } from "../components/reusable";
-import { queryClient } from "../App";
 
-const CreateCategoryForm = () => {
+const CreateCategoryFormSA = () => {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
 
-  const {
-    data: countries,
-    isLoading,
-    isError,
-    isSuccess: isCountryQuerySuccess,
-  } = useQuery({
-    queryKey: ["getAllCountries"],
-    queryFn: getAllCountries,
-  });
+  const countryRef = useRef();
+  const tagsRef = useRef();
 
   const { mutate, isPending: isCategoryLooading } = useMutation({
     mutationKey: ["createCategory"],
@@ -33,7 +20,7 @@ const CreateCategoryForm = () => {
     onSuccess: (dt) => {
       toast.success(`Category Created SUccessfully`);
       clearFormFields();
-      queryClient.invalidateQueries({ queryKey: ["getCategoryByCountry"] });
+      queryClient.invalidateQueries({ queryKey: ["getAllCategory"] });
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -41,15 +28,10 @@ const CreateCategoryForm = () => {
   });
 
   const [formFields, setFormFields] = useState({
-    country_id: user.role === "SubAdmin" ? user.country : "",
+    country_id: user.country,
     name: "",
     expected_inputs: [],
   });
-
-  // component variables
-  let countryData = isCountryQuerySuccess
-    ? transformCountryFormData(countries.data.data)
-    : [];
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -59,8 +41,6 @@ const CreateCategoryForm = () => {
     const categoryData = {
       ...formFields,
     };
-
-    console.log("categoryData", categoryData);
 
     if (isError) {
       return toast.error("Please fill all form fields");
@@ -79,6 +59,12 @@ const CreateCategoryForm = () => {
       name: "",
       expected_inputs: [],
     });
+
+    // try {
+    //   // countryRef.current.clearValue();
+    // } catch (ex) {
+    //   toast.success(`Successful`);
+    // }
   };
 
   return (
@@ -88,15 +74,6 @@ const CreateCategoryForm = () => {
       </h2>
 
       <form action="" onSubmit={onSubmit}>
-        {user.role === "SuperAdmin" && (
-          <FormInputDropDown
-            label="State"
-            data={countryData}
-            index="z-30"
-            onChange={(e) => handleChange(e, "country_id")}
-          />
-        )}
-
         <TextInput
           label={"Category Name"}
           placeholder="Category name"
@@ -105,6 +82,7 @@ const CreateCategoryForm = () => {
         />
 
         <TagsInput
+          tags={formFields.expected_inputs}
           defaultValue={formFields.expected_inputs}
           label={"Expected Input Name(s)"}
           onChange={(e) => handleChange(e, "expected_inputs")}
@@ -129,4 +107,4 @@ const CreateCategoryForm = () => {
   );
 };
 
-export default CreateCategoryForm;
+export default CreateCategoryFormSA;

@@ -27,17 +27,13 @@ const Configuration = () => {
     queryFn: () => getCategoryByCountry(user.country),
   });
 
-  // console.log(catData.data.data);
-
-  if (true) {
-    return (
-      <CategoryPage
-        data={catData?.data.data}
-        productPath="/admin/configuration/products"
-        categoryPath="/admin/configuration/categories"
-      />
-    );
-  }
+  return (
+    <CategoryPage
+      data={catData?.data.data}
+      productPath="/admin/configuration/products"
+      categoryPath="/admin/configuration/categories"
+    />
+  );
 };
 
 export default Configuration;

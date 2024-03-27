@@ -59,7 +59,7 @@ const Sidebar = () => {
             />
             <div className="text-[12px] p-1">
               <p className="text-[16px]">
-                {user.firstName} {user.lastName}{" "}
+                {user.first_name} {user.last_name}
               </p>
               <span>{user.id}</span>
             </div>

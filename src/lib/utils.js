@@ -10,6 +10,27 @@ export const transformCategoryGridData = (data) => {
   return newData;
 };
 
+export const transformCategoryProductsGridData = (data) => {
+  const newData = data?.map((item, i) => {
+    const inputs = item.inputs?.map((it, i) => it.title);
+
+    const tItem = {
+      _id: item._id,
+      name: item.name,
+      caegory_id: item.category?._id,
+      category_name: item.category?.name,
+      country_id: item.country?._id,
+      country_name: item.country?.name,
+      currency: item.country?.currency?.symbol,
+      inputs,
+    };
+
+    return tItem;
+  });
+
+  return newData;
+};
+
 export const transformSubAdminGridData = (data) => {
   const newData = data.map((item) => {
     const {
@@ -212,7 +233,7 @@ export const transformProductsDataByCategory = (data) => {
 };
 
 export const transformProductGridData = (data) => {
-  const newData = data.map((item) => {
+  const newData = data?.map((item) => {
     const inputs = item.inputs.reduce((acc, curr) => {
       // change to value
       acc[curr.title] = curr.value;
@@ -222,17 +243,17 @@ export const transformProductGridData = (data) => {
 
     const tData = {
       _id: item._id,
-      name: item.product.name,
+      name: item.product?.name,
       ...inputs,
-      createdAt: item.createdAt,
+      createdAt: item?.createdAt,
       created_by: item.created_by?.id,
       district: item.district?.name,
       flagged: item.flagged,
     };
 
-    return tData;
+    console.log(tData, "tData");
 
-    // console.log("mu inputs", inputs);
+    return tData;
   });
 
   return newData;

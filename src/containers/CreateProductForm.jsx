@@ -1,22 +1,27 @@
-import React, { useRef, useState } from "react";
-import {
-  FormDropdown,
-  FormInput,
-  FormInputDropDown,
-  TagsInput,
-  TextInput,
-} from "../components/form";
+import React, { useEffect, useRef, useState } from "react";
+import { FormInputDropDown, TextInput } from "../components/form";
 import { GeneralTable } from "../components/charts";
 import productInputs from "../../src/data/form/productInputs.json";
 import { createProduct, getCategoryByCountry } from "../lib/service";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/useAuth";
-import { transformCategoryFormData } from "../lib/utils";
 import FormProductInputs from "./FormProductInputs";
 import { toast } from "react-toastify";
 
 const CreateProductForm = ({ countryData }) => {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  const [formFields, setFormFields] = useState({
+    country_id: user.country,
+    category_id: "",
+    name: "",
+    inputs: [],
+  });
+
+  const categoryInputRef = useRef();
+  const titleInputRef = useRef();
+  const typesInputRef = useRef();
 
   const { mutate, isPending: mtPending } = useMutation({
     mutationKey: ["createProduct"],
@@ -24,6 +29,7 @@ const CreateProductForm = ({ countryData }) => {
     onSuccess: (sx) => {
       toast.success(`Product created succesfuuly`);
       clearFormFields();
+      queryClient.invalidateQueries({ queryKey: ["getProductsByCountry"] });
     },
     onError: (ex) => {
       toast.error(ex.message);
@@ -37,22 +43,11 @@ const CreateProductForm = ({ countryData }) => {
   } = useQuery({
     queryKey: ["getCategoryByCountry"],
     queryFn: () => getCategoryByCountry(user.country),
-    enabled: !!user.country,
-  });
-
-  const [formFields, setFormFields] = useState({
-    country_id: user.country,
-    category_id: "",
-    name: "",
-    inputs: [],
   });
 
   // component variables
-  const categoryInputRef = useRef();
-
-  const [allExpectedInputs, setAllExpectedInputs] = useState();
   const [expectedInputs, setExpectedInputs] = useState([]);
-  const [categories, setCategories] = useState(null);
+
   let caInputData =
     catSuccess &&
     catByCountry?.data?.data?.map((it) => ({ label: it.name, value: it._id }));
@@ -75,18 +70,44 @@ const CreateProductForm = ({ countryData }) => {
       }, {});
 
   const addInput = (inputObj) => {
+    console.log(inputObj, "input object");
+    console.log(expectedInputs, "expectedInputs");
+
+    const updatedExpectedInputs = expectedInputs.filter(
+      (flt) => flt.value !== inputObj.title
+    );
+
+    setExpectedInputs(updatedExpectedInputs);
+
     let newInputs = [...formFields.inputs];
     newInputs.push(inputObj);
 
     setFormFields({ ...formFields, inputs: newInputs });
   };
 
-  const handleSubmit = (e) => {
-    // e.preventDefault();
+  const removeInput = (row) => {
+    let catId = formFields.category_id;
+    let input_title = row.title;
 
+    let newInputs = [...formFields.inputs].filter(
+      (item) => item.title !== input_title
+    );
+    setFormFields({ ...formFields, inputs: newInputs });
+
+    const newObj = {
+      label: input_title,
+      value: input_title,
+    };
+
+    setExpectedInputs((prev) => [...prev, newObj]);
+  };
+
+  const handleSubmit = async () => {
     const mutationData = {
       ...formFields,
     };
+
+    console.log("mutation data", mutationData);
 
     const isError = Object.values(formFields).filter((it) => !it.length).length;
 
@@ -95,8 +116,7 @@ const CreateProductForm = ({ countryData }) => {
       return toast.error(`Please fill all inputs`);
     }
 
-    mutate(mutationData);
-    clearFormFields();
+    await mutate(mutationData);
   };
 
   const clearFormFields = () => {
@@ -107,40 +127,22 @@ const CreateProductForm = ({ countryData }) => {
       inputs: [],
     });
 
-    categoryInputRef.current.setValue("");
+    try {
+      categoryInputRef.current.clearValue();
+    } catch (ex) {
+      toast.success(`successful`);
+    }
   };
 
   const handleChange = (val, fieldName) => {
-    if (fieldName === "country_id") {
-      handleCountryChange(val);
-    } else if (fieldName === "category_id") {
+    if (fieldName === "category_id") {
       handleCategoryChange(val);
     } else {
       setFormFields({ ...formFields, [fieldName]: val });
     }
   };
 
-  const handleCountryChange = async (val) => {
-    const { data: categoryByCountry } = await user.country(val);
-
-    const tData = transformCategoryFormData(
-      categoryByCountry.data.length ? categoryByCountry.data : []
-    );
-
-    console.log(tData);
-
-    setCategories(tData.categoryIds);
-    setAllExpectedInputs(tData.expectedInputs);
-
-    setFormFields({ ...formFields, country_id: val, category_id: "" });
-    // clearInputs();
-  };
-
   const handleCategoryChange = async (val) => {
-    console.log("change", val);
-    console.log("change 2", mExpectedInputs[val]);
-    console.log("change 3", mExpectedInputs);
-
     setExpectedInputs(mExpectedInputs[val]);
 
     setFormFields({ ...formFields, category_id: val });
@@ -152,6 +154,7 @@ const CreateProductForm = ({ countryData }) => {
 
       <div className="mt-4 md:w-3/5 xl:w-2/3 space-y-4">
         <FormInputDropDown
+          index="z-40"
           reff={categoryInputRef}
           placeholder={"Choose category"}
           data={caInputData || []}
@@ -183,13 +186,7 @@ const CreateProductForm = ({ countryData }) => {
                 flag={{
                   title: "Remove",
                   action: (row) => {
-                    let newInputs = [...formFields.inputs].filter(
-                      (item) => item.title !== row.title
-                    );
-
-                    setFormFields({ ...formFields, inputs: newInputs });
-
-                    // console.log("row clicked", row);
+                    removeInput(row);
                   },
                 }}
                 data={formFields.inputs}
@@ -200,7 +197,10 @@ const CreateProductForm = ({ countryData }) => {
 
         <button
           onClick={handleSubmit}
-          className="h-[54px] my-[45px] rounded-[5px] text-center bg-[#82B22E] font-[500] text-base text-white w-full leading-[24px]"
+          disabled={mtPending}
+          className={`h-[54px] my-[45px] rounded-[5px] text-center ${
+            mtPending ? "bg-gray-400" : "bg-[#82B22E]"
+          }  font-[500] text-base text-white w-full leading-[24px]`}
         >
           Create
         </button>
