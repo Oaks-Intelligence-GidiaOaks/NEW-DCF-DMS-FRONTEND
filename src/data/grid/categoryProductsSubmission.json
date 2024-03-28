@@ -1,0 +1,449 @@
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "65e6ef999bafadb791f601bd",
+      "category": {
+        "_id": "65e645816adc65587a804eb8",
+        "country": "65e344bff0eab8c4f2552abe",
+        "name": "Food Product",
+        "expected_inputs": ["Price", "Size", "Brand"],
+        "createdAt": "2024-03-04T22:04:49.629Z",
+        "updatedAt": "2024-03-04T22:04:49.629Z",
+        "__v": 0
+      },
+      "product": {
+        "_id": "65e64b4c6adc65587a804ed6",
+        "country": "65e344bff0eab8c4f2552abe",
+        "category": "65e645816adc65587a804eb8",
+        "name": "Rice 25Kg",
+        "inputs": [
+          {
+            "title": "Price",
+            "input_type": "Number",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed7"
+          },
+          {
+            "title": "Size",
+            "input_type": "Text",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed8"
+          },
+          {
+            "title": "Brand",
+            "input_type": "DropDown",
+            "options": ["Good Mama", "Local"],
+            "_id": "65e64b4c6adc65587a804ed9"
+          }
+        ],
+        "createdAt": "2024-03-04T22:29:32.365Z",
+        "updatedAt": "2024-03-04T22:29:32.365Z",
+        "__v": 0
+      },
+      "district": {
+        "_id": "65e34a248097670c457ef850",
+        "name": "Abak",
+        "state_id": "65e3471e11445db48a021eb3",
+        "createdAt": "2024-03-02T15:47:48.406Z",
+        "updatedAt": "2024-03-02T15:47:48.406Z",
+        "__v": 0
+      },
+      "country": {
+        "currency": {
+          "name": "Nigerian Naira",
+          "symbol": "NGN"
+        },
+        "_id": "65e344bff0eab8c4f2552abe",
+        "name": "Nigeria",
+        "createdAt": "2024-03-02T15:24:47.640Z",
+        "updatedAt": "2024-03-02T15:24:47.640Z",
+        "__v": 0
+      },
+      "state": {
+        "_id": "65e3471e11445db48a021eb3",
+        "name": "Akwa Ibom",
+        "country_id": "65e344bff0eab8c4f2552abe",
+        "createdAt": "2024-03-02T15:34:54.336Z",
+        "updatedAt": "2024-03-02T15:34:54.336Z",
+        "__v": 0
+      },
+      "created_by": {
+        "_id": "65e6e7e3bc60eff8a6554b8a",
+        "first_name": "Peter",
+        "last_name": "Paul",
+        "email": "pet1@gmail.com",
+        "id": "11586803",
+        "phone_number": "0709089746",
+        "identityType": "NIN",
+        "identity_number": "9115637453799",
+        "identity_image_url": "",
+        "country": "65e344bff0eab8c4f2552abe",
+        "states": ["65e3471e11445db48a021eb3"],
+        "districts": ["65e34a248097670c457ef850"],
+        "disabled": false,
+        "firstUse": true,
+        "photo_url": "",
+        "role": "Enumerator",
+        "createdAt": "2024-03-05T09:37:39.883Z",
+        "updatedAt": "2024-03-05T09:37:39.883Z",
+        "__v": 0
+      },
+      "approved": false,
+      "flagged": false,
+      "inputs": [
+        {
+          "title": "Price",
+          "value": "1000",
+          "_id": "65e6ef999bafadb791f601be"
+        },
+        {
+          "title": "Size",
+          "value": "Module",
+          "_id": "65e6ef999bafadb791f601bf"
+        },
+        {
+          "title": "Brand",
+          "value": "Good Mama",
+          "_id": "65e6ef999bafadb791f601c0"
+        }
+      ],
+      "createdAt": "2024-03-05T10:10:33.859Z",
+      "updatedAt": "2024-03-05T10:10:33.859Z",
+      "__v": 0
+    },
+    {
+      "_id": "65e6ef1e225798e0c31b122d",
+      "category": {
+        "_id": "65e645816adc65587a804eb8",
+        "country": "65e344bff0eab8c4f2552abe",
+        "name": "Food Product",
+        "expected_inputs": ["Price", "Size", "Brand"],
+        "createdAt": "2024-03-04T22:04:49.629Z",
+        "updatedAt": "2024-03-04T22:04:49.629Z",
+        "__v": 0
+      },
+      "product": {
+        "_id": "65e64b4c6adc65587a804ed6",
+        "country": "65e344bff0eab8c4f2552abe",
+        "category": "65e645816adc65587a804eb8",
+        "name": "Rice 25Kg",
+        "inputs": [
+          {
+            "title": "Price",
+            "input_type": "Number",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed7"
+          },
+          {
+            "title": "Size",
+            "input_type": "Text",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed8"
+          },
+          {
+            "title": "Brand",
+            "input_type": "DropDown",
+            "options": ["Good Mama", "Local"],
+            "_id": "65e64b4c6adc65587a804ed9"
+          }
+        ],
+        "createdAt": "2024-03-04T22:29:32.365Z",
+        "updatedAt": "2024-03-04T22:29:32.365Z",
+        "__v": 0
+      },
+      "district": {
+        "_id": "65e34a248097670c457ef852",
+        "name": "Eket",
+        "state_id": "65e3471e11445db48a021eb3",
+        "createdAt": "2024-03-02T15:47:48.407Z",
+        "updatedAt": "2024-03-02T15:47:48.407Z",
+        "__v": 0
+      },
+      "country": {
+        "currency": {
+          "name": "Nigerian Naira",
+          "symbol": "NGN"
+        },
+        "_id": "65e344bff0eab8c4f2552abe",
+        "name": "Nigeria",
+        "createdAt": "2024-03-02T15:24:47.640Z",
+        "updatedAt": "2024-03-02T15:24:47.640Z",
+        "__v": 0
+      },
+      "state": {
+        "_id": "65e3471e11445db48a021eb3",
+        "name": "Akwa Ibom",
+        "country_id": "65e344bff0eab8c4f2552abe",
+        "createdAt": "2024-03-02T15:34:54.336Z",
+        "updatedAt": "2024-03-02T15:34:54.336Z",
+        "__v": 0
+      },
+      "created_by": {
+        "_id": "65e6e7e3bc60eff8a6554b8a",
+        "first_name": "Peter",
+        "last_name": "Paul",
+        "email": "pet1@gmail.com",
+        "id": "11586803",
+        "phone_number": "0709089746",
+        "identityType": "NIN",
+        "identity_number": "9115637453799",
+        "identity_image_url": "",
+        "country": "65e344bff0eab8c4f2552abe",
+        "states": ["65e3471e11445db48a021eb3"],
+        "districts": ["65e34a248097670c457ef850"],
+        "disabled": false,
+        "firstUse": true,
+        "photo_url": "",
+        "role": "Enumerator",
+        "createdAt": "2024-03-05T09:37:39.883Z",
+        "updatedAt": "2024-03-05T09:37:39.883Z",
+        "__v": 0
+      },
+      "approved": false,
+      "flagged": false,
+      "inputs": [
+        {
+          "title": "Price",
+          "value": "1000",
+          "_id": "65e6ef1e225798e0c31b122e"
+        },
+        {
+          "title": "Size",
+          "value": "Module",
+          "_id": "65e6ef1e225798e0c31b122f"
+        },
+        {
+          "title": "Brand",
+          "value": "Good Mama",
+          "_id": "65e6ef1e225798e0c31b1230"
+        }
+      ],
+      "createdAt": "2024-03-05T10:08:30.301Z",
+      "updatedAt": "2024-03-05T10:08:30.301Z",
+      "__v": 0
+    },
+    {
+      "_id": "65e6eedf96d2399fd2e60d19",
+      "category": {
+        "_id": "65e645816adc65587a804eb8",
+        "country": "65e344bff0eab8c4f2552abe",
+        "name": "Food Product",
+        "expected_inputs": ["Price", "Size", "Brand"],
+        "createdAt": "2024-03-04T22:04:49.629Z",
+        "updatedAt": "2024-03-04T22:04:49.629Z",
+        "__v": 0
+      },
+      "product": {
+        "_id": "65e64b4c6adc65587a804ed6",
+        "country": "65e344bff0eab8c4f2552abe",
+        "category": "65e645816adc65587a804eb8",
+        "name": "Rice 25Kg",
+        "inputs": [
+          {
+            "title": "Price",
+            "input_type": "Number",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed7"
+          },
+          {
+            "title": "Size",
+            "input_type": "Text",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed8"
+          },
+          {
+            "title": "Brand",
+            "input_type": "DropDown",
+            "options": ["Good Mama", "Local"],
+            "_id": "65e64b4c6adc65587a804ed9"
+          }
+        ],
+        "createdAt": "2024-03-04T22:29:32.365Z",
+        "updatedAt": "2024-03-04T22:29:32.365Z",
+        "__v": 0
+      },
+      "district": {
+        "_id": "65e34a248097670c457ef852",
+        "name": "Eket",
+        "state_id": "65e3471e11445db48a021eb3",
+        "createdAt": "2024-03-02T15:47:48.407Z",
+        "updatedAt": "2024-03-02T15:47:48.407Z",
+        "__v": 0
+      },
+      "country": {
+        "currency": {
+          "name": "Nigerian Naira",
+          "symbol": "NGN"
+        },
+        "_id": "65e344bff0eab8c4f2552abe",
+        "name": "Nigeria",
+        "createdAt": "2024-03-02T15:24:47.640Z",
+        "updatedAt": "2024-03-02T15:24:47.640Z",
+        "__v": 0
+      },
+      "state": {
+        "_id": "65e3471e11445db48a021eb3",
+        "name": "Akwa Ibom",
+        "country_id": "65e344bff0eab8c4f2552abe",
+        "createdAt": "2024-03-02T15:34:54.336Z",
+        "updatedAt": "2024-03-02T15:34:54.336Z",
+        "__v": 0
+      },
+      "created_by": {
+        "_id": "65e6e7e3bc60eff8a6554b8a",
+        "first_name": "Peter",
+        "last_name": "Paul",
+        "email": "pet1@gmail.com",
+        "id": "11586803",
+        "phone_number": "0709089746",
+        "identityType": "NIN",
+        "identity_number": "9115637453799",
+        "identity_image_url": "",
+        "country": "65e344bff0eab8c4f2552abe",
+        "states": ["65e3471e11445db48a021eb3"],
+        "districts": ["65e34a248097670c457ef850"],
+        "disabled": false,
+        "firstUse": true,
+        "photo_url": "",
+        "role": "Enumerator",
+        "createdAt": "2024-03-05T09:37:39.883Z",
+        "updatedAt": "2024-03-05T09:37:39.883Z",
+        "__v": 0
+      },
+      "approved": false,
+      "flagged": false,
+      "inputs": [
+        {
+          "title": "Price",
+          "value": "1000",
+          "_id": "65e6eedf96d2399fd2e60d1a"
+        },
+        {
+          "title": "Size",
+          "value": "Module",
+          "_id": "65e6eedf96d2399fd2e60d1b"
+        },
+        {
+          "title": "Brand",
+          "value": "Good Mama",
+          "_id": "65e6eedf96d2399fd2e60d1c"
+        }
+      ],
+      "createdAt": "2024-03-05T10:07:27.741Z",
+      "updatedAt": "2024-03-05T10:07:27.741Z",
+      "__v": 0
+    },
+    {
+      "_id": "65e6ee1c9967830963a59e10",
+      "category": {
+        "_id": "65e645816adc65587a804eb8",
+        "country": "65e344bff0eab8c4f2552abe",
+        "name": "Food Product",
+        "expected_inputs": ["Price", "Size", "Brand"],
+        "createdAt": "2024-03-04T22:04:49.629Z",
+        "updatedAt": "2024-03-04T22:04:49.629Z",
+        "__v": 0
+      },
+      "product": {
+        "_id": "65e64b4c6adc65587a804ed6",
+        "country": "65e344bff0eab8c4f2552abe",
+        "category": "65e645816adc65587a804eb8",
+        "name": "Rice 25Kg",
+        "inputs": [
+          {
+            "title": "Price",
+            "input_type": "Number",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed7"
+          },
+          {
+            "title": "Size",
+            "input_type": "Text",
+            "options": [],
+            "_id": "65e64b4c6adc65587a804ed8"
+          },
+          {
+            "title": "Brand",
+            "input_type": "DropDown",
+            "options": ["Good Mama", "Local"],
+            "_id": "65e64b4c6adc65587a804ed9"
+          }
+        ],
+        "createdAt": "2024-03-04T22:29:32.365Z",
+        "updatedAt": "2024-03-04T22:29:32.365Z",
+        "__v": 0
+      },
+      "district": {
+        "_id": "65e34a248097670c457ef852",
+        "name": "Eket",
+        "state_id": "65e3471e11445db48a021eb3",
+        "createdAt": "2024-03-02T15:47:48.407Z",
+        "updatedAt": "2024-03-02T15:47:48.407Z",
+        "__v": 0
+      },
+      "country": {
+        "currency": {
+          "name": "Nigerian Naira",
+          "symbol": "NGN"
+        },
+        "_id": "65e344bff0eab8c4f2552abe",
+        "name": "Nigeria",
+        "createdAt": "2024-03-02T15:24:47.640Z",
+        "updatedAt": "2024-03-02T15:24:47.640Z",
+        "__v": 0
+      },
+      "state": {
+        "_id": "65e3471e11445db48a021eb3",
+        "name": "Akwa Ibom",
+        "country_id": "65e344bff0eab8c4f2552abe",
+        "createdAt": "2024-03-02T15:34:54.336Z",
+        "updatedAt": "2024-03-02T15:34:54.336Z",
+        "__v": 0
+      },
+      "created_by": {
+        "_id": "65e6e7e3bc60eff8a6554b8a",
+        "first_name": "Peter",
+        "last_name": "Paul",
+        "email": "pet1@gmail.com",
+        "id": "11586803",
+        "phone_number": "0709089746",
+        "identityType": "NIN",
+        "identity_number": "9115637453799",
+        "identity_image_url": "",
+        "country": "65e344bff0eab8c4f2552abe",
+        "states": ["65e3471e11445db48a021eb3"],
+        "districts": ["65e34a248097670c457ef850"],
+        "disabled": false,
+        "firstUse": true,
+        "photo_url": "",
+        "role": "Enumerator",
+        "createdAt": "2024-03-05T09:37:39.883Z",
+        "updatedAt": "2024-03-05T09:37:39.883Z",
+        "__v": 0
+      },
+      "approved": false,
+      "flagged": false,
+      "inputs": [
+        {
+          "title": "Price",
+          "value": "1000",
+          "_id": "65e6ee1c9967830963a59e11"
+        },
+        {
+          "title": "Size",
+          "value": "Module",
+          "_id": "65e6ee1c9967830963a59e12"
+        },
+        {
+          "title": "Brand",
+          "value": "Good Mama",
+          "_id": "65e6ee1c9967830963a59e13"
+        }
+      ],
+      "createdAt": "2024-03-05T10:04:12.749Z",
+      "updatedAt": "2024-03-05T10:04:12.749Z",
+      "__v": 0
+    }
+  ]
+}

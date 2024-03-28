@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CategoryTab from "../../components/CategoryTab";
-import {
-  Restaurant,
-  DirectionsCar,
-  Home,
-  PowerSettingsNew,
-  Shuffle,
-  Summarize,
-} from "@mui/icons-material";
+import { Home } from "@mui/icons-material";
 
 import { Loading, NoData } from "../../components/reusable";
 import { useQuery, useQueryClient } from "@tanstack/react-query";

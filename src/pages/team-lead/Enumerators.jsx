@@ -4,17 +4,36 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import EnumeratorGrid from "../../components/grid/EnumeratorGrid";
 import { Loading, NoData } from "../../components/reusable";
-import { useQuery } from "@tanstack/react-query";
-import { getAllEnumerators } from "../../lib/service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  disableUser,
+  getAllEnumerators,
+  updateUserById,
+} from "../../lib/service";
 import {
   transformEnumeratorsGridData,
   transformSubAdminGridData,
 } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
+import { toast } from "react-toastify";
 
 const Enumerators = () => {
-  const [tableData, setTableData] = useState(null);
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["updateUserById"],
+    mutationFn: (userId, userData) => updateUserById(userId, userData),
+    onSuccess: (sx) => {
+      toast.success(`user details updated successfully`);
+      queryClient.invalidateQueries({
+        queryKey: ["getAllEnumerators"],
+      });
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
 
   const {
     data: enumerators,
@@ -36,6 +55,56 @@ const Enumerators = () => {
         newlyAdded: enumerators.data.newlyAdded,
       }
     : null;
+
+  const actions = [
+    {
+      title: "delete",
+      action: async (row) => {
+        try {
+          const res = await disableUser(row._id);
+          queryClient.invalidateQueries({
+            queryKey: ["getAllEnumerators"],
+          });
+
+          toast.success(`user deleted successfully..`);
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
+    },
+  ];
+
+  const commands = [
+    {
+      type: "Edit",
+      buttonOption: { cssClass: "e-flat", iconCss: "e-edit e-icons" },
+    },
+    {
+      type: "Save",
+      buttonOption: { cssClass: "e-flat", iconCss: "e-update e-icons" },
+    },
+    {
+      type: "Cancel",
+      buttonOption: { cssClass: "e-flat", iconCss: "e-cancel-icon e-icons" },
+    },
+  ];
+
+  const handleSave = async (args) => {
+    const { data } = args;
+
+    if (args.requestType === "save") {
+      const userFormData = new FormData();
+
+      userFormData.append("first_name", data.first_name);
+      userFormData.append("last_name", data.last_name);
+      userFormData.append("email", data.email);
+      userFormData.append("phone_number", data.phone_number);
+
+      await mutate(data._id, userFormData);
+    }
+  };
+
+  const nonEditableFields = ["id", "states", "districts", "country"];
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
@@ -68,7 +137,14 @@ const Enumerators = () => {
         {enumLoading ? (
           <Loading />
         ) : enumData ? (
-          <GeneralTable pageSize={30} data={enumData} actions={[]} />
+          <GeneralTable
+            pageSize={30}
+            data={enumData}
+            actions={actions}
+            commands={commands}
+            handleSave={handleSave}
+            nonEditableFields={nonEditableFields}
+          />
         ) : (
           <div className="h-32">
             <NoData text="You have no enumerators yet" />

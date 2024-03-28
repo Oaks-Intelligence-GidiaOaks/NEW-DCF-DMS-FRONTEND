@@ -1,15 +1,33 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import {
   getProductResponsesByCategory,
   resubmitProductData,
+  updateProductData,
 } from "../lib/service";
 import { GeneralTable } from "../components/charts";
 import { transformProductGridData } from "../lib/utils";
 import { toast } from "react-toastify";
-import { queryClient } from "../App";
+import catProdSubmission from "../data/grid/categoryProductsSubmission.json";
 
 const ProductsByCategoryTableTL = ({ categoryId }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["updateProductData"],
+    mutationFn: (productId, productData) =>
+      updateProductData(productId, productData),
+    onSuccess: (sx) => {
+      toast.success(`product updated successfully..`);
+      queryClient.invalidateQueries({
+        queryKey: ["getProductResponsesByCategory"],
+      });
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
   const {
     data: productData,
     isLoading: prodLoading,
@@ -26,8 +44,12 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
   }, [categoryId, refetch]);
 
   // component variables
+  // let prodGridData = prodSuccess
+  //   ? transformProductGridData(productData.data.data)
+  //   : [];
+
   let prodGridData = prodSuccess
-    ? transformProductGridData(productData.data.data)
+    ? transformProductGridData(catProdSubmission.data)
     : [];
 
   const Flag = {
@@ -67,12 +89,20 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
 
   const handleSave = async (args) => {
     if (args.requestType === "save") {
-      const { data } = args;
+      const {
+        data: { createdAt, created_by, district, flagged, _id, name, ...rest },
+      } = args;
 
       const modifiedData = {
-        _id: data._id,
+        inputs: Object.entries(rest).map((item, i) => ({
+          title: item[0],
+          value: item[1],
+        })),
       };
-      console.log("modified", data);
+
+      console.log("modified", modifiedData);
+
+      await mutate(_id, modifiedData);
     }
   };
 
@@ -85,6 +115,7 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
         commands={Commands}
         handleSave={handleSave}
         flag={Flag}
+        nonEditableFields={["flagged", "district", "name"]}
       />
     </div>
   );

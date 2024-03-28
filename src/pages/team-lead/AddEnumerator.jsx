@@ -204,12 +204,12 @@ const AddEnumerator = () => {
     bodyFormData.append("last_name", newUser.lastName);
     bodyFormData.append("email", newUser.email);
     bodyFormData.append("phone_number", newUser.phoneNumber);
-    bodyFormData.append("identityType", newUser.identityType);
-    bodyFormData.append("identity_number", newUser.identity);
     bodyFormData.append("states", newUser.state);
-    bodyFormData.append("identity_image_url", newUser.identityImage);
-    bodyFormData.append("role", "Enumerator");
     bodyFormData.append("country", user.country);
+    bodyFormData.append("identity_number", newUser.identity);
+    bodyFormData.append("identityType", newUser.identityType);
+    bodyFormData.append("identity_document", newUser.identityImage);
+    bodyFormData.append("role", "Enumerator");
 
     newUser.LGA?.map((item) => bodyFormData.append("districts", `${item}`));
 
