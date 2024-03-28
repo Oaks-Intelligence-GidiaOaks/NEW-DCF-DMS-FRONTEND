@@ -44,13 +44,13 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
   }, [categoryId, refetch]);
 
   // component variables
-  // let prodGridData = prodSuccess
-  //   ? transformProductGridData(productData.data.data)
-  //   : [];
-
   let prodGridData = prodSuccess
-    ? transformProductGridData(catProdSubmission.data)
+    ? transformProductGridData(productData.data.data)
     : [];
+
+  // let prodGridData = prodSuccess
+  //   ? transformProductGridData(catProdSubmission.data)
+  //   : [];
 
   const Flag = {
     title: "Submit",
