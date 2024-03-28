@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CategoryTab from "../../components/CategoryTab";
-import {
-  Restaurant,
-  DirectionsCar,
-  Home,
-  PowerSettingsNew,
-  Shuffle,
-  Summarize,
-} from "@mui/icons-material";
+import { Home } from "@mui/icons-material";
 
-import OaksSlider from "../../components/Slider";
-import axios from "axios";
-import { Loading, NoData } from "../../components/reusable";
+import { CountCard, Loading, NoData } from "../../components/reusable";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryClient } from "../../App";
 import { GeneralTable } from "../../components/charts";
 import { useAuth } from "../../context";
 import { transformProductsDataByCategory } from "../../lib/utils";
 import { getAllCategory, getTeamLeadSubmissionRate } from "../../lib/service";
-import {
-  ProductsByCategoryTable,
-  ProductsByCategoryTableTL,
-} from "../../containers";
+import { ProductsByCategoryTableTL } from "../../containers";
 
 const FormResponses = () => {
   const { user } = useAuth();
@@ -78,24 +66,26 @@ const FormResponses = () => {
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="rounded justify-between bg-oaksyellow p-3 flex xs:flex-1 md:flex-initial items-center gap-4 text-xs">
-          <p className="text-white whitespace-nowrap">Expected submissions</p>
-          <p className="rounded p-1  bg-white">
-            {sRCount?.notSubmited + sRCount?.submited}
-          </p>
-        </div>
+        <CountCard
+          text="Expected submissions"
+          styles=" bg-oaksyellow text-white"
+          countStyles=" bg-white text-black"
+          count={sRCount?.notSubmited + sRCount?.submited}
+        />
 
-        <div className="flex p-3 lg:ml-8 items-center gap-6 w-fit rounded bg-white border border-oaksyellow">
-          <p className="">Submissions</p>
-          <p className="p-1 bg-gray-100 rounded text-sm">{sRCount?.submited}</p>
-        </div>
+        <CountCard
+          text=" Submissions"
+          styles=" bg-white border border-oaksyellow"
+          count={sRCount?.submited}
+          countStyles=" bg-gray-100"
+        />
 
-        <div className="rounded bg-white border border-oaksyellow  flex items-center p-3 gap-10 xs:gap-6 lg:ml-auto cursor-pointer">
-          <p>No response</p>
-          <p className="bg-gray-100 p-1 rounded text-sm px-2">
-            {sRCount?.notSubmited}
-          </p>
-        </div>
+        <CountCard
+          text=" No response"
+          styles=" lg:ml-auto  bg-white border border-oaksyellow"
+          count={sRCount?.notSubmited}
+          countStyles=" bg-gray-100"
+        />
       </div>
 
       {/* categories */}

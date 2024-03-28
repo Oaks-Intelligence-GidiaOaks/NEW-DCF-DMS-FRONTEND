@@ -12,7 +12,11 @@ export const createUser = async (userData) => {
 };
 
 export const updateUserById = async (userId, userData) => {
-  const data = await axios.put(`user/profile/${userId}`, userData);
+  const data = await axios.put(`user/profile/${userId}`, userData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return data;
 };
 
@@ -329,6 +333,14 @@ export const getProductDataByCountry = async (countryId) => {
 
 export const getPrevProductDataByCountry = async (countryId) => {
   const data = await axios.get(`form_response/prev_product/${countryId}`);
+  return data;
+};
+
+export const updateProductData = async (productId, productData) => {
+  const data = await axios.put(
+    `form_response/product/${productId}`,
+    productData
+  );
   return data;
 };
 

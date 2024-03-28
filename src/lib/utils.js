@@ -251,8 +251,6 @@ export const transformProductGridData = (data) => {
       flagged: item.flagged,
     };
 
-    console.log(tData, "tData");
-
     return tData;
   });
 

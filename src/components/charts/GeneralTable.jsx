@@ -30,6 +30,7 @@ const GeneralTable = ({
   handleQuery,
   handleSave,
   height = 350,
+  nonEditableFields,
 }) => {
   if (!data) return;
   const masterRow = data;
@@ -98,6 +99,7 @@ const GeneralTable = ({
             key={item}
             field={item}
             width={item === "Note" ? 300 + item.length : 180 + item.length}
+            allowEditing={!nonEditableFields?.includes(item)}
           />
         ))
       : [];
@@ -238,6 +240,7 @@ const GeneralTable = ({
               headerText="S/N"
               width={80}
               template={serialNumberTemplate}
+              allowEditing={false}
             />
             {masterColumn}
             {actions && (
@@ -284,68 +287,6 @@ const GeneralTable = ({
       </div>
     </div>
   );
-};
-
-GeneralTable.defaultProps = {
-  // data: rows,
-  // pageSize: 10,
-  // handleQuery: (args) => {
-  // if (
-  //   args.column.field === "price" &&
-  //   isOutsideLimit(avgData, "food", args.data)
-  // ) {
-  //   args.cell.classList.add("red-text");
-  // }
-  // },
-  // handleSave: (args) => {
-  // if (
-  //   args.column.field === "price" &&
-  //   isOutsideLimit(avgData, "food", args.data)
-  // ) {
-  //   args.cell.classList.add("red-text");
-  // }
-  // },
-  // title: "Title Goes Here",
-  // commands: [
-  //   {
-  //     type: "Edit",
-  //     buttonOption: { cssClass: "e-flat", iconCss: "e-edit e-icons" },
-  //   },
-  //   {
-  //     type: "Save",
-  //     buttonOption: { cssClass: "e-flat", iconCss: "e-update e-icons" },
-  //   },
-  //   {
-  //     type: "Cancel",
-  //     buttonOption: { cssClass: "e-flat", iconCss: "e-cancel-icon e-icons" },
-  //   },
-  // ],
-  // flag: {
-  //   title: "DEL",
-  //   action: (d) => {
-  //     console.log("FLAG: ", d);
-  //   },
-  // },
-  // actions: [
-  //   {
-  //     title: "Delete",
-  //     action: (d) => {
-  //       console.log("action Clicked", d);
-  //     },
-  //   },
-  //   {
-  //     title: "Edit",
-  //     action: (d) => {
-  //       console.log("action Clicked", d);
-  //     },
-  //   },
-  //   {
-  //     title: "Others",
-  //     action: (d) => {
-  //       console.log("action Clicked", d);
-  //     },
-  //   },
-  // ],
 };
 
 export default GeneralTable;
