@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getEnumeratorCount } from "../lib/service";
 
 const AddedRemovedChartSA = () => {
-  const [yearDropdown, setYearDropdown] = useState("");
+  const [yearDropdown, setYearDropdown] = useState();
   const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552abe"); //default NG
 
   const {

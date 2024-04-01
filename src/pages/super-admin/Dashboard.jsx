@@ -38,23 +38,23 @@ const Dashboard = () => {
     queryFn: getAllEnumerators,
   });
 
-  const {
-    data: submissionRate,
-    isLoading: srLoading,
-    isSuccess: srSuccess,
-  } = useQuery({
-    queryKey: ["getSubmissionCount"],
-    queryFn: getSubmissionCount,
-  });
+  // const {
+  //   data: submissionRate,
+  //   isLoading: srLoading,
+  //   isSuccess: srSuccess,
+  // } = useQuery({
+  //   queryKey: ["getSubmissionCount"],
+  //   queryFn: getSubmissionCount,
+  // });
 
-  const {
-    data: allDistricts,
-    isLoading: districtsLoading,
-    isSuccess: districtsSuccess,
-  } = useQuery({
-    queryKey: ["getDistrictsCount"],
-    queryFn: getDistrictsCount,
-  });
+  // const {
+  //   data: allDistricts,
+  //   isLoading: districtsLoading,
+  //   isSuccess: districtsSuccess,
+  // } = useQuery({
+  //   queryKey: ["getDistrictsCount"],
+  //   queryFn: getDistrictsCount,
+  // });
 
   // component variables
   let subAdminsCount = successSubAdmin
@@ -78,8 +78,8 @@ const Dashboard = () => {
       }
     : null;
 
-  let districtsCount = districtsSuccess ? {} : null;
-  let submissionsCount = srSuccess ? {} : null;
+  // let districtsCount = districtsSuccess ? {} : null;
+  // let submissionsCount = srSuccess ? {} : null;
 
   return (
     <div className="">
@@ -100,7 +100,7 @@ const Dashboard = () => {
             </div>
           )}
 
-          {submissionRate ? (
+          {teamLeadsCount ? (
             <MetricCard
               leadText="Team Leads"
               leadCount={teamLeadsCount?.totalTeamLead}

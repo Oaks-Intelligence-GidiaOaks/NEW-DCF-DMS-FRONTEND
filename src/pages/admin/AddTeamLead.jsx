@@ -40,7 +40,6 @@ const AddTeamLead = () => {
     onSuccess: (sx) => {
       toast.success(sx.data.message);
       resetForm();
-      // location.reload();
     },
     onError: (ex) => {
       toast.error(ex.message);

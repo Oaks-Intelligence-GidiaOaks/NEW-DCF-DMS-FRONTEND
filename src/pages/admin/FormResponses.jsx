@@ -8,7 +8,11 @@ import { queryClient } from "../../App";
 import { GeneralTable } from "../../components/charts";
 import { useAuth } from "../../context";
 import { transformProductsDataByCategory } from "../../lib/utils";
-import { getAllCategory, getTeamLeadSubmissionRate } from "../../lib/service";
+import {
+  getAllCategory,
+  getCategoryByCountry,
+  getTeamLeadSubmissionRate,
+} from "../../lib/service";
 import { ProductsByCategoryTable } from "../../containers";
 
 const FormResponses = () => {
@@ -20,8 +24,8 @@ const FormResponses = () => {
     isLoading: catLoading,
     isSuccess: catSuccess,
   } = useQuery({
-    queryKey: ["getAllCategory"],
-    queryFn: () => getAllCategory(user.country),
+    queryKey: ["getCategoryByCountry"],
+    queryFn: () => getCategoryByCountry(user.country),
   });
 
   const {

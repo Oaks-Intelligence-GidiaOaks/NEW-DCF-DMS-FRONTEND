@@ -1,14 +1,32 @@
 import React from "react";
 import { ProductsPage } from "../../containers";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getProductsByCategory } from "../../lib/service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  deleteProduct,
+  getProductsByCategory,
+  updateProduct,
+} from "../../lib/service";
 import { transformCategoryProductsGridData } from "../../lib/utils";
 
 const ViewProducts = () => {
+  const queryClient = useQueryClient();
   const { categoryId } = useParams();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["updateProduct"],
+    mutationFn: (mData) => updateProduct(mData),
+    onSuccess: (sx) => {
+      toast.success(`product details updated successfully`);
+      queryClient.invalidateQueries({
+        queryKey: ["getProductsByCategory"],
+      });
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
 
   const {
     data: catProducts,
@@ -23,34 +41,51 @@ const ViewProducts = () => {
     ? transformCategoryProductsGridData(catProducts?.data?.data)
     : [];
 
-  const flag = {
-    title: "Remove",
-    action: async () => {
-      try {
-        const res = await axios.delete(`product/${row._id}`);
-        toast.success(`product deleted successfully`);
-      } catch (ex) {
-        toast.error(ex.message);
-      }
-    },
+  const handleSave = async (args) => {
+    const {
+      data: {
+        _id,
+        category_id,
+        category_name,
+        country_id,
+        country_name,
+        currency,
+        name,
+        ...rest
+      },
+    } = args;
+
+    if (args.requestType === "save") {
+      const inputs = Object.entries(rest).map((item) => ({
+        title: item[0],
+        input_type: item[1],
+      }));
+
+      const modifiedData = {
+        country_id,
+        category_id,
+        name,
+        inputs,
+      };
+
+      const mtData = {
+        productId: _id,
+        productData: modifiedData,
+      };
+
+      console.log(mtData, "mtData");
+
+      await mutate(mtData);
+    }
   };
 
   const action = [
     {
-      title: "edit",
+      title: "delete",
       action: async (row) => {
-        let inputs = [];
-
         try {
-          const updatedData = {
-            country_id: row.country_id,
-            category_id: row.category_id,
-            name: row.name,
-            inputs,
-          };
-
-          await axios.put(`product/${row._id}`, updatedData);
-          toast.success(`product updated successfully`);
+          const res = await deleteProduct(row._id);
+          toast.success(`product deleted successfully`);
         } catch (ex) {
           toast.error(ex.message);
         }
@@ -61,7 +96,7 @@ const ViewProducts = () => {
   return (
     <ProductsPage
       action={action}
-      flag={flag}
+      handleSave={handleSave}
       data={prodData}
       backNavPath="/super_admin/configuration"
     />

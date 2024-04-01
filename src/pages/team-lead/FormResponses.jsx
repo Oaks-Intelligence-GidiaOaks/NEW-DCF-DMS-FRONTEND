@@ -8,7 +8,11 @@ import { queryClient } from "../../App";
 import { GeneralTable } from "../../components/charts";
 import { useAuth } from "../../context";
 import { transformProductsDataByCategory } from "../../lib/utils";
-import { getAllCategory, getTeamLeadSubmissionRate } from "../../lib/service";
+import {
+  getAllCategory,
+  getCategoryByCountry,
+  getTeamLeadSubmissionRate,
+} from "../../lib/service";
 import { ProductsByCategoryTableTL } from "../../containers";
 
 const FormResponses = () => {
@@ -21,8 +25,8 @@ const FormResponses = () => {
     isLoading: catLoading,
     isSuccess: catSuccess,
   } = useQuery({
-    queryKey: ["getAllCategory"],
-    queryFn: () => getAllCategory(user.country),
+    queryKey: ["getCategoryByCountry"],
+    queryFn: () => getCategoryByCountry(user.country),
   });
 
   const {
@@ -55,13 +59,9 @@ const FormResponses = () => {
         submited: 0,
       };
 
-  // console.log("SrCount", sRCount);
-
   const handleCategoryClick = (id) => {
     setCategoryId(id);
   };
-
-  // console.log("all categories", categories);
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">

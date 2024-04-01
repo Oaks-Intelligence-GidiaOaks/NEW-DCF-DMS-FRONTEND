@@ -33,6 +33,7 @@ import {
   AdminNewProduct,
   AdminNewCategory,
   AdminViewProducts,
+  AdminEditTeamLead,
 } from "./pages/admin";
 
 import TeamLead from "./components/layout/TeamLead";
@@ -49,6 +50,7 @@ import {
   SuperAdminAddTeamLead,
   SuperAdminConfiguration,
   SuperAdminDashboard,
+  SuperAdminEditTeamLead,
   SuperAdminEnumerators,
   SuperAdminFormResponses,
   SuperAdminHistory,
@@ -327,6 +329,18 @@ function App() {
             }
           />
           <Route
+            path="/admin/edit_team_lead/:teamLeadId"
+            element={
+              adminRoleCheck ? (
+                <Admin>
+                  <AdminEditTeamLead />
+                </Admin>
+              ) : (
+                <Navigate replace to={"/"} />
+              )
+            }
+          />
+          <Route
             path="/admin/profile"
             element={
               adminRoleCheck ? (
@@ -596,6 +610,20 @@ function App() {
                 component={
                   <SuperAdmin>
                     <SuperAdminSubAdmins />
+                  </SuperAdmin>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/super_admin/admins/edit_team_lead/:teamLeadId"
+            element={
+              <ProtectedRoute
+                requiredRole="SuperAdmin"
+                component={
+                  <SuperAdmin>
+                    <SuperAdminEditTeamLead />
                   </SuperAdmin>
                 }
               />

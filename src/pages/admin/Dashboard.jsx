@@ -14,20 +14,13 @@ import {
   getEnumeratorCount,
   getSubmissionCount,
   getTeamLeadSubmissionRate,
+  getTeamLeadsCount,
 } from "../../lib/service";
 import { MetricCard } from "../../components";
 import AddedRemovedChartTL from "../../containers/AddedRemovedTL";
+import AddedRemovedChartSA from "../../containers/AddedRemovedSA";
 
 const Dashboard = () => {
-  const {
-    data: allEnumerators,
-    isLoading: loadingEnumerators,
-    isSuccess: successEnumerators,
-  } = useQuery({
-    queryKey: ["getAllEnumerators"],
-    queryFn: getAllEnumerators,
-  });
-
   const {
     data: srRate,
     isLoading: srLoading,
@@ -46,11 +39,20 @@ const Dashboard = () => {
     queryFn: getDistrictsCount,
   });
 
+  const {
+    data: tls,
+    isLoading: tlsLoading,
+    isSuccess: tlsSuccess,
+  } = useQuery({
+    queryKey: ["getTeamLeadsCount"],
+    queryFn: getTeamLeadsCount,
+  });
+
   // component variables
-  let enumeratorsCount = successEnumerators
+  let tlsCount = tlsSuccess
     ? {
-        newlyAdded: allEnumerators.data.newlyAdded,
-        totalEnumerators: allEnumerators.data.totalEnumerators,
+        newlyAdded: tls.data.newlyAdded,
+        totalEnumerators: tls.data.totalTeamLead,
       }
     : null;
 
@@ -68,20 +70,16 @@ const Dashboard = () => {
       }
     : null;
 
-  // console.log("enumeratorsCount", enumeratorsCount);
-  // console.log("districtsCount", districtsCount);
-  // console.log("submissionsCount", srCount);
-
   return (
     <div className="">
       <div className="mx-auto  mt-8 pb-4 md:w-[]">
         <div className="flex items-center justify-between gap-3 overflow-x-scroll metrics-scrollbar">
-          {enumeratorsCount ? (
+          {tlsCount ? (
             <MetricCard
-              leadText="Enumerators"
-              leadCount={enumeratorsCount.totalEnumerators}
+              leadText="Team Leads"
+              leadCount={tlsCount.totalEnumerators}
               subText="Newly Added"
-              subCount={enumeratorsCount.newlyAdded}
+              subCount={tlsCount.newlyAdded}
               legendOne="Total"
               legendTwo="Newly added"
             />
@@ -122,7 +120,7 @@ const Dashboard = () => {
           )}
         </div>
 
-        <AddedRemovedChartTL />
+        <AddedRemovedChartSA />
       </div>
     </div>
   );

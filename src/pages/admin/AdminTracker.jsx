@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TrackerGrid from "../../components/grid/TrackerGrid";
-import MeshedLineChart from "../../components/charts/MeshedLineChart";
-import axios from "axios";
 import { Loading } from "../../components/reusable";
 import { parseDate } from "../../lib/helpers";
 import { GeneralTable } from "../../components/charts";
@@ -18,6 +15,7 @@ import {
   tooltipConfig,
   transformAdminSubmissionTime,
 } from "../../lib/utils";
+import { userNonEditableFields } from "../../lib/actions";
 
 const AdminTracker = () => {
   const [timeOfSub, setTimeOfSub] = useState(null);
@@ -80,7 +78,18 @@ const AdminTracker = () => {
             <Loading />
           </div>
         ) : (
-          <GeneralTable height={200} data={rtData?.data.data} />
+          <GeneralTable
+            title={"Response Tracker"}
+            height={350}
+            pageSize={30}
+            nonEditableFields={[
+              ...userNonEditableFields,
+              "first_name",
+              "last_name",
+              "status",
+            ]}
+            data={rtData?.data.data}
+          />
         )}
       </div>
 

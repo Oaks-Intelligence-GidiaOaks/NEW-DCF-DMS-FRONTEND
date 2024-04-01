@@ -11,12 +11,17 @@ export const createUser = async (userData) => {
   return data;
 };
 
-export const updateUserById = async (userId, userData) => {
-  const data = await axios.put(`user/profile/${userId}`, userData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const updateUserById = async (mtData) => {
+  const data = await axios.put(
+    `user/profile/${mtData.userId}`,
+    mtData.userData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
   return data;
 };
 
@@ -99,8 +104,8 @@ export const getCategoryByCountry = async (countryId) => {
   return data;
 };
 
-export const updateCategory = async (categoryId) => {
-  const data = await axios.put(`category/${categoryId}`);
+export const updateCategory = async ({ categoryId, categoryData }) => {
+  const data = await axios.put(`category/${categoryId}`, categoryData);
   return data;
 };
 
@@ -135,7 +140,9 @@ export const getProductsByCategory = async (categoryId) => {
   return data;
 };
 
-export const updateProduct = async (productId, productData) => {
+export const updateProduct = async ({ productId, productData }) => {
+  console.log("entered", productData);
+
   const data = await axios.put(`product/${productId}`, productData);
   return data;
 };
@@ -274,12 +281,12 @@ export const getMasterDataByCountry = async (
     urlParams.append("endDateFilter", endDate);
   }
 
-  // if (pageNo) {
-  //   urlParams.append("page", pageNo);
-  // }
+  if (pageNo) {
+    urlParams.append("page", pageNo);
+  }
 
-  // const url = `master_list/${countryId}?${urlParams.toString()}`;
-  const url = `master_list/${countryId}`;
+  const url = `master_list/${countryId}?${urlParams.toString()}`;
+  // const url = `master_list/${countryId}`;
 
   console.log("url", url);
 
@@ -293,7 +300,7 @@ export const getTeamLeadSubmissionRate = async () => {
   return data;
 };
 
-export const getYearlyEnumerators = async (year) => {
+export const getYearlyEnumerators = async (year = 2024) => {
   const data = await axios.get(
     `team_lead_dashboard/yearly_enumerators?yearFilter=${year}`
   );
@@ -312,8 +319,6 @@ export const getDistrictsCount = async () => {
 };
 
 export const getEnumeratorCount = async (yearFilter = 2024) => {
-  console.log(yearFilter, "here");
-
   const data = await axios.get(
     `admin_dashboard/yearly_enumerators?yearFilter=${yearFilter}`
   );
@@ -336,7 +341,7 @@ export const getPrevProductDataByCountry = async (countryId) => {
   return data;
 };
 
-export const updateProductData = async (productId, productData) => {
+export const updateProductData = async ({ productId, productData }) => {
   const data = await axios.put(
     `form_response/product/${productId}`,
     productData
@@ -364,8 +369,8 @@ export const approveFormResponse = async (ids) => {
   return data;
 };
 
-export const flagResponse = async (ids) => {
-  const data = await axios.put(`form_response/flag_response`, ids);
+export const flagResponse = async (productId) => {
+  const data = await axios.put(`form_response/flag_product/${productId}`);
   return data;
 };
 

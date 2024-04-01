@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Loading } from "../../components/reusable";
-import HistoryGrid from "../../components/grid/HistoryGrid";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLog } from "../../lib/service";

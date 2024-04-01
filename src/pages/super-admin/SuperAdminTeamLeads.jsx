@@ -6,20 +6,36 @@ import {
   transformTeamLedsGridData,
 } from "../../lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   disableUser,
   getAllSubAdmin,
   getTeamLeadsByCountry,
   resetPassword,
+  updateUserById,
 } from "../../lib/service";
 import { toast } from "react-toastify";
-import { queryClient } from "../../App";
+
+import { commands, userNonEditableFields } from "../../lib/actions";
 
 const SuperAdminTeamLeads = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
-
   const { countryId } = useParams();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["updateUserById"],
+    mutationFn: (data) => updateUserById(data),
+    onSuccess: (sx) => {
+      toast.success(`user details updated successfully`);
+      queryClient.invalidateQueries({
+        queryKey: ["getTeamLeadsByCountry"],
+      });
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
 
   const {
     data: teamLeads,
@@ -35,10 +51,6 @@ const SuperAdminTeamLeads = () => {
     : [];
 
   const tableActions = [
-    // {
-    //   title: "Edit",
-    //   action: (row) => console.log(row),
-    // },
     {
       title: "Reset Password",
       action: async (row) => {
@@ -81,6 +93,22 @@ const SuperAdminTeamLeads = () => {
     },
   ];
 
+  const handleSave = async (args) => {
+    const { data } = args;
+
+    if (args.requestType === "save") {
+      const userFormData = new FormData();
+
+      userFormData.append("first_name", data.first_name);
+      userFormData.append("last_name", data.last_name);
+      userFormData.append("email", data.email);
+      userFormData.append("phone_number", data.phone_number);
+
+      const mtData = { userId: data._id, userData: userFormData };
+
+      await mutate(mtData);
+    }
+  };
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
       {/* headers */}
@@ -122,6 +150,10 @@ const SuperAdminTeamLeads = () => {
           title="Team Leads Table"
           data={tlGridData}
           actions={tableActions}
+          pageSize={60}
+          commands={commands}
+          handleSave={handleSave}
+          nonEditableFields={userNonEditableFields}
         />
       </div>
 
