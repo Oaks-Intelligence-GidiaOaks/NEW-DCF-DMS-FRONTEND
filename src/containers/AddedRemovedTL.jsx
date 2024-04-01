@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getYearlyEnumerators } from "../lib/service";
 
 const AddedRemovedChartTL = () => {
-  const [yearDropdown, setYearDropdown] = useState("");
+  const [yearDropdown, setYearDropdown] = useState();
 
   const {
     data: enumeratorsChartCount,

@@ -54,3 +54,4 @@ export const categoryProductsNonEditableFields = [
   "currency",
 ];
 export const categoryProductsHiddenFields = ["country_id", "category_id"];
+export const productsByCategoryHiddenFields = ["flagged", "_id"];

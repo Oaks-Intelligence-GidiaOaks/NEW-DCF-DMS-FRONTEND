@@ -128,7 +128,12 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <GeneralTable title={"Master List"} pageSize={113} data={mGridData} />
+        <GeneralTable
+          title={"Master List"}
+          pageSize={113}
+          data={mGridData}
+          height={360}
+        />
         <div className="p-2 border ">
           <div className="ml-auto flex items-center">
             {/* {<PageNumbers />} */}

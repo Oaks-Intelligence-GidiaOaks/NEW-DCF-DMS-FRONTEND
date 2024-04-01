@@ -9,15 +9,14 @@ import { GeneralTable } from "../components/charts";
 import { transformProductGridData } from "../lib/utils";
 import { toast } from "react-toastify";
 import catProdSubmission from "../data/grid/categoryProductsSubmission.json";
-import { commands } from "../lib/actions";
+import { commands, productsByCategoryHiddenFields } from "../lib/actions";
 
 const ProductsByCategoryTableTL = ({ categoryId }) => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["updateProductData"],
-    mutationFn: (productId, productData) =>
-      updateProductData(productId, productData),
+    mutationFn: (mData) => updateProductData(mData),
     onSuccess: (sx) => {
       toast.success(`product updated successfully..`);
       queryClient.invalidateQueries({
@@ -101,9 +100,12 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
         })),
       };
 
-      console.log("modified", modifiedData);
+      const mtData = {
+        productId: _id,
+        productData: modifiedData,
+      };
 
-      await mutate(_id, modifiedData);
+      await mutate(mtData);
     }
   };
 
@@ -111,12 +113,14 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
     <div>
       <GeneralTable
         title="Form Responses"
+        height={400}
         pageSize={60}
         data={prodGridData}
         commands={Commands}
         handleSave={handleSave}
         flag={Flag}
         nonEditableFields={["flagged", "district", "name"]}
+        hiddenFields={productsByCategoryHiddenFields}
       />
     </div>
   );

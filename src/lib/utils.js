@@ -290,7 +290,7 @@ const reduceProductsArrayToObject = (data) => {
   const transformedData = [];
 
   data.forEach((item) => {
-    const name = item.product.name;
+    const name = item.product?.name;
     const inputs = item.inputs;
 
     let newInputs = inputs.reduce((acc, curr) => {

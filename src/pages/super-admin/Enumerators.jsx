@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   BackButton,
   CountCard,
@@ -142,6 +142,15 @@ const Enumerators = () => {
           styles=" bg-white"
           countStyles=" text-primary "
         />
+
+        <Link to={`/super_admin/admins/edit_team_lead/${teamLeadId}`}>
+          <CountCard
+            styles="border border-primary"
+            plus
+            plusColor=""
+            text="About"
+          />
+        </Link>
 
         <div className="border w-fit md:ml-auto " onClick={() => navigate(-1)}>
           <BackButton />

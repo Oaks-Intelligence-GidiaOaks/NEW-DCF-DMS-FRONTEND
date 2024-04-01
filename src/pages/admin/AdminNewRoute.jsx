@@ -7,9 +7,7 @@ import { useAuth } from "../../context";
 
 const AdminNewRoute = () => {
   const { user } = useAuth();
-
   const [activeTab, setActiveTab] = useState("create");
-  // const [lgaRoutes, setLgaRoutes] = useState([]);
 
   const {
     data: lrData,
@@ -22,15 +20,12 @@ const AdminNewRoute = () => {
 
   // component variables
   const lgaRoutes = lrData?.data.data;
-
   console.log(lgaRoutes, "lgaRoutes");
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`lga_routes`)
-  //     .then((res) => setLgaRoutes(res.data.data))
-  //     .catch((err) => console.error(err));
-  // }, []);
+  const activeForm = {
+    create: <CreateLgaRoutes lgaRoutes={lgaRoutes} />,
+    update: <UpdateLgaRoutes lgaRoutes={lgaRoutes} />,
+  };
 
   let activeTabStyle =
     "bg-blue-500 text-white my-6  p-2 cursor-pointer rounded";
@@ -62,11 +57,7 @@ const AdminNewRoute = () => {
         </div>
       </div>
 
-      {activeTab === "create" ? (
-        <CreateLgaRoutes lgaRoutes={lgaRoutes} />
-      ) : (
-        <UpdateLgaRoutes lgaRoutes={lgaRoutes} />
-      )}
+      {activeForm[activeTab]}
     </div>
   );
 };

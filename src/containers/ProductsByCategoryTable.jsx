@@ -1,16 +1,34 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import {
   flagResponse,
   getProductResponsesByCategory,
   getProductsByCategory,
+  updateProductData,
 } from "../lib/service";
 import { GeneralTable } from "../components/charts";
 import { transformProductGridData } from "../lib/utils";
 import { toast } from "react-toastify";
 import { queryClient } from "../App";
+import { commands, productsByCategoryHiddenFields } from "../lib/actions";
 
 const ProductsByCategoryTable = ({ categoryId }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["updateProductData"],
+    mutationFn: (mData) => updateProductData(mData),
+    onSuccess: (sx) => {
+      toast.success(`product updated successfully..`);
+      queryClient.invalidateQueries({
+        queryKey: ["getProductResponsesByCategory"],
+      });
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
   const {
     data: productData,
     isLoading: prodLoading,
@@ -31,8 +49,6 @@ const ProductsByCategoryTable = ({ categoryId }) => {
     ? transformProductGridData(productData.data.data)
     : [];
 
-  const AdminActions = [];
-
   const AdminFlag = {
     title: "Flag",
     action: async (row) => {
@@ -43,7 +59,7 @@ const ProductsByCategoryTable = ({ categoryId }) => {
       console.log(tRow, "tRow");
 
       try {
-        await flagResponse(tRow);
+        const res = await flagResponse(row._id);
         queryClient.invalidateQueries({
           queryKey: ["getProductResponsesByCategory"],
         });
@@ -55,29 +71,25 @@ const ProductsByCategoryTable = ({ categoryId }) => {
     },
   };
 
-  const AdminCommands = [
-    {
-      type: "Edit",
-      buttonOption: { cssClass: "e-flat", iconCss: "e-edit e-icons" },
-    },
-    {
-      type: "Save",
-      buttonOption: { cssClass: "e-flat", iconCss: "e-update e-icons" },
-    },
-    {
-      type: "Cancel",
-      buttonOption: { cssClass: "e-flat", iconCss: "e-cancel-icon e-icons" },
-    },
-  ];
-
   const handleSave = async (args) => {
     if (args.requestType === "save") {
-      const { data } = args;
+      const {
+        data: { createdAt, created_by, district, flagged, _id, name, ...rest },
+      } = args;
 
       const modifiedData = {
-        _id: data._id,
+        inputs: Object.entries(rest).map((item, i) => ({
+          title: item[0],
+          value: item[1],
+        })),
       };
-      console.log("modified", data);
+
+      const mtData = {
+        productId: _id,
+        productData: modifiedData,
+      };
+
+      await mutate(mtData);
     }
   };
 
@@ -87,8 +99,10 @@ const ProductsByCategoryTable = ({ categoryId }) => {
         title="Form Responses"
         pageSize={60}
         data={prodGridData}
-        commands={AdminCommands}
+        commands={commands}
         handleSave={handleSave}
+        nonEditableFields={["flagged", "district", "name"]}
+        hiddenFields={productsByCategoryHiddenFields}
         flag={AdminFlag}
       />
     </div>

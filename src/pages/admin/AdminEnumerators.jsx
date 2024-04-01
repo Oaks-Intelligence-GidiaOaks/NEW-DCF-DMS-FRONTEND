@@ -139,12 +139,14 @@ const AdminEnumerators = () => {
           <BackButton />
         </Link>
 
-        <CountCard
-          styles="border border-primary"
-          plus
-          plusColor=""
-          text="About"
-        />
+        <Link to={`/admin/edit_team_lead/${teamLeadId}`}>
+          <CountCard
+            styles="border border-primary"
+            plus
+            plusColor=""
+            text="About"
+          />
+        </Link>
       </div>
 
       {/* table */}
