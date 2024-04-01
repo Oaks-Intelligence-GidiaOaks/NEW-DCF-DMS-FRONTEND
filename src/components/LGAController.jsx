@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth } from "../context";
 
-function LGAController() {
+function LGAController({ userData }) {
   const {
     state: {
       currentLGA,
@@ -71,7 +71,13 @@ function LGAController() {
       <input
         readOnly
         type="text"
-        value={currentLGA}
+        value={
+          userData?.data?.data
+            ? userData?.data?.data?.user?.districts.filter(
+                (d) => d._id === currentLGA
+              )[0]["name"]
+            : currentLGA
+        }
         placeholder="Change LGA"
         className="flex flex-1 capitalize pl-1 outline-none rounded cursor-pointer text-[14px] bg-transparent"
         onFocus={() => {
@@ -98,7 +104,13 @@ function LGAController() {
                 }}
               >
                 <SlLocationPin size={16} color="#72a247" />
-                <span>{item}</span>
+                <span>
+                  {
+                    userData?.data?.data?.user?.districts.filter(
+                      (d) => d._id === item
+                    )[0]["name"]
+                  }
+                </span>
               </li>
             ))}
         </ul>

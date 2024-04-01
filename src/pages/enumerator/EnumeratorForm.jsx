@@ -59,6 +59,8 @@ function EnumeratorForm() {
   const { setUser, user } = useAuth();
   const [formState, setFormState] = useState(savedState?.formState ?? null);
 
+  console.log("form state: ", savedState);
+
   useEffect(() => {
     window.addEventListener("beforeunload", function (e) {
       e.preventDefault();
@@ -79,27 +81,45 @@ function EnumeratorForm() {
       return res;
     },
     select: (data) => {
+      const uniqueCategories =
+        data?.data?.data?.reduce((unique, item) => {
+          const categoryName = item?.category?.name;
+          if (categoryName && !unique.includes(categoryName)) {
+            unique.push(categoryName);
+          }
+          return unique;
+        }, []) || [];
+      const processedData =
+        data?.data?.data?.reduce((accumulator, item) => {
+          const categoryName = item?.category?.name;
+          if (categoryName) {
+            const updatedInputs = item.inputs.map((input) => ({
+              ...input,
+              value: "",
+            }));
+            accumulator[categoryName] = [
+              { ...item, inputs: updatedInputs },
+              ...(accumulator[categoryName] ?? []),
+            ];
+          }
+          return accumulator;
+        }, {}) || {};
       return {
-        categories: data?.data?.data?.reduce((prev, curr) => {
-          return prev.includes(curr.category.name)
-            ? prev
-            : [curr.category.name, ...prev];
-        }, []),
-        data: data?.data?.data?.reduce((prev, curr) => {
-          return {
-            ...prev,
-            [curr.category.name]: [
-              {
-                ...curr,
-                inputs: curr.inputs.map((inp, i) => ({ ...inp, value: "" })),
-              },
-              ...(prev[curr.category.name] ?? []),
-            ],
-          };
-        }, {}),
+        categories: uniqueCategories,
+        data: processedData,
       };
     },
   });
+
+  const userData = useQuery({
+    queryKey: ["user-data"],
+    queryFn: async () => {
+      const res = await axios.get(`user`);
+      return res;
+    },
+  });
+
+  console.log("User data: ", userData.data);
 
   useEffect(() => {
     if (enumeratorFormData.isSuccess) {
@@ -252,7 +272,9 @@ function EnumeratorForm() {
                     : "justify-end xs:pr-0 sm:pr-3"
                 }  max-w-[410px] xs:w-[90%]`}
               >
-                {user.districts.length > 1 && <LGAController />}
+                {user.districts.length > 1 && (
+                  <LGAController userData={userData} />
+                )}
                 <button
                   className="flex justify-center items-center px-3 bg-primary-green py-2 max-w-[170px] rounded"
                   onClick={saveForm}
@@ -530,15 +552,17 @@ function EnumeratorForm() {
                 </div>
                 <div>
                   <p className="text-[17px] font-medium">
-                    {user.districts.length > 1 ? "Districts" : "District"}
+                    {userData.data?.data?.user?.districts?.length > 1
+                      ? "Districts"
+                      : "District"}
                   </p>
-                  {user.districts.map((lga, i) => (
+                  {userData?.data?.data?.user?.districts.map((district, i) => (
                     <p
                       key={i}
                       className="text-[15px] capitalize text-secondary-gray flex items-center -translate-x-[6px]"
                     >
                       <BsDot size={18} color="#72a247" />
-                      <span>{lga}</span>
+                      <span>{district.name}</span>
                     </p>
                   ))}
                 </div>
