@@ -11,12 +11,17 @@ export const createUser = async (userData) => {
   return data;
 };
 
-export const updateUserById = async (userId, userData) => {
-  const data = await axios.put(`user/profile/${userId}`, userData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const updateUserById = async (mtData) => {
+  const data = await axios.put(
+    `user/profile/${mtData.userId}`,
+    mtData.userData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
   return data;
 };
 
@@ -99,8 +104,8 @@ export const getCategoryByCountry = async (countryId) => {
   return data;
 };
 
-export const updateCategory = async (categoryId) => {
-  const data = await axios.put(`category/${categoryId}`);
+export const updateCategory = async ({ categoryId, categoryData }) => {
+  const data = await axios.put(`category/${categoryId}`, categoryData);
   return data;
 };
 
@@ -135,7 +140,9 @@ export const getProductsByCategory = async (categoryId) => {
   return data;
 };
 
-export const updateProduct = async (productId, productData) => {
+export const updateProduct = async ({ productId, productData }) => {
+  console.log("entered", productData);
+
   const data = await axios.put(`product/${productId}`, productData);
   return data;
 };

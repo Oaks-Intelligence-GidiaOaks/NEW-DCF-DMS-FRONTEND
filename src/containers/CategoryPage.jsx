@@ -2,58 +2,35 @@ import React from "react";
 // import { FaPlus } from "react-icons/fa6";
 import { TiPlus } from "react-icons/ti";
 import { GeneralTable } from "../components/charts";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { SkeletonLoaders } from "../components/reusable";
-import categoryData from "../../src/data/grid/categoryData.json";
 import { transformCategoryGridData } from "../lib/utils";
 // import { gridActions } from "../lib/actions";
 import { Link, useNavigate } from "react-router-dom";
+import { commands } from "../lib/actions";
 
 const CategoryPage = ({
   actions,
+  handleSave,
   data,
-  commands,
-  pageSize,
   tableTitle = "Category Table",
   productPath,
   categoryPath,
 }) => {
-  const navigate = useNavigate();
-
-  // const categoryData = useQuery({
-  //   queryKey: ["getAllCategory"],
-  //   queryFn: async () => await axios.get("category"),
-  // });
-
   const gridData = data?.length ? transformCategoryGridData(data) : [];
-
-  const gridActions = {
-    categoryGrid: [
-      {
-        title: "See more",
-        action: (row) => {
-          navigate(`/admin/configuration/category_products/${row._id}`);
-        },
-      },
-      {
-        title: "Remove",
-        action: (row) => {
-          console.log("Remove clicked", row);
-        },
-      },
-    ],
-  };
 
   const activeState = {
     true: <SkeletonLoaders count={3} />,
     false: (
       <GeneralTable
-        height={200}
+        height={350}
         data={gridData}
+        commands={commands}
         pageSize={30}
+        handleSave={handleSave}
         title={tableTitle}
-        actions={gridActions.categoryGrid}
+        nonEditableFields={["country_id"]}
+        hiddenFields={["country_id"]}
+        actions={actions}
       />
     ),
   };

@@ -1,8 +1,7 @@
 export const transformCategoryGridData = (data) => {
-  console.log(data, "bvdcgdvhb");
-
   const newData = data.map((item, index) => ({
     _id: item._id,
+    country_id: item.country._id,
     "Category name": item.name,
     "Expected Inputs": item.expected_inputs,
   }));
@@ -12,17 +11,21 @@ export const transformCategoryGridData = (data) => {
 
 export const transformCategoryProductsGridData = (data) => {
   const newData = data?.map((item, i) => {
-    const inputs = item.inputs?.map((it, i) => it.title);
+    const inputs = item.inputs.reduce((acc, curr) => {
+      acc[curr.title] = curr.input_type;
+
+      return acc;
+    }, {});
 
     const tItem = {
       _id: item._id,
       name: item.name,
-      caegory_id: item.category?._id,
+      category_id: item.category?._id,
       category_name: item.category?.name,
       country_id: item.country?._id,
       country_name: item.country?.name,
       currency: item.country?.currency?.symbol,
-      inputs,
+      ...inputs,
     };
 
     return tItem;
@@ -89,8 +92,6 @@ export const transformEnumeratorsGridData = (data) => {
 };
 
 export const transformTeamLedsGridData = (data) => {
-  console.log("team leads", data);
-
   const newData = data.map((item) => {
     const {
       identity_image_url,
@@ -195,8 +196,6 @@ export const transformProductsDataByCategory = (data) => {
   const categories = [];
   let productsByCategory = {};
 
-  console.log("trans by data", data);
-
   data.forEach((item) => {
     let catObj = { _id: item.category?._id, name: item.category?.name };
 
@@ -209,8 +208,6 @@ export const transformProductsDataByCategory = (data) => {
       created_by: item.created_by?.id,
       // ...rStructure,
     };
-
-    console.log("finishing", prodObj);
 
     if (!categories.some((cat) => cat._id === catObj._id)) {
       categories.push(catObj);
@@ -227,9 +224,6 @@ export const transformProductsDataByCategory = (data) => {
     categories,
     productsByCategory,
   };
-
-  // console.log(categories, "from categries array");
-  // console.log(productsByCategory, "products By Category");
 };
 
 export const transformProductGridData = (data) => {
@@ -258,8 +252,6 @@ export const transformProductGridData = (data) => {
 };
 
 export const transformMasterGridData = (data) => {
-  // console.log("master grid data", data);
-
   const newGridData = [];
 
   data.forEach((dt) => {
@@ -285,8 +277,6 @@ export const transformMasterGridData = (data) => {
     newGridData.push(last);
   });
 
-  // console.log(newGridData);
-
   return newGridData;
 };
 
@@ -304,8 +294,6 @@ const reduceProductsArrayToObject = (data) => {
     const inputs = item.inputs;
 
     let newInputs = inputs.reduce((acc, curr) => {
-      // console.log(curr, "current");
-
       let objNew = {
         [`${curr.title}  ${name} `]: curr.value,
       };
@@ -321,7 +309,6 @@ const reduceProductsArrayToObject = (data) => {
 
 // charts
 export const transformAdminSubmissionTime = (data) => {
-  console.log("transformAdminSubmissionTime", data);
   const newData = [];
 
   data.forEach((it, i) => {
@@ -392,8 +379,6 @@ export const filterExpectedInputs = (allExpectedInputs, selectedInputs) => {
   let data = allExpectedInputs.filter(
     ({ value }) => !selectedValues.has(value)
   );
-
-  console.log(data, "data");
 
   return data;
 };

@@ -1,21 +1,35 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-import { TeamLeadGrid } from "../../components/grid";
 import { Link, useNavigate } from "react-router-dom";
 import { Loading, NoData } from "../../components/reusable";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTeamLeadsByCountry, resetPassword } from "../../lib/service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getTeamLeadsByCountry,
+  resetPassword,
+  updateUserById,
+} from "../../lib/service";
 import { useAuth } from "../../context";
 import { transformTeamLedsGridData } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
 import { toast } from "react-toastify";
+import { commands, userNonEditableFields } from "../../lib/actions";
 
 const TeamLeads = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["updateUserById"],
+    mutationFn: (data) => updateUserById(data),
+    onSuccess: (sx) => {
+      toast.success(`user details updated successfully`);
+      queryClient.invalidateQueries({
+        queryKey: ["getTeamLeadsByCountry"],
+      });
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
 
   const {
     data: teamLeads,
@@ -79,6 +93,23 @@ const TeamLeads = () => {
     },
   ];
 
+  const handleSave = async (args) => {
+    const { data } = args;
+
+    if (args.requestType === "save") {
+      const userFormData = new FormData();
+
+      userFormData.append("first_name", data.first_name);
+      userFormData.append("last_name", data.last_name);
+      userFormData.append("email", data.email);
+      userFormData.append("phone_number", data.phone_number);
+
+      const mtData = { userId: data._id, userData: userFormData };
+
+      await mutate(mtData);
+    }
+  };
+
   console.log("team leads data", tlGridData);
 
   return (
@@ -122,7 +153,14 @@ const TeamLeads = () => {
         {tlLoading ? (
           <Loading />
         ) : tlSuccess && tlGridData.length ? (
-          <GeneralTable data={tlGridData} actions={actions} />
+          <GeneralTable
+            data={tlGridData}
+            actions={actions}
+            pageSize={60}
+            commands={commands}
+            handleSave={handleSave}
+            nonEditableFields={userNonEditableFields}
+          />
         ) : (
           <NoData text="No team leads yet" />
         )}

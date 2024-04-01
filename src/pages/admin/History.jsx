@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Loading } from "../../components/reusable";
-import HistoryGrid from "../../components/grid/HistoryGrid";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLog } from "../../lib/service";
@@ -109,7 +107,12 @@ const History = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <GeneralTable title="Audit Logs" data={logsData} height={260} />
+        <GeneralTable
+          title="Audit Logs"
+          data={logsData}
+          height={260}
+          pageSize={120}
+        />
 
         <div className="py-2 px-4 border ">
           <div className="ml-auto flex items-center">{<PageNumbers />}</div>

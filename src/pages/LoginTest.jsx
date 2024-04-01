@@ -81,7 +81,7 @@ function EnumeratorLogin() {
 
       try {
         axios
-          .post("test_login", data, {
+          .post("user/login/test", data, {
             headers: {
               "Content-Type": "application/json",
             },
@@ -107,8 +107,7 @@ function EnumeratorLogin() {
                 "Invalid password, please input correct password."
               );
             }
-            // console.log(others);
-            // console.log(others.status);
+
             if (
               others &&
               others.message &&
@@ -129,7 +128,7 @@ function EnumeratorLogin() {
               navigate("/form");
             }
 
-            if (user.role === "team_lead") {
+            if (user.role === "TeamLead") {
               secureLocalStorage.setItem("oius", "true");
               secureLocalStorage.setItem(
                 "user",
@@ -138,13 +137,22 @@ function EnumeratorLogin() {
               navigate("/home");
             }
 
-            if (user.role === "admin" || user.role === "super_admin") {
+            if (user.role === "SubAdmin") {
               secureLocalStorage.setItem("oius", "true");
               secureLocalStorage.setItem(
                 "user",
                 JSON.stringify({ ...user, ...others })
               );
               navigate("/admin/home");
+            }
+
+            if (user.role === "SuperAdmin") {
+              secureLocalStorage.setItem("oius", "true");
+              secureLocalStorage.setItem(
+                "user",
+                JSON.stringify({ ...user, ...others })
+              );
+              navigate("/super_admin/home");
             }
           })
           .catch((error) => {

@@ -1,17 +1,21 @@
-import React, { useEffect, useMemo, useState } from "react";
-import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BackButton, CountCard, NoData } from "../../components/reusable";
 import { useNavigate } from "react-router-dom";
-import EnumeratorGrid from "../../components/grid/EnumeratorGrid";
-import { IoIosArrowBack } from "react-icons/io";
-import { useQuery } from "@tanstack/react-query";
-import { getIndividualUser, getTeamLeadEnumerators } from "../../lib/service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  disableUser,
+  getIndividualUser,
+  getTeamLeadEnumerators,
+  resetPassword,
+  updateUserById,
+} from "../../lib/service";
 import { transformEnumeratorsGridData } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
+import { toast } from "react-toastify";
+import { commands, userNonEditableFields } from "../../lib/actions";
 
 const AdminEnumerators = () => {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { teamLeadId } = useParams();
 
   const {
@@ -32,6 +36,20 @@ const AdminEnumerators = () => {
     queryFn: () => getIndividualUser(teamLeadId),
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["updateUserById"],
+    mutationFn: (mdata) => updateUserById(mdata),
+    onSuccess: (sx) => {
+      toast.success(`user details updated successfully`);
+      queryClient.invalidateQueries({
+        queryKey: ["getTeamLeadEnumerators"],
+      });
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
   console.log(teamLead, "team lead");
 
   // component variables
@@ -45,6 +63,61 @@ const AdminEnumerators = () => {
         newlyAdded: enumerators.data.newlyAdded,
       }
     : null;
+
+  const actions = [
+    {
+      title: "reset password",
+      action: async (row) => {
+        try {
+          const res = await resetPassword({
+            id: row.id,
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["getAllEnumerators"],
+          });
+
+          toast.success(`Password reset successfully..`);
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
+    },
+    {
+      title: "delete",
+      action: async (row) => {
+        try {
+          const res = await disableUser(row._id);
+          queryClient.invalidateQueries({
+            queryKey: ["getAllEnumerators"],
+          });
+
+          toast.success(`user deleted successfully..`);
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
+    },
+  ];
+
+  const handleSave = async (args) => {
+    const { data } = args;
+
+    if (args.requestType === "save") {
+      const userFormData = new FormData();
+
+      userFormData.append("first_name", data.first_name);
+      userFormData.append("last_name", data.last_name);
+      userFormData.append("email", data.email);
+      userFormData.append("phone_number", data.phone_number);
+
+      const mtData = {
+        userId: data._id,
+        userData: userFormData,
+      };
+
+      await mutate(mtData);
+    }
+  };
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
@@ -76,14 +149,14 @@ const AdminEnumerators = () => {
 
       {/* table */}
       <div className="bg-white  w-full text-xs">
-        <div className="p-2 font-semibold text-base tracking-tighter">
-          Users - Enumerators
-        </div>
-
         <GeneralTable
+          pageSize={60}
           data={enumData}
-          actions={[]}
+          actions={actions}
           title="Users - Enumerators"
+          commands={commands}
+          nonEditableFields={userNonEditableFields}
+          handleSave={handleSave}
         />
       </div>
     </div>

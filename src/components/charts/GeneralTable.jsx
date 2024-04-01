@@ -31,6 +31,7 @@ const GeneralTable = ({
   handleSave,
   height = 350,
   nonEditableFields,
+  hiddenFields,
 }) => {
   if (!data) return;
   const masterRow = data;
@@ -82,6 +83,8 @@ const GeneralTable = ({
     return objectWithMostKeys;
   }
 
+  // console.log(!hiddenFields?.includes(item), "hidden");
+
   let masterColumn =
     masterRow && masterRow.length > 0
       ? Object.keys(getTableColumnData(masterRow)).map((item) => (
@@ -93,7 +96,8 @@ const GeneralTable = ({
               item !== "created_at" &&
               item !== "createdAt" &&
               item !== "updatedAt" &&
-              item !== "updated_at"
+              item !== "updated_at" &&
+              !hiddenFields?.includes(item)
             }
             headerText={item !== null && item}
             key={item}

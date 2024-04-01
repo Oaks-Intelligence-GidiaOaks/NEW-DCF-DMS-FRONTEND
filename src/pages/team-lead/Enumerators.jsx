@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-import { Link, useNavigate } from "react-router-dom";
-import EnumeratorGrid from "../../components/grid/EnumeratorGrid";
+import { useNavigate } from "react-router-dom";
 import { Loading, NoData } from "../../components/reusable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   disableUser,
   getAllEnumerators,
+  resetPassword,
   updateUserById,
 } from "../../lib/service";
 import {
@@ -16,6 +13,7 @@ import {
 } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
 import { toast } from "react-toastify";
+import { userNonEditableFields } from "../../lib/actions";
 
 const Enumerators = () => {
   const queryClient = useQueryClient();
@@ -23,7 +21,7 @@ const Enumerators = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["updateUserById"],
-    mutationFn: (userId, userData) => updateUserById(userId, userData),
+    mutationFn: (mdata) => updateUserById(mdata),
     onSuccess: (sx) => {
       toast.success(`user details updated successfully`);
       queryClient.invalidateQueries({
@@ -57,6 +55,24 @@ const Enumerators = () => {
     : null;
 
   const actions = [
+    {
+      title: "Reset Password",
+      action: async (row) => {
+        const tData = {
+          id: row.id,
+        };
+
+        try {
+          const res = await resetPassword(tData);
+          toast.success(`Passeord reset successfully`);
+          queryClient.invalidateQueries({
+            queryKey: ["getAllEnumerators"],
+          });
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
+    },
     {
       title: "delete",
       action: async (row) => {
@@ -100,11 +116,14 @@ const Enumerators = () => {
       userFormData.append("email", data.email);
       userFormData.append("phone_number", data.phone_number);
 
-      await mutate(data._id, userFormData);
+      const mtData = {
+        userId: data._id,
+        userData: userFormData,
+      };
+
+      await mutate(mtData);
     }
   };
-
-  const nonEditableFields = ["id", "states", "districts", "country"];
 
   return (
     <div className="flex text-xs flex-col gap-6 h-full sm:mx-6 lg:mx-auto lg:w-[90%] mt-6">
@@ -138,12 +157,12 @@ const Enumerators = () => {
           <Loading />
         ) : enumData ? (
           <GeneralTable
-            pageSize={30}
+            pageSize={60}
             data={enumData}
             actions={actions}
             commands={commands}
             handleSave={handleSave}
-            nonEditableFields={nonEditableFields}
+            nonEditableFields={userNonEditableFields}
           />
         ) : (
           <div className="h-32">
