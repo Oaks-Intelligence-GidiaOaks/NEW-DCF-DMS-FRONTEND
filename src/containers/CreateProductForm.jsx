@@ -16,6 +16,7 @@ const CreateProductForm = ({ countryData }) => {
     country_id: user.country,
     category_id: "",
     name: "",
+    isTransport: false,
     inputs: [],
   });
 
@@ -103,13 +104,15 @@ const CreateProductForm = ({ countryData }) => {
   };
 
   const handleSubmit = async () => {
+    const { isTransport, ...rest } = formFields;
+
     const mutationData = {
       ...formFields,
     };
 
     console.log("mutation data", mutationData);
 
-    const isError = Object.values(formFields).filter((it) => !it.length).length;
+    const isError = Object.values(rest).filter((it) => !it.length).length;
 
     if (isError) {
       console.log(isError, "isError");
@@ -124,6 +127,7 @@ const CreateProductForm = ({ countryData }) => {
       country_id: user.country,
       category_id: "",
       name: "",
+      isTransport: false,
       inputs: [],
     });
 
@@ -154,7 +158,7 @@ const CreateProductForm = ({ countryData }) => {
 
       <div className="mt-4 md:w-3/5 xl:w-2/3 space-y-4">
         <FormInputDropDown
-          index="z-40"
+          index="z-[80]"
           reff={categoryInputRef}
           placeholder={"Choose category"}
           data={caInputData || []}
@@ -194,6 +198,22 @@ const CreateProductForm = ({ countryData }) => {
             </div>
           </div>
         )}
+
+        <div className="flex py-3 px-3 gap-2 text-sm">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            checked={formFields.isTransport}
+            onChange={(e) =>
+              setFormFields({
+                ...formFields,
+                isTransport: !formFields.isTransport,
+              })
+            }
+          />
+          <label htmlFor="">is this a transport product ?</label>
+        </div>
 
         <button
           onClick={handleSubmit}

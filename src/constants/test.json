@@ -1,0 +1,2378 @@
+[
+  {
+    "lga": "Arochukwu",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Amuvi",
+        "end": "Amanagu"
+      },
+      {
+        "name": "route 2",
+        "start": "Amuvi",
+        "end": "Asaga"
+      },
+      {
+        "name": "route 3",
+        "start": "Amuvi",
+        "end": "Obinkita"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb1",
+    "district_id": "65e3497c8097670c457ef82a",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Umuahia North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Fmc",
+        "end": "Orpet Filling Station Junction"
+      },
+      {
+        "name": "route 2",
+        "start": "Gate",
+        "end": "Bank Road"
+      },
+      {
+        "name": "route 3",
+        "start": "Gate",
+        "end": "State Secretariat"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb1",
+    "district_id": "65e3497c8097670c457ef836",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Umuahia South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Gate",
+        "end": "Olokoro"
+      },
+      {
+        "name": "route 2",
+        "start": "Tower",
+        "end": "Ubakala"
+      },
+      {
+        "name": "route 3",
+        "start": "Ubakala",
+        "end": "Gate"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb1",
+    "district_id": "65e3497c8097670c457ef837",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Girei",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Mau",
+        "end": "Federal Housing"
+      },
+      {
+        "name": "route 2",
+        "start": "Mau",
+        "end": "Jimeta Market"
+      },
+      {
+        "name": "route 3",
+        "start": "Mau",
+        "end": "Mubi Round About"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb2",
+    "district_id": "65e349b08097670c457ef83d",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Mubi North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Gombi",
+        "end": "Yola"
+      },
+      {
+        "name": "route 2",
+        "start": "Mbarama",
+        "end": "Gra"
+      },
+      {
+        "name": "route 3",
+        "start": "Mubi",
+        "end": "Gombi"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb2",
+    "district_id": "65e349b08097670c457ef847",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Etinan",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "College Of Health",
+        "end": "General Hospital"
+      },
+      {
+        "name": "route 2",
+        "start": "Ekomimam Junction",
+        "end": "State Secretariat"
+      },
+      {
+        "name": "route 3",
+        "start": "State Secretariat",
+        "end": "I.K Junction"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb3",
+    "district_id": "65e34a248097670c457ef856",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Oron",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Maritime",
+        "end": "Market"
+      },
+      {
+        "name": "route 2",
+        "start": "Secretariat",
+        "end": "Uyo"
+      },
+      {
+        "name": "route 3",
+        "start": "Stadium Road",
+        "end": "Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb3",
+    "district_id": "65e34a248097670c457ef868",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Uyo",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Abak Road",
+        "end": "Plaza"
+      },
+      {
+        "name": "route 2",
+        "start": "Ikot Ekpene Road",
+        "end": "Plaza"
+      },
+      {
+        "name": "route 3",
+        "start": "Oron Road",
+        "end": "Plaza"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb3",
+    "district_id": "65e34a248097670c457ef86e",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Anaocha",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Nwagu",
+        "end": "Ekwuluobia"
+      },
+      {
+        "name": "route 2",
+        "start": "Nwagu",
+        "end": "Nneni"
+      },
+      {
+        "name": "route 3",
+        "start": "Nwagu",
+        "end": "Nnewi"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb4",
+    "district_id": "65e34a4e8097670c457ef873",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Idemili South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Oba",
+        "end": "Nnewi"
+      },
+      {
+        "name": "route 2",
+        "start": "Oba",
+        "end": "Upper Iweka"
+      },
+      {
+        "name": "route 3",
+        "start": "Oba Junction",
+        "end": "Aforba"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb4",
+    "district_id": "65e34a4e8097670c457ef87a",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Nnewi North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Eastern Mass Transit",
+        "end": "Robern Store"
+      },
+      {
+        "name": "route 2",
+        "start": "Ibeto Junction",
+        "end": "Nkwo Market"
+      },
+      {
+        "name": "route 3",
+        "start": "Water Works",
+        "end": "Local Government"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb4",
+    "district_id": "65e34a4e8097670c457ef87d",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Bauchi",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Awala",
+        "end": "Airforce Base"
+      },
+      {
+        "name": "route 2",
+        "start": "Wintin",
+        "end": "Awala"
+      },
+      {
+        "name": "route 3",
+        "start": "Yelwa",
+        "end": "Wintin"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb5",
+    "district_id": "65e34a798097670c457ef887",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Katagum",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Barrack",
+        "end": "Federal Low Cost"
+      },
+      {
+        "name": "route 2",
+        "start": "Barrack",
+        "end": "Kassua"
+      },
+      {
+        "name": "route 3",
+        "start": "Federal Low-Cost",
+        "end": "Barrack"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb5",
+    "district_id": "65e34a798097670c457ef891",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Brass",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Okpoama",
+        "end": "Ewoama"
+      },
+      {
+        "name": "route 2",
+        "start": "Okpoama",
+        "end": "Twon"
+      },
+      {
+        "name": "route 3",
+        "start": "Within Community,Brass",
+        "end": "Brass,Beyelsa"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb6",
+    "district_id": "65e34a9c8097670c457ef89b",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Kolokuma/Opokuma",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Kaima",
+        "end": "Mbaima"
+      },
+      {
+        "name": "route 2",
+        "start": "Kaima",
+        "end": "Opukuma"
+      },
+      {
+        "name": "route 3",
+        "start": "Kaima",
+        "end": "Yenegua"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb6",
+    "district_id": "65e34a9c8097670c457ef89d",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Yenagoa",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Hospital Junction",
+        "end": "Berger"
+      },
+      {
+        "name": "route 2",
+        "start": "Hospital Junction",
+        "end": "Ekeki Park"
+      },
+      {
+        "name": "route 3",
+        "start": "Tombia",
+        "end": "Kpansha Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb6",
+    "district_id": "65e34a9c8097670c457ef8a2",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Kwande",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Corpers Lodge",
+        "end": "Secretariat"
+      },
+      {
+        "name": "route 2",
+        "start": "Market",
+        "end": "Corpers Lodge"
+      },
+      {
+        "name": "route 3",
+        "start": "Secretariat",
+        "end": "Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb7",
+    "district_id": "65e34ac18097670c457ef8ae",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Makurdi",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Highlevel",
+        "end": "Nyiman Layout"
+      },
+      {
+        "name": "route 2",
+        "start": "Modern Market",
+        "end": "Wadata"
+      },
+      {
+        "name": "route 3",
+        "start": "Nyiman Layout",
+        "end": "Modern Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb7",
+    "district_id": "65e34ac18097670c457ef8b0",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Vandeikya",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Federal Government College",
+        "end": "Market"
+      },
+      {
+        "name": "route 2",
+        "start": "Market",
+        "end": "Branch"
+      },
+      {
+        "name": "route 3",
+        "start": "Market",
+        "end": "General Hospital Vandeikya"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb7",
+    "district_id": "65e34ac18097670c457ef8ba",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Biu",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Biu",
+        "end": "Buratai"
+      },
+      {
+        "name": "route 2",
+        "start": "Biu",
+        "end": "Sakwa"
+      },
+      {
+        "name": "route 3",
+        "start": "Biu",
+        "end": "Mirnga"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb8",
+    "district_id": "65e34ae58097670c457ef8c0",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Hawul",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Azare",
+        "end": "Shaffa"
+      },
+      {
+        "name": "route 2",
+        "start": "Azare",
+        "end": "Shaffa"
+      },
+      {
+        "name": "route 3",
+        "start": "Azare",
+        "end": "Shaffa"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb8",
+    "district_id": "65e34ae58097670c457ef8c7",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Maiduguri",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Bulunkutu",
+        "end": "Moduganari"
+      },
+      {
+        "name": "route 2",
+        "start": "Moduganari",
+        "end": "Bambao Road"
+      },
+      {
+        "name": "route 3",
+        "start": "Post Office",
+        "end": "Moduganari"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb8",
+    "district_id": "65e34ae58097670c457ef8d0",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Calabar Municipal",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Marian",
+        "end": "Mobile"
+      },
+      {
+        "name": "route 2",
+        "start": "Mobile",
+        "end": "8Mile"
+      },
+      {
+        "name": "route 3",
+        "start": "Mobile",
+        "end": "Watt"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb9",
+    "district_id": "65e34b128097670c457ef8df",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Calabar South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Anantigha",
+        "end": "Etagbor Maingate"
+      },
+      {
+        "name": "route 2",
+        "start": "Ekpo Abasi",
+        "end": "Goldie By Mount Zion"
+      },
+      {
+        "name": "route 3",
+        "start": "Goldie By Mount Zion",
+        "end": "Unical Maingate"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb9",
+    "district_id": "65e34b128097670c457ef8e0",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ikom",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Atimaka",
+        "end": "Living Faith Church"
+      },
+      {
+        "name": "route 2",
+        "start": "Ikom Stadium",
+        "end": "Happkings Hotel"
+      },
+      {
+        "name": "route 3",
+        "start": "Ogoja Road",
+        "end": "Police Station"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eb9",
+    "district_id": "65e34b128097670c457ef8e2",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ika South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Central Hospital",
+        "end": "Baleke"
+      },
+      {
+        "name": "route 2",
+        "start": "Central Hospital",
+        "end": "Garage"
+      },
+      {
+        "name": "route 3",
+        "start": "College Junction",
+        "end": "Crunchies"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eba",
+    "district_id": "65e34b318097670c457ef8f2",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Isoko North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "General Hospital",
+        "end": "Alaka"
+      },
+      {
+        "name": "route 2",
+        "start": "General Hospital",
+        "end": "Big Market"
+      },
+      {
+        "name": "route 3",
+        "start": "General Hospital",
+        "end": "Small Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eba",
+    "district_id": "65e34b318097670c457ef8f3",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Oshimili South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Okpanam Road",
+        "end": "Awnai Road"
+      },
+      {
+        "name": "route 2",
+        "start": "Summit",
+        "end": "Nebisi Road"
+      },
+      {
+        "name": "route 3",
+        "start": "Summit",
+        "end": "Okpanam Road"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eba",
+    "district_id": "65e34b318097670c457ef8f9",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Abakaliki",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Abakaliki Township Stadium",
+        "end": "Unity Bank"
+      },
+      {
+        "name": "route 2",
+        "start": "Federal Teaching Hospital",
+        "end": "Abakaliki Rice Mill"
+      },
+      {
+        "name": "route 3",
+        "start": "Federal Teaching Hospital",
+        "end": "Spera N Deo Junction"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebb",
+    "district_id": "65e34b538097670c457ef905",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Izzi",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Nwezenyi",
+        "end": "Iboko"
+      },
+      {
+        "name": "route 2",
+        "start": "Nwezenyi",
+        "end": "Ndubia"
+      },
+      {
+        "name": "route 3",
+        "start": "Nwezenyi",
+        "end": "Onu-Ebonyi Inyimagu Nursery And Primary School"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebb",
+    "district_id": "65e34b538097670c457ef90e",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ohaukwu",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Ezzamgbo",
+        "end": 135
+      },
+      {
+        "name": "route 2",
+        "start": "Ezzamgbo",
+        "end": "Okwo"
+      },
+      {
+        "name": "route 3",
+        "start": "Ezzamgbo",
+        "end": "New Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebb",
+    "district_id": "65e34b538097670c457ef910",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Etsako Central",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "D'King Mayor Royal Hotel",
+        "end": "St Theresa Catholic Church"
+      },
+      {
+        "name": "route 2",
+        "start": "Mcwilliams Apt Hotel Ltd",
+        "end": "Fugar Central Mosque"
+      },
+      {
+        "name": "route 3",
+        "start": "Royal Palace",
+        "end": "Philophet Contenental Hotel And Suites"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebc",
+    "district_id": "65e34b7b8097670c457ef91c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Igueben",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Afuda Primary School",
+        "end": "Igueben Local Government Secretariat"
+      },
+      {
+        "name": "route 2",
+        "start": "De Amanios Gas",
+        "end": "Igueben Local Government Secretariat"
+      },
+      {
+        "name": "route 3",
+        "start": "Purple Café",
+        "end": "Kings Community Group Of Schools"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebc",
+    "district_id": "65e34b7b8097670c457ef91f",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Oredo",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Airport Road",
+        "end": "Ringroad"
+      },
+      {
+        "name": "route 2",
+        "start": "Ring Road",
+        "end": "Ikpoba Hill"
+      },
+      {
+        "name": "route 3",
+        "start": "Sapele Road",
+        "end": "Ring Road"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebc",
+    "district_id": "65e34b7b8097670c457ef921",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ado Ekiti",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Access Bank",
+        "end": "Similoluwa"
+      },
+      {
+        "name": "route 2",
+        "start": "Similoluwa",
+        "end": "Fajuyi Memorial Park"
+      },
+      {
+        "name": "route 3",
+        "start": "Similoluwa Street",
+        "end": "Access Bank"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebd",
+    "district_id": "65e34b9a8097670c457ef929",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ekiti East",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "General Hospital",
+        "end": "Kota Block Industry"
+      },
+      {
+        "name": "route 2",
+        "start": "Isinbode",
+        "end": "Eda Ile"
+      },
+      {
+        "name": "route 3",
+        "start": "Omuo Oke",
+        "end": "Obadore Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebd",
+    "district_id": "65e34b9a8097670c457ef92b",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Moba",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "General Hospital",
+        "end": "Otun Ekiti"
+      },
+      {
+        "name": "route 2",
+        "start": "Moba Grammar School",
+        "end": "Total Energies"
+      },
+      {
+        "name": "route 3",
+        "start": "Palace Of Oore Of Moba Land",
+        "end": "General Hospital"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebd",
+    "district_id": "65e34b9a8097670c457ef937",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Enugu East",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "New Artisan Market",
+        "end": "Mega Pharmacy"
+      },
+      {
+        "name": "route 2",
+        "start": "New Haven Junction",
+        "end": "Mainland"
+      },
+      {
+        "name": "route 3",
+        "start": "New Society Busstop",
+        "end": "Eke Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebe",
+    "district_id": "65e34bbb8097670c457ef93c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Enugu North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Holy Ghost",
+        "end": "82 Division Headquarters"
+      },
+      {
+        "name": "route 2",
+        "start": "Holy Ghost Cathedral",
+        "end": "Abakpa"
+      },
+      {
+        "name": "route 3",
+        "start": "Holy Ghost Cathedral",
+        "end": "Emene"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebe",
+    "district_id": "65e34bbb8097670c457ef93d",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Oji River",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Akpugoeze",
+        "end": "Ugwuoba"
+      },
+      {
+        "name": "route 2",
+        "start": "Nysc Secretariat",
+        "end": "Oji River"
+      },
+      {
+        "name": "route 3",
+        "start": "Nysc Secretariat",
+        "end": "Oji Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebe",
+    "district_id": "65e34bbb8097670c457ef947",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Abuja Municipal",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Lugbe",
+        "end": "Goza Accross"
+      },
+      {
+        "name": "route 2",
+        "start": "Piwoyi",
+        "end": "Lugbe"
+      },
+      {
+        "name": "route 3",
+        "start": "Secretariat",
+        "end": "Chika"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed5",
+    "district_id": "65e34f308097670c457efb50",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Bwari",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Arab Junction",
+        "end": "Liberty"
+      },
+      {
+        "name": "route 2",
+        "start": "Arab Junction",
+        "end": "Nnpc"
+      },
+      {
+        "name": "route 3",
+        "start": "Liberty",
+        "end": "Chikakore"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed5",
+    "district_id": "65e34f308097670c457efb51",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Gwagwalada",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Apo Roundabout",
+        "end": "Karu Bridge"
+      },
+      {
+        "name": "route 2",
+        "start": "Area 1",
+        "end": "Central Area"
+      },
+      {
+        "name": "route 3",
+        "start": "Estate Gate",
+        "end": "Roundabout"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed5",
+    "district_id": "65e34f308097670c457efb52",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Akko",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Amada Academy",
+        "end": "Lawanti"
+      },
+      {
+        "name": "route 2",
+        "start": "Rainbow Hotel",
+        "end": "Tunfure"
+      },
+      {
+        "name": "route 3",
+        "start": "Tunfure",
+        "end": "Amada Academy"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebf",
+    "district_id": "65e34bf88097670c457ef94c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Balanga",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Ecwa",
+        "end": "Emir Palace"
+      },
+      {
+        "name": "route 2",
+        "start": "Ecwa Gospel Galilee",
+        "end": "Bank Of Industry"
+      },
+      {
+        "name": "route 3",
+        "start": "Ecwa Gospel Galilee",
+        "end": "Secretariat"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebf",
+    "district_id": "65e34bf88097670c457ef94d",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Gombe",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Main Market",
+        "end": "Unity Bank"
+      },
+      {
+        "name": "route 2",
+        "start": "Ministry Of Information And Culture",
+        "end": "Specialist Hospital"
+      },
+      {
+        "name": "route 3",
+        "start": "Tunfure",
+        "end": "Unity Bank"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ebf",
+    "district_id": "65e34bf88097670c457ef951",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Onuimo",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Afor Umuna",
+        "end": "State Secretariat"
+      },
+      {
+        "name": "route 2",
+        "start": "Afor Umuna",
+        "end": "Aforezu Market"
+      },
+      {
+        "name": "route 3",
+        "start": "Afuezu",
+        "end": "Okigwe"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec0",
+    "district_id": "660308ad3039a27f87013605",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Owerri Municipal",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Wethdral",
+        "end": "Mcc"
+      },
+      {
+        "name": "route 2",
+        "start": "Wethdral",
+        "end": "Owerri Fire Service"
+      },
+      {
+        "name": "route 3",
+        "start": "Wethdral",
+        "end": "Port Harcourt Road"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec0",
+    "district_id": "65e34c188097670c457ef96f",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Owerri North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Mcc",
+        "end": "Ikenegbu"
+      },
+      {
+        "name": "route 2",
+        "start": "Mcc",
+        "end": "Toronto Police Station"
+      },
+      {
+        "name": "route 3",
+        "start": "Toronto Police Station",
+        "end": "Ikenegbu"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec0",
+    "district_id": "65e34c188097670c457ef970",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Auyo",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Auyo",
+        "end": "Ayama"
+      },
+      {
+        "name": "route 2",
+        "start": "Auyo",
+        "end": "Kafin Hausa"
+      },
+      {
+        "name": "route 3",
+        "start": "Auyo",
+        "end": "Hadejia"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec1",
+    "district_id": "65e34c398097670c457ef973",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Babura",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Babura",
+        "end": "Dan Alili"
+      },
+      {
+        "name": "route 2",
+        "start": "Babura",
+        "end": "Babura-Gumel Road"
+      },
+      {
+        "name": "route 3",
+        "start": "Babura",
+        "end": "Insharuwa"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec1",
+    "district_id": "65e34c398097670c457ef974",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Dutse",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Fagoji",
+        "end": "Hakimi"
+      },
+      {
+        "name": "route 2",
+        "start": "Zai Plaza",
+        "end": "Federal Inland Revenue Service"
+      },
+      {
+        "name": "route 3",
+        "start": "Zai Plaza",
+        "end": "Federal Inland Revenue Service"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec1",
+    "district_id": "65e34c398097670c457ef978",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Kaduna North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Barnawa",
+        "end": "Kano Road"
+      },
+      {
+        "name": "route 2",
+        "start": "Kabala Road",
+        "end": "Sabo Market"
+      },
+      {
+        "name": "route 3",
+        "start": "Kakuri",
+        "end": "Sabo Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec2",
+    "district_id": "65e34c618097670c457ef997",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Kaduna South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Barnawa Complex Mosque",
+        "end": "Station Market Roundabout"
+      },
+      {
+        "name": "route 2",
+        "start": "Kasuwa",
+        "end": "Barnawa Complex"
+      },
+      {
+        "name": "route 3",
+        "start": "Kasuwa Street",
+        "end": "Kakuri"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec2",
+    "district_id": "65e34c618097670c457ef998",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Zaria",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Agoro Tudunwada",
+        "end": "Pz Nigeria"
+      },
+      {
+        "name": "route 2",
+        "start": "Tudun Jukun",
+        "end": "Kofan Doka"
+      },
+      {
+        "name": "route 3",
+        "start": "Tudun Jukun",
+        "end": "Kongo Road"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec2",
+    "district_id": "65e34c618097670c457ef9a5",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Fagge",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Kofar Wambai",
+        "end": "Bata"
+      },
+      {
+        "name": "route 2",
+        "start": "Yankaba Road",
+        "end": "Bata"
+      },
+      {
+        "name": "route 3",
+        "start": "Yankura Market",
+        "end": "France Road"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec3",
+    "district_id": "65e34c8b8097670c457ef9b2",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Kano Municipal",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Kano Municipal Council",
+        "end": "Hotoro"
+      },
+      {
+        "name": "route 2",
+        "start": "Kano Municipal Council",
+        "end": "Kabuga Busstop"
+      },
+      {
+        "name": "route 3",
+        "start": "Kano Municipal Council",
+        "end": "Naibawa"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec3",
+    "district_id": "65e34c8b8097670c457ef9bb",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Nasarawa",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Badawa Layout",
+        "end": "Hottoro Road"
+      },
+      {
+        "name": "route 2",
+        "start": "Badawa Layout",
+        "end": "Police Station Street"
+      },
+      {
+        "name": "route 3",
+        "start": "Badawa Layout",
+        "end": "Sabon Gari"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec3",
+    "district_id": "65e34c8b8097670c457ef9c5",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Batagarawa",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Alqualam",
+        "end": "Liyafa"
+      },
+      {
+        "name": "route 2",
+        "start": "Central Market",
+        "end": "Fce"
+      },
+      {
+        "name": "route 3",
+        "start": "Sardauna",
+        "end": "Layout"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec4",
+    "district_id": "65e34cb48097670c457ef9d5",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Kaita",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Gas",
+        "end": "Yandaki"
+      },
+      {
+        "name": "route 2",
+        "start": "Tashya",
+        "end": "Dankama"
+      },
+      {
+        "name": "route 3",
+        "start": "Tashya",
+        "end": "Nakunu"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec4",
+    "district_id": "65e34cb48097670c457ef9e5",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Katsina",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Main Road",
+        "end": "Center Market"
+      },
+      {
+        "name": "route 2",
+        "start": "Transit Camp",
+        "end": "Tudu Kasira"
+      },
+      {
+        "name": "route 3",
+        "start": "Tudu Kasira",
+        "end": "Main Road"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec4",
+    "district_id": "65e34cb48097670c457ef9e8",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Birnin Kebbi",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Bayan Kara",
+        "end": "Central Market"
+      },
+      {
+        "name": "route 2",
+        "start": "Federal Polytechnic",
+        "end": "Gesse Phase 1"
+      },
+      {
+        "name": "route 3",
+        "start": "Tudun Wada",
+        "end": "Bello Way"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec5",
+    "district_id": "65e34cda8097670c457ef9fc",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Kalgo",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Kalgo",
+        "end": "Birnin Kebbi"
+      },
+      {
+        "name": "route 2",
+        "start": "Kalgo",
+        "end": "Bunza"
+      },
+      {
+        "name": "route 3",
+        "start": "Kalgo",
+        "end": "Jega"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec5",
+    "district_id": "65e34cda8097670c457efa02",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Lokoja",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Natako",
+        "end": "Barracks"
+      },
+      {
+        "name": "route 2",
+        "start": "New Market",
+        "end": "Barracks"
+      },
+      {
+        "name": "route 3",
+        "start": "Paparanda",
+        "end": "Barracks"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec6",
+    "district_id": "65e34d098097670c457efa19",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Okene",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Bariki",
+        "end": "Ageva"
+      },
+      {
+        "name": "route 2",
+        "start": "Check Point",
+        "end": "Bariki"
+      },
+      {
+        "name": "route 3",
+        "start": "Check Point",
+        "end": "Bariki"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec6",
+    "district_id": "65e34d098097670c457efa1e",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Omala",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Anyigba Junction",
+        "end": "Ogodu"
+      },
+      {
+        "name": "route 2",
+        "start": "Garage",
+        "end": "Bagana"
+      },
+      {
+        "name": "route 3",
+        "start": "Secteriat Junction",
+        "end": "Obakume"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec6",
+    "district_id": "65e34d098097670c457efa20",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Baruten",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Ilesha",
+        "end": "Gwanara"
+      },
+      {
+        "name": "route 2",
+        "start": "Ilesha",
+        "end": "Okuta"
+      },
+      {
+        "name": "route 3",
+        "start": "Ilesha",
+        "end": "Saki"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec7",
+    "district_id": "65e34d2a8097670c457efa25",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ilorin South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Fate",
+        "end": "Tanke"
+      },
+      {
+        "name": "route 2",
+        "start": "Gaa Akanbi",
+        "end": "Tanke"
+      },
+      {
+        "name": "route 3",
+        "start": "Gambari",
+        "end": "Adeta"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec7",
+    "district_id": "65e34d2a8097670c457efa2a",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ilorin West",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Egbejila Junction",
+        "end": "Oloje Market"
+      },
+      {
+        "name": "route 2",
+        "start": "Ogidi",
+        "end": "Bani"
+      },
+      {
+        "name": "route 3",
+        "start": "Oja-Oba",
+        "end": "Aremu"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec7",
+    "district_id": "65e34d2a8097670c457efa2b",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Alimosho",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Megida",
+        "end": "Bolaji"
+      },
+      {
+        "name": "route 2",
+        "start": "Megida",
+        "end": "Ipaja Church"
+      },
+      {
+        "name": "route 3",
+        "start": "Megida",
+        "end": "Odo Across"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec8",
+    "district_id": "65e34d4a8097670c457efa37",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Badagry",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Badagry Roundabout",
+        "end": "Seme Border"
+      },
+      {
+        "name": "route 2",
+        "start": "Muwo",
+        "end": "Agbara"
+      },
+      {
+        "name": "route 3",
+        "start": "Okwafor",
+        "end": "Badagry Roundabout"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec8",
+    "district_id": "65e34d4a8097670c457efa3a",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Ikeja",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Agege",
+        "end": "Ikeja"
+      },
+      {
+        "name": "route 2",
+        "start": "Berger",
+        "end": "Computer Village"
+      },
+      {
+        "name": "route 3",
+        "start": "Ikeja",
+        "end": "Estate"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec8",
+    "district_id": "65e34d4a8097670c457efa3f",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Doma",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Bosco",
+        "end": "New Market"
+      },
+      {
+        "name": "route 2",
+        "start": "Doma",
+        "end": "Alagye"
+      },
+      {
+        "name": "route 3",
+        "start": "Donald",
+        "end": "Lafia"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec9",
+    "district_id": "65e34d618097670c457efa4c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Karu",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Mararaba",
+        "end": "One Man Village"
+      },
+      {
+        "name": "route 2",
+        "start": "Nyanya",
+        "end": "Mararaba"
+      },
+      {
+        "name": "route 3",
+        "start": "One Man Village",
+        "end": "New Nyanya"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec9",
+    "district_id": "65e34d618097670c457efa4d",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Keana",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Giza",
+        "end": "Kadarko"
+      },
+      {
+        "name": "route 2",
+        "start": "Giza",
+        "end": "Keana Town"
+      },
+      {
+        "name": "route 3",
+        "start": "Giza",
+        "end": "Lafiya"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec9",
+    "district_id": "65e34d618097670c457efa4e",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Lafia",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Imap",
+        "end": "Nudb"
+      },
+      {
+        "name": "route 2",
+        "start": "Poly",
+        "end": "Azuba"
+      },
+      {
+        "name": "route 3",
+        "start": "Shabu",
+        "end": "Government"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ec9",
+    "district_id": "65e34d618097670c457efa51",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Bosso",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Bosso",
+        "end": "Mobil"
+      },
+      {
+        "name": "route 2",
+        "start": "Bosso",
+        "end": "Pakungu"
+      },
+      {
+        "name": "route 3",
+        "start": "Bosso",
+        "end": "Tunga"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eca",
+    "district_id": "65e34d938097670c457efa5c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Chanchaga",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Chanchaga",
+        "end": "City Gate"
+      },
+      {
+        "name": "route 2",
+        "start": "Chanchaga",
+        "end": "Tunga"
+      },
+      {
+        "name": "route 3",
+        "start": "Within Chanchaga"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eca",
+    "district_id": "65e34d938097670c457efa5d",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Suleja",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Suleja",
+        "end": "Kwamba"
+      },
+      {
+        "name": "route 2",
+        "start": "Suleja",
+        "end": "Maje"
+      },
+      {
+        "name": "route 3",
+        "start": "Suleja",
+        "end": "Zuba"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021eca",
+    "district_id": "65e34d938097670c457efa6e",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Abeokuta North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Ile-Ise Awo",
+        "end": "Fajol"
+      },
+      {
+        "name": "route 2",
+        "start": "Ile-Ise Awo",
+        "end": "Ita-Oshin"
+      },
+      {
+        "name": "route 3",
+        "start": "Ita-Oshin",
+        "end": "Kwari Road"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecb",
+    "district_id": "65e34db58097670c457efa72",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Abeokuta South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Kuto",
+        "end": "Oke Ilewo"
+      },
+      {
+        "name": "route 2",
+        "start": "Oke Ilewo",
+        "end": "Oke Mosan"
+      },
+      {
+        "name": "route 3",
+        "start": "Panseke",
+        "end": "Adigbe"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecb",
+    "district_id": "65e34db58097670c457efa73",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Akure South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Oke Aro",
+        "end": "Arakale"
+      },
+      {
+        "name": "route 2",
+        "start": "Ilesha road",
+        "end": "Oja"
+      },
+      {
+        "name": "route 3",
+        "start": "Futa",
+        "end": "Road Block"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecc",
+    "district_id": "65e34dd58097670c457efa8c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Owo",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Okedogbon",
+        "end": "Achiever'S University"
+      },
+      {
+        "name": "route 2",
+        "start": "Okedogbon",
+        "end": "Chicken Republic"
+      },
+      {
+        "name": "route 3",
+        "start": "Okedogbon",
+        "end": "Fmc"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecc",
+    "district_id": "65e34dd58097670c457efa98",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Aiyedaade",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Ayepe",
+        "end": "Oke Church"
+      },
+      {
+        "name": "route 2",
+        "start": "Temidire",
+        "end": "Oke Elu"
+      },
+      {
+        "name": "route 3",
+        "start": "Oke Oje",
+        "end": "Wakajaiye"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecd",
+    "district_id": "65e34df78097670c457efa9c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Olorunda",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Oke oniti",
+        "end": "Olorunda"
+      },
+      {
+        "name": "route 2",
+        "start": "Stadium",
+        "end": "Olorunda"
+      },
+      {
+        "name": "route 3",
+        "start": "Otefun",
+        "end": "Old Garage"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecd",
+    "district_id": "65e34df78097670c457efab4",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Osogbo",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Estate",
+        "end": "Olaiya"
+      },
+      {
+        "name": "route 2",
+        "start": "Aregbe",
+        "end": "Abeere"
+      },
+      {
+        "name": "route 3",
+        "start": "Owode Garage",
+        "end": "Oke Baale"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecd",
+    "district_id": "65e34df78097670c457efab7",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Akinyele",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "IITA",
+        "end": "Ojoo"
+      },
+      {
+        "name": "route 2",
+        "start": "Ojoo",
+        "end": "Akinyele"
+      },
+      {
+        "name": "route 3",
+        "start": "Ojoo",
+        "end": "Moniya"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ece",
+    "district_id": "65e34e188097670c457efaba",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Ibadan North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Adeoyo",
+        "end": "Oje"
+      },
+      {
+        "name": "route 2",
+        "start": "Mokola Roundabout",
+        "end": "Sango"
+      },
+      {
+        "name": "route 3",
+        "start": "University College Hospital (UCH)",
+        "end": "Agodi Gate"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ece",
+    "district_id": "65e34e188097670c457efabe",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Barkin Ladi",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Pla poly",
+        "end": "Ban"
+      },
+      {
+        "name": "route 2",
+        "start": "Heipang",
+        "end": "Coccin church gassa"
+      },
+      {
+        "name": "route 3",
+        "start": "Barkin gangere",
+        "end": "Barkin john"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecf",
+    "district_id": "65e34e438097670c457efadb",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Jos North",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Pla poly",
+        "end": "Ban"
+      },
+      {
+        "name": "route 2",
+        "start": "Bukuru",
+        "end": "Terminus"
+      },
+      {
+        "name": "route 3",
+        "start": "Gada biyu",
+        "end": "Old airport"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecf",
+    "district_id": "65e34e438097670c457efadf",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Jos South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Building materials",
+        "end": "Ramun"
+      },
+      {
+        "name": "route 2",
+        "start": "Building materials",
+        "end": "Old airport"
+      },
+      {
+        "name": "route 3",
+        "start": "Bukuru",
+        "end": "Terminus"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ecf",
+    "district_id": "65e34e438097670c457efae0",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Emohua",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Oduoha",
+        "end": "Elibrada"
+      },
+      {
+        "name": "route 2",
+        "start": "Isiodu",
+        "end": "Rumakunde"
+      },
+      {
+        "name": "route 3",
+        "start": "Rumakunde",
+        "end": "Rumuohia"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed0",
+    "district_id": "65e34e768097670c457efaf5",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Obio/Akpor",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Choba",
+        "end": "Runuodara"
+      },
+      {
+        "name": "route 2",
+        "start": "Choba",
+        "end": "Rumuola"
+      },
+      {
+        "name": "route 3",
+        "start": "Chioba",
+        "end": "Rumuokoro"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed0",
+    "district_id": "65e34e768097670c457efafb",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Dange Shuni",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Barracks",
+        "end": "Kwanawa"
+      },
+      {
+        "name": "route 2",
+        "start": "Danbuwa",
+        "end": "Kwanawa"
+      },
+      {
+        "name": "route 3",
+        "start": "Barracks",
+        "end": "Market"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed1",
+    "district_id": "65e34eb68097670c457efb07",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Sokoto South",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Dambuwa",
+        "end": "Kano road"
+      },
+      {
+        "name": "route 2",
+        "start": "Dambuwa",
+        "end": "UDUTH"
+      },
+      {
+        "name": "route 3",
+        "start": "Dambuwa",
+        "end": "Hayjia Alima"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed1",
+    "district_id": "65e34eb68097670c457efb15",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+
+  {
+    "lga": "Yorro",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Round about Pantisawa",
+        "end": " GDSS Pantisawa"
+      },
+      {
+        "name": "route 2",
+        "start": "Round about Pantisawa",
+        "end": " Kalau"
+      },
+      {
+        "name": "route 3",
+        "start": "Round about Pantisawa",
+        "end": " Nyaja"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed2",
+    "district_id": "65e34ed68097670c457efb2b",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Lau",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Appawa",
+        "end": "Kunini"
+      },
+      {
+        "name": "route 2",
+        "start": "Appawa",
+        "end": "Mayo-Lope"
+      },
+      {
+        "name": "route 3",
+        "start": "Appawa",
+        "end": "Jalingo"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed2",
+    "district_id": "65e34ed68097670c457efb26",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Bade",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Tashan kuka",
+        "end": "Low cost"
+      },
+      {
+        "name": "route 2",
+        "start": "Mobile base",
+        "end": "Market"
+      },
+      {
+        "name": "route 3",
+        "start": "Market",
+        "end": "College"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed3",
+    "district_id": "65e34ef48097670c457efb2e",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Damaturu",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Bayantasha",
+        "end": "New Jerusalem"
+      },
+      {
+        "name": "route 2",
+        "start": "YBC",
+        "end": "New Bra bra"
+      },
+      {
+        "name": "route 3",
+        "start": "Malari",
+        "end": "Sabonpegi"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed3",
+    "district_id": "65e34ef48097670c457efb30",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Potiskum",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Signal barracks",
+        "end": "Jos park"
+      },
+      {
+        "name": "route 2",
+        "start": "FCE",
+        "end": "Market"
+      },
+      {
+        "name": "route 3",
+        "start": "Texaco",
+        "end": "Dazigau"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed3",
+    "district_id": "65e34ef48097670c457efb3b",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Bungudu",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "General hospital",
+        "end": "Kasuwa"
+      },
+      {
+        "name": "route 2",
+        "start": "Gidan sarki",
+        "end": "Tasha"
+      },
+      {
+        "name": "route 3",
+        "start": "Gidan sarki",
+        "end": "Area 1"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed4",
+    "district_id": "65e34f0f8097670c457efb44",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Gusau",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Sabon gari",
+        "end": "Samaru"
+      },
+      {
+        "name": "route 2",
+        "start": "GRA",
+        "end": "Tudun wada"
+      },
+      {
+        "name": "route 3",
+        "start": "Damba",
+        "end": "Labin labin"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed4",
+    "district_id": "65e34f0f8097670c457efb46",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  },
+  {
+    "lga": "Tsafe",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Hanyan tumbi",
+        "end": "Market"
+      },
+      {
+        "name": "route 2",
+        "start": "Market",
+        "end": "Area 2"
+      },
+      {
+        "name": "route 3",
+        "start": "Area 2",
+        "end": "Green house"
+      }
+    ],
+    "state_id": "65e3471e11445db48a021ed4",
+    "district_id": "65e34f0f8097670c457efb4c",
+    "country_id": "65e344bff0eab8c4f2552abe"
+  }
+]

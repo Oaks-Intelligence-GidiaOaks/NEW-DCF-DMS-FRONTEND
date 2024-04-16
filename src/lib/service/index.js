@@ -409,8 +409,8 @@ export const getRoutesByDistrict = async (districtId) => {
   return data;
 };
 
-export const updateRoute = async (districtId) => {
-  const data = await axios.put(`district_route/${districtId}`);
+export const updateRoute = async ({ districtId, data: dData }) => {
+  const data = await axios.put(`district_route/${districtId}`, dData);
   return data;
 };
 
