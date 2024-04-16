@@ -1,0 +1,22 @@
+[
+  {
+    "lga": "Arochukwu",
+    "routes": [
+      {
+        "name": "route 1",
+        "start": "Amuvi",
+        "end": "Asaga"
+      },
+      {
+        "name": "route 2",
+        "start": "Amuvi",
+        "end": "Amanagu"
+      },
+      {
+        "name": "route 3",
+        "start": "Amuvi",
+        "end": "junction"
+      }
+    ]
+  }
+]

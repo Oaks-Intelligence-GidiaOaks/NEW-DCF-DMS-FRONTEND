@@ -22,6 +22,7 @@ const CreateProductFormSA = ({ countryData }) => {
     country_id: "",
     category_id: "",
     name: "",
+    isTransport: false,
     inputs: [],
   });
 
@@ -121,13 +122,13 @@ const CreateProductFormSA = ({ countryData }) => {
   const handleSubmit = async () => {
     // e.preventDefault();
 
+    const { isTransport, ...rest } = formFields;
+
     const mutationData = {
       ...formFields,
     };
 
-    console.log("mutation data", mutationData);
-
-    const isError = Object.values(formFields).filter((it) => !it.length).length;
+    const isError = Object.values(rest).filter((it) => !it.length).length;
 
     if (isError) {
       console.log(isError, "isError");
@@ -142,6 +143,7 @@ const CreateProductFormSA = ({ countryData }) => {
       country_id: "",
       category_id: "",
       name: "",
+      isTransport: false,
       inputs: [],
     });
 
@@ -181,7 +183,7 @@ const CreateProductFormSA = ({ countryData }) => {
 
       <div className="mt-4 md:w-3/5 xl:w-2/3 space-y-4">
         <FormInputDropDown
-          index="z-50"
+          index="z-[90]"
           reff={countryInputRef}
           placeholder={"Choose country"}
           data={countryData}
@@ -191,7 +193,7 @@ const CreateProductFormSA = ({ countryData }) => {
         />
 
         <FormInputDropDown
-          index="z-40"
+          index="z-[80]"
           reff={categoryInputRef}
           placeholder={"Choose category"}
           data={caInputData || []}
@@ -231,6 +233,22 @@ const CreateProductFormSA = ({ countryData }) => {
             </div>
           </div>
         )}
+
+        <div className="flex py-3 px-3 gap-2 text-sm">
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            checked={formFields.isTransport}
+            onChange={(e) =>
+              setFormFields({
+                ...formFields,
+                isTransport: !formFields.isTransport,
+              })
+            }
+          />
+          <label htmlFor="">is this a transport product ?</label>
+        </div>
 
         <button
           onClick={handleSubmit}

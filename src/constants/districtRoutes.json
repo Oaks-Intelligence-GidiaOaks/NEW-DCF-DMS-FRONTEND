@@ -1,0 +1,2035 @@
+[
+ {
+  "State": "Abia",
+  "LGA": "Arochukwu",
+  "Start": "Amuvi",
+  "End": "Amanagu"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Arochukwu",
+  "Start": "Amuvi",
+  "End": "Asaga"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Arochukwu",
+  "Start": "Amuvi",
+  "End": "Obinkita"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Umuahia North",
+  "Start": "Fmc",
+  "End": "Orpet Filling Station Junction"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Umuahia North",
+  "Start": "Gate",
+  "End": "Bank Road"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Umuahia North",
+  "Start": "Gate",
+  "End": "State Secretariat"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Umuahia South",
+  "Start": "Gate",
+  "End": "Olokoro"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Umuahia South",
+  "Start": "Tower",
+  "End": "Ubakala"
+ },
+ {
+  "State": "Abia",
+  "LGA": "Umuahia South",
+  "Start": "Ubakala",
+  "End": "Gate"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Girei",
+  "Start": "Mau",
+  "End": "Federal Housing"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Girei",
+  "Start": "Mau",
+  "End": "Jimeta Market"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Girei",
+  "Start": "Mau",
+  "End": "Mubi Round About"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Mubi North",
+  "Start": "Gombi",
+  "End": "Yola"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Mubi North",
+  "Start": "Mbarama",
+  "End": "Gra"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Mubi North",
+  "Start": "Mubi",
+  "End": "Gombi"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Yola",
+  "Start": "Lamido Palace",
+  "End": "Main Market"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Yola",
+  "Start": "Mopol Barracks Mbamba",
+  "End": "Main Market"
+ },
+ {
+  "State": "Adamawa",
+  "LGA": "Yola",
+  "Start": "Shagari",
+  "End": "Aun School"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Etinan",
+  "Start": "College Of Health",
+  "End": "General Hospital"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Etinan",
+  "Start": "Ekomimam Junction",
+  "End": "State Secretariat"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Etinan",
+  "Start": "State Secretariat",
+  "End": "I.K Junction"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Oron",
+  "Start": "Maritime",
+  "End": "Market"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Oron",
+  "Start": "Secretariat",
+  "End": "Uyo"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Oron",
+  "Start": "Stadium Road",
+  "End": "Market"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Uyo",
+  "Start": "Abak Road",
+  "End": "Plaza"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Uyo",
+  "Start": "Ikot Ekpene Road",
+  "End": "Plaza"
+ },
+ {
+  "State": "Akwa-Ibom",
+  "LGA": "Uyo",
+  "Start": "Oron Road",
+  "End": "Plaza"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Anaocha",
+  "Start": "Nwagu",
+  "End": "Ekwuluobia"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Anaocha",
+  "Start": "Nwagu",
+  "End": "Nneni"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Anaocha",
+  "Start": "Nwagu",
+  "End": "Nnewi"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Idemili South",
+  "Start": "Oba",
+  "End": "Nnewi"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Idemili South",
+  "Start": "Oba",
+  "End": "Upper Iweka"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Idemili South",
+  "Start": "Oba Junction",
+  "End": "Aforba"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Nnewi North",
+  "Start": "Eastern Mass Transit",
+  "End": "Robern Store"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Nnewi North",
+  "Start": "Ibeto Junction",
+  "End": "Nkwo Market"
+ },
+ {
+  "State": "Anambra",
+  "LGA": "Nnewi North",
+  "Start": "Water Works",
+  "End": "Local Government"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Bauchi",
+  "Start": "Awala",
+  "End": "Airforce Base"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Bauchi",
+  "Start": "Wintin",
+  "End": "Awala"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Bauchi",
+  "Start": "Yelwa",
+  "End": "Wintin"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Itas Gadau",
+  "Start": "Itas",
+  "End": "Mashema"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Itas Gadau",
+  "Start": "Itas",
+  "End": "Nasarawo"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Itas Gadau",
+  "Start": "Itas",
+  "End": "Zubiki"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Katagum",
+  "Start": "Barrack",
+  "End": "Federal Low Cost"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Katagum",
+  "Start": "Barrack",
+  "End": "Kassua"
+ },
+ {
+  "State": "Bauchi",
+  "LGA": "Katagum",
+  "Start": "Federal Low-Cost",
+  "End": "Barrack"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Brass",
+  "Start": "Okpoama",
+  "End": "Ewoama"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Brass",
+  "Start": "Okpoama",
+  "End": "Twon"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Brass",
+  "Start": "Within Community,Brass",
+  "End": "Brass,Beyelsa"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Kolokuma\/Opokuma",
+  "Start": "Kaima",
+  "End": "Mbaima"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Kolokuma\/Opokuma",
+  "Start": "Kaima",
+  "End": "Opukuma"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Kolokuma\/Opokuma",
+  "Start": "Kaima",
+  "End": "Yenegua"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Yenagoa",
+  "Start": "Hospital Junction",
+  "End": "Berger"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Yenagoa",
+  "Start": "Hospital Junction",
+  "End": "Ekeki Park"
+ },
+ {
+  "State": "Bayelsa",
+  "LGA": "Yenagoa",
+  "Start": "Tombia",
+  "End": "Kpansha Market"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Kwande",
+  "Start": "Corpers Lodge",
+  "End": "Secretariat"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Kwande",
+  "Start": "Market",
+  "End": "Corpers Lodge"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Kwande",
+  "Start": "Secretariat",
+  "End": "Market"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Makurdi",
+  "Start": "Highlevel",
+  "End": "Nyiman Layout"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Makurdi",
+  "Start": "Modern Market",
+  "End": "Wadata"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Makurdi",
+  "Start": "Nyiman Layout",
+  "End": "Modern Market"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Vandeikya",
+  "Start": "Federal Government College",
+  "End": "Market"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Vandeikya",
+  "Start": "Market",
+  "End": "Branch"
+ },
+ {
+  "State": "Benue",
+  "LGA": "Vandeikya",
+  "Start": "Market",
+  "End": "General Hospital Vandeikya"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Biu",
+  "Start": "Biu",
+  "End": "Buratai"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Biu",
+  "Start": "Biu",
+  "End": "Sakwa"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Biu",
+  "Start": "Biu",
+  "End": "Mirnga"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Hawul",
+  "Start": "Azare",
+  "End": "Shaffa"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Hawul",
+  "Start": "Azare",
+  "End": "Shaffa"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Hawul",
+  "Start": "Azare",
+  "End": "Shaffa"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Maiduguri",
+  "Start": "Bulunkutu",
+  "End": "Moduganari"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Maiduguri",
+  "Start": "Moduganari",
+  "End": "Bambao Road"
+ },
+ {
+  "State": "Borno",
+  "LGA": "Maiduguri",
+  "Start": "Post Office",
+  "End": "Moduganari"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Calabar Municipal",
+  "Start": "Marian",
+  "End": "Mobile"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Calabar Municipal",
+  "Start": "Mobile",
+  "End": "8Mile"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Calabar Municipal",
+  "Start": "Mobile",
+  "End": "Watt"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Calabar South",
+  "Start": "Anantigha",
+  "End": "Etagbor Maingate"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Calabar South",
+  "Start": "Ekpo Abasi",
+  "End": "Goldie By Mount Zion"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Calabar South",
+  "Start": "Goldie By Mount Zion",
+  "End": "Unical Maingate"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Ikom",
+  "Start": "Atimaka",
+  "End": "Living Faith Church"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Ikom",
+  "Start": "Ikom Stadium",
+  "End": "Happkings Hotel"
+ },
+ {
+  "State": "Cross River",
+  "LGA": "Ikom",
+  "Start": "Ogoja Road",
+  "End": "Police Station"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Ika South",
+  "Start": "Central Hospital",
+  "End": "Baleke"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Ika South",
+  "Start": "Central Hospital",
+  "End": "Garage"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Ika South",
+  "Start": "College Junction",
+  "End": "Crunchies"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Isoko North",
+  "Start": "General Hospital",
+  "End": "Alaka"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Isoko North",
+  "Start": "General Hospital",
+  "End": "Big Market"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Isoko North",
+  "Start": "General Hospital",
+  "End": "Small Market"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Oshimili South",
+  "Start": "Okpanam Road",
+  "End": "Awnai Road"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Oshimili South",
+  "Start": "Summit",
+  "End": "Nebisi Road"
+ },
+ {
+  "State": "Delta",
+  "LGA": "Oshimili South",
+  "Start": "Summit",
+  "End": "Okpanam Road"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Abakaliki",
+  "Start": "Abakaliki Township Stadium",
+  "End": "Unity Bank"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Abakaliki",
+  "Start": "Federal Teaching Hospital",
+  "End": "Abakaliki Rice Mill"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Abakaliki",
+  "Start": "Federal Teaching Hospital",
+  "End": "Spera N Deo Junction"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Izzi",
+  "Start": "Nwezenyi",
+  "End": "Iboko"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Izzi",
+  "Start": "Nwezenyi",
+  "End": "Ndubia"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Izzi",
+  "Start": "Nwezenyi",
+  "End": "Onu-Ebonyi Inyimagu Nursery And Primary School"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Ohaukwu",
+  "Start": "Ezzamgbo",
+  "End": 135
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Ohaukwu",
+  "Start": "Ezzamgbo",
+  "End": "Okwo"
+ },
+ {
+  "State": "Ebonyi",
+  "LGA": "Ohaukwu",
+  "Start": "Ezzamgbo",
+  "End": "New Market"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Etsako Central",
+  "Start": "D'King Mayor Royal Hotel",
+  "End": "St Theresa Catholic Church"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Etsako Central",
+  "Start": "Mcwilliams Apt Hotel Ltd",
+  "End": "Fugar Central Mosque"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Etsako Central",
+  "Start": "Royal Palace",
+  "End": "Philophet Contenental Hotel And Suites"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Igueben",
+  "Start": "Afuda Primary School",
+  "End": "Igueben Local Government Secretariat"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Igueben",
+  "Start": "De Amanios Gas",
+  "End": "Igueben Local Government Secretariat"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Igueben",
+  "Start": "Purple Café",
+  "End": "Kings Community Group Of Schools"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Oredo",
+  "Start": "Airport Road",
+  "End": "Ringroad"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Oredo",
+  "Start": "Ring Road",
+  "End": "Ikpoba Hill"
+ },
+ {
+  "State": "Edo",
+  "LGA": "Oredo",
+  "Start": "Sapele Road",
+  "End": "Ring Road"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Ado Ekiti",
+  "Start": "Access Bank",
+  "End": "Similoluwa"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Ado Ekiti",
+  "Start": "Similoluwa",
+  "End": "Fajuyi Memorial Park"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Ado Ekiti",
+  "Start": "Similoluwa Street",
+  "End": "Access Bank"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Ekiti East",
+  "Start": "General Hospital",
+  "End": "Kota Block Industry"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Ekiti East",
+  "Start": "Isinbode",
+  "End": "Eda Ile"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Ekiti East",
+  "Start": "Omuo Oke",
+  "End": "Obadore Market"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Moba",
+  "Start": "General Hospital",
+  "End": "Otun Ekiti"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Moba",
+  "Start": "Moba Grammar School",
+  "End": "Total Energies"
+ },
+ {
+  "State": "Ekiti",
+  "LGA": "Moba",
+  "Start": "Palace Of Oore Of Moba Land",
+  "End": "General Hospital"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Enugu East",
+  "Start": "New Artisan Market",
+  "End": "Mega Pharmacy"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Enugu East",
+  "Start": "New Haven Junction",
+  "End": "Mainland"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Enugu East",
+  "Start": "New Society Busstop",
+  "End": "Eke Market"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Enugu North",
+  "Start": "Holy Ghost",
+  "End": "82 Division Headquarters"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Enugu North",
+  "Start": "Holy Ghost Cathedral",
+  "End": "Abakpa"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Enugu North",
+  "Start": "Holy Ghost Cathedral",
+  "End": "Emene"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Oji River",
+  "Start": "Akpugoeze",
+  "End": "Ugwuoba"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Oji River",
+  "Start": "Nysc Secretariat",
+  "End": "Oji River"
+ },
+ {
+  "State": "Enugu",
+  "LGA": "Oji River",
+  "Start": "Nysc Secretariat",
+  "End": "Oji Market"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Abuja Municipal",
+  "Start": "Lugbe",
+  "End": "Goza Accross"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Abuja Municipal",
+  "Start": "Piwoyi",
+  "End": "Lugbe"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Abuja Municipal",
+  "Start": "Secretariat",
+  "End": "Chika"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Bwari",
+  "Start": "Arab Junction",
+  "End": "Liberty"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Bwari",
+  "Start": "Arab Junction",
+  "End": "Nnpc"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Bwari",
+  "Start": "Liberty",
+  "End": "Chikakore"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Gwagwalada",
+  "Start": "Apo Roundabout",
+  "End": "Karu Bridge"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Gwagwalada",
+  "Start": "Area 1",
+  "End": "Central Area"
+ },
+ {
+  "State": "Fct",
+  "LGA": "Gwagwalada",
+  "Start": "Estate Gate",
+  "End": "Roundabout"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Akko",
+  "Start": "Amada Academy",
+  "End": "Lawanti"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Akko",
+  "Start": "Rainbow Hotel",
+  "End": "Tunfure"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Akko",
+  "Start": "Tunfure",
+  "End": "Amada Academy"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Balanga",
+  "Start": "Ecwa",
+  "End": "Emir Palace"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Balanga",
+  "Start": "Ecwa Gospel Galilee",
+  "End": "Bank Of Industry"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Balanga",
+  "Start": "Ecwa Gospel Galilee",
+  "End": "Secretariat"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Gombe",
+  "Start": "Main Market",
+  "End": "Unity Bank"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Gombe",
+  "Start": "Ministry Of Information And Culture",
+  "End": "Specialist Hospital"
+ },
+ {
+  "State": "Gombe",
+  "LGA": "Gombe",
+  "Start": "Tunfure",
+  "End": "Unity Bank"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Onuimo",
+  "Start": "Afor Umuna",
+  "End": "State Secretariat"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Onuimo",
+  "Start": "Afor Umuna",
+  "End": "Aforezu Market"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Onuimo",
+  "Start": "Afuezu",
+  "End": "Okigwe"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Owerri Municipal",
+  "Start": "Wethdral",
+  "End": "Mcc"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Owerri Municipal",
+  "Start": "Wethdral",
+  "End": "Owerri Fire Service"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Owerri Municipal",
+  "Start": "Wethdral",
+  "End": "Port Harcourt Road"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Owerri North",
+  "Start": "Mcc",
+  "End": "Ikenegbu"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Owerri North",
+  "Start": "Mcc",
+  "End": "Toronto Police Station"
+ },
+ {
+  "State": "Imo",
+  "LGA": "Owerri North",
+  "Start": "Toronto Police Station",
+  "End": "Ikenegbu"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Auyo",
+  "Start": "Auyo",
+  "End": "Ayama"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Auyo",
+  "Start": "Auyo",
+  "End": "Kafin Hausa"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Auyo",
+  "Start": "Auyo",
+  "End": "Hadejia"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Babura",
+  "Start": "Babura",
+  "End": "Dan Alili"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Babura",
+  "Start": "Babura",
+  "End": "Babura-Gumel Road"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Babura",
+  "Start": "Babura",
+  "End": "Insharuwa"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Dutse",
+  "Start": "Fagoji",
+  "End": "Hakimi"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Dutse",
+  "Start": "Zai Plaza",
+  "End": "Federal Inland Revenue Service"
+ },
+ {
+  "State": "Jigawa",
+  "LGA": "Dutse",
+  "Start": "Zai Plaza",
+  "End": "Federal Inland Revenue Service"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Kaduna North",
+  "Start": "Barnawa",
+  "End": "Kano Road"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Kaduna North",
+  "Start": "Kabala Road",
+  "End": "Sabo Market"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Kaduna North",
+  "Start": "Kakuri",
+  "End": "Sabo Market"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Kaduna South",
+  "Start": "Barnawa Complex Mosque",
+  "End": "Station Market Roundabout"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Kaduna South",
+  "Start": "Kasuwa",
+  "End": "Barnawa Complex"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Kaduna South",
+  "Start": "Kasuwa Street",
+  "End": "Kakuri"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Zaria",
+  "Start": "Agoro Tudunwada",
+  "End": "Pz Nigeria"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Zaria",
+  "Start": "Tudun Jukun",
+  "End": "Kofan Doka"
+ },
+ {
+  "State": "Kaduna",
+  "LGA": "Zaria",
+  "Start": "Tudun Jukun",
+  "End": "Kongo Road"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Fagge",
+  "Start": "Kofar Wambai",
+  "End": "Bata"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Fagge",
+  "Start": "Yankaba Road",
+  "End": "Bata"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Fagge",
+  "Start": "Yankura Market",
+  "End": "France Road"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Kano Municipal",
+  "Start": "Kano Municipal Council",
+  "End": "Hotoro"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Kano Municipal",
+  "Start": "Kano Municipal Council",
+  "End": "Kabuga Busstop"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Kano Municipal",
+  "Start": "Kano Municipal Council",
+  "End": "Naibawa"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Nasarawa",
+  "Start": "Badawa Layout",
+  "End": "Hottoro Road"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Nasarawa",
+  "Start": "Badawa Layout",
+  "End": "Police Station Street"
+ },
+ {
+  "State": "Kano",
+  "LGA": "Nasarawa",
+  "Start": "Badawa Layout",
+  "End": "Sabon Gari"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Batagarawa",
+  "Start": "Alqualam",
+  "End": "Liyafa"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Batagarawa",
+  "Start": "Central Market",
+  "End": "Fce"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Batagarawa",
+  "Start": "Sardauna",
+  "End": "Layout"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Kaita",
+  "Start": "Gas",
+  "End": "Yandaki"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Kaita",
+  "Start": "Tashya",
+  "End": "Dankama"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Kaita",
+  "Start": "Tashya",
+  "End": "Nakunu"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Katsina",
+  "Start": "Main Road",
+  "End": "Center Market"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Katsina",
+  "Start": "Transit Camp",
+  "End": "Tudu Kasira"
+ },
+ {
+  "State": "Katsina",
+  "LGA": "Katsina",
+  "Start": "Tudu Kasira",
+  "End": "Main Road"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Birnin Kebbi",
+  "Start": "Bayan Kara",
+  "End": "Central Market"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Birnin Kebbi",
+  "Start": "Federal Polytechnic",
+  "End": "Gesse Phase 1"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Birnin Kebbi",
+  "Start": "Tudun Wada",
+  "End": "Bello Way"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Kalgo",
+  "Start": "Kalgo",
+  "End": "Birnin Kebbi"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Kalgo",
+  "Start": "Kalgo",
+  "End": "Bunza"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Kalgo",
+  "Start": "Kalgo",
+  "End": "Jega"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Yelwa Yauri",
+  "Start": "Nakowa",
+  "End": "Yauri Market"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Yelwa Yauri",
+  "Start": "Narto-Bayan",
+  "End": "Nepa"
+ },
+ {
+  "State": "Kebbi",
+  "LGA": "Yelwa Yauri",
+  "Start": "New Garage",
+  "End": "Tashan Garkuwa"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Lokoja",
+  "Start": "Natako",
+  "End": "Barracks"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Lokoja",
+  "Start": "New Market",
+  "End": "Barracks"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Lokoja",
+  "Start": "Paparanda",
+  "End": "Barracks"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Okene",
+  "Start": "Bariki",
+  "End": "Ageva"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Okene",
+  "Start": "Check Point",
+  "End": "Bariki"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Okene",
+  "Start": "Check Point",
+  "End": "Bariki"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Omala",
+  "Start": "Anyigba Junction",
+  "End": "Ogodu"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Omala",
+  "Start": "Garage",
+  "End": "Bagana"
+ },
+ {
+  "State": "Kogi",
+  "LGA": "Omala",
+  "Start": "Secteriat Junction",
+  "End": "Obakume"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Baruten",
+  "Start": "Ilesha",
+  "End": "Gwanara"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Baruten",
+  "Start": "Ilesha",
+  "End": "Okuta"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Baruten",
+  "Start": "Ilesha",
+  "End": "Saki"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Ilorin South",
+  "Start": "Fate",
+  "End": "Tanke"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Ilorin South",
+  "Start": "Gaa Akanbi",
+  "End": "Tanke"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Ilorin South",
+  "Start": "Gambari",
+  "End": "Adeta"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Ilorin West",
+  "Start": "Egbejila Junction",
+  "End": "Oloje Market"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Ilorin West",
+  "Start": "Ogidi",
+  "End": "Bani"
+ },
+ {
+  "State": "Kwara",
+  "LGA": "Ilorin West",
+  "Start": "Oja-Oba",
+  "End": "Aremu"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Alimosho",
+  "Start": "Megida",
+  "End": "Bolaji"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Alimosho",
+  "Start": "Megida",
+  "End": "Ipaja Church"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Alimosho",
+  "Start": "Megida",
+  "End": "Odo Across"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Badagry",
+  "Start": "Badagry Roundabout",
+  "End": "Seme Border"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Badagry",
+  "Start": "Muwo",
+  "End": "Agbara"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Badagry",
+  "Start": "Okwafor",
+  "End": "Badagry Roundabout"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Eti Osa",
+  "Start": "Ahmadu Bello Way",
+  "End": "Eko Hotel"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Eti Osa",
+  "Start": "Cms",
+  "End": "Eko Hotel"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Eti Osa",
+  "Start": "Odekun",
+  "End": "Obalende"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Ikeja",
+  "Start": "Agege",
+  "End": "Ikeja"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Ikeja",
+  "Start": "Berger",
+  "End": "Computer Village"
+ },
+ {
+  "State": "Lagos",
+  "LGA": "Ikeja",
+  "Start": "Ikeja",
+  "End": "Estate"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Doma",
+  "Start": "Bosco",
+  "End": "New Market"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Doma",
+  "Start": "Doma",
+  "End": "Alagye"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Doma",
+  "Start": "Donald",
+  "End": "Lafia"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Karu",
+  "Start": "Mararaba",
+  "End": "One Man Village"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Karu",
+  "Start": "Nyanya",
+  "End": "Mararaba"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Karu",
+  "Start": "One Man Village",
+  "End": "New Nyanya"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Keana",
+  "Start": "Giza",
+  "End": "Kadarko"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Keana",
+  "Start": "Giza",
+  "End": "Keana Town"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Keana",
+  "Start": "Giza",
+  "End": "Lafiya"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Lafia",
+  "Start": "Imap",
+  "End": "Nudb"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Lafia",
+  "Start": "Poly",
+  "End": "Azuba"
+ },
+ {
+  "State": "Nasarawa",
+  "LGA": "Lafia",
+  "Start": "Shabu",
+  "End": "Government"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Bosso",
+  "Start": "Bosso",
+  "End": "Mobil"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Bosso",
+  "Start": "Bosso",
+  "End": "Pakungu"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Bosso",
+  "Start": "Bosso",
+  "End": "Tunga"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Chanchaga",
+  "Start": "Chanchaga",
+  "End": "City Gate"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Chanchaga",
+  "Start": "Chanchaga",
+  "End": "Tunga"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Chanchaga",
+  "Start": "Within Chanchaga"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Suleja",
+  "Start": "Suleja",
+  "End": "Kwamba"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Suleja",
+  "Start": "Suleja",
+  "End": "Maje"
+ },
+ {
+  "State": "Niger",
+  "LGA": "Suleja",
+  "Start": "Suleja",
+  "End": "Zuba"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Abeokuta North",
+  "Start": "Ile-Ise Awo",
+  "End": "Fajol"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Abeokuta North",
+  "Start": "Ile-Ise Awo",
+  "End": "Ita-Oshin"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Abeokuta North",
+  "Start": "Ita-Oshin",
+  "End": "Kwari Road"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Abeokuta South",
+  "Start": "Kuto",
+  "End": "Oke Ilewo"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Abeokuta South",
+  "Start": "Oke Ilewo",
+  "End": "Oke Mosan"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Abeokuta South",
+  "Start": "Panseke",
+  "End": "Adigbe"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Ado Odo\/Ota",
+  "Start": "Agbara",
+  "End": "Atan"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Ado Odo\/Ota",
+  "Start": "Atan",
+  "End": "Toll Gate (Sango Ota)"
+ },
+ {
+  "State": "Ogun",
+  "LGA": "Ado Odo\/Ota",
+  "Start": "Lusada",
+  "End": "Atan"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Akoko North East",
+  "Start": "Funmilayo",
+  "End": "Garage"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Akoko North East",
+  "Start": "Jubilee",
+  "End": "Oloko"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Akoko North East",
+  "Start": "Ilepa",
+  "End": "Okorun"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Akure South",
+  "Start": "Oke Aro",
+  "End": "Arakale"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Akure South",
+  "Start": "Ilesha road",
+  "End": "Oja"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Akure South",
+  "Start": "Futa",
+  "End": "Road Block"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Owo",
+  "Start": "Okedogbon",
+  "End": "Achiever'S University"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Owo",
+  "Start": "Okedogbon",
+  "End": "Chicken Republic"
+ },
+ {
+  "State": "Ondo",
+  "LGA": "Owo",
+  "Start": "Okedogbon",
+  "End": "Fmc"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Aiyedaade",
+  "Start": "Ayepe",
+  "End": "Oke Church"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Aiyedaade",
+  "Start": "Temidire",
+  "End": "Oke Elu"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Aiyedaade",
+  "Start": "Oke Oje",
+  "End": "Wakajaiye"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Olorunda",
+  "Start": "Oke oniti",
+  "End": "Olorunda"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Olorunda",
+  "Start": "Stadium",
+  "End": "Olorunda"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Olorunda",
+  "Start": "Otefun",
+  "End": "Old Garage"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Osogbo",
+  "Start": "Estate",
+  "End": "Olaiya"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Osogbo",
+  "Start": "Aregbe",
+  "End": "Abeere"
+ },
+ {
+  "State": "Osun",
+  "LGA": "Osogbo",
+  "Start": "Owode Garage",
+  "End": "Oke Baale"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Akinyele",
+  "Start": "IITA",
+  "End": "Ojoo"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Akinyele",
+  "Start": "Ojoo",
+  "End": "Akinyele"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Akinyele",
+  "Start": "Ojoo",
+  "End": "Moniya"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Ibadan North",
+  "Start": "Adeoyo",
+  "End": "Oje"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Ibadan North",
+  "Start": "Mokola Roundabout",
+  "End": "Sango"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Ibadan North",
+  "Start": "University College Hospital (UCH)",
+  "End": "Agodi Gate"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Ibadan North West",
+  "Start": "Mokola roundabout",
+  "End": "Jericho"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Ibadan North West",
+  "Start": "Apata",
+  "End": "Mokola roundabout"
+ },
+ {
+  "State": "Oyo",
+  "LGA": "Ibadan North West",
+  "Start": "Jericho",
+  "End": "Odo ona"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Barkin Ladi",
+  "Start": "Pla poly",
+  "End": "Ban"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Barkin Ladi",
+  "Start": "Heipang",
+  "End": "Coccin church gassa"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Barkin Ladi",
+  "Start": "Barkin gangere",
+  "End": "Barkin john"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Jos North",
+  "Start": "Pla poly",
+  "End": "Ban"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Jos North",
+  "Start": "Bukuru",
+  "End": "Terminus"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Jos North",
+  "Start": "Gada biyu",
+  "End": "Old airport"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Jos South",
+  "Start": "Building materials",
+  "End": "Ramun"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Jos South",
+  "Start": "Building materials",
+  "End": "Old airport"
+ },
+ {
+  "State": "Plateau",
+  "LGA": "Jos South",
+  "Start": "Bukuru",
+  "End": "Terminus"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Phalga",
+  "Start": "Waterline",
+  "End": "Creek market"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Phalga",
+  "Start": "New market",
+  "End": "Rukpokwu"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Phalga",
+  "Start": "Rukpokwu",
+  "End": "Water line"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Emohua",
+  "Start": "Oduoha",
+  "End": "Elibrada"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Emohua",
+  "Start": "Isiodu",
+  "End": "Rumakunde"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Emohua",
+  "Start": "Rumakunde",
+  "End": "Rumuohia"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Obio\/Akpor",
+  "Start": "Choba",
+  "End": "Runuodara"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Obio\/Akpor",
+  "Start": "Choba",
+  "End": "Rumuola"
+ },
+ {
+  "State": "Rivers",
+  "LGA": "Obio\/Akpor",
+  "Start": "Chioba",
+  "End": "Rumuokoro"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Dange Shuni",
+  "Start": "Barracks",
+  "End": "Kwanawa"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Dange Shuni",
+  "Start": "Danbuwa",
+  "End": "Kwanawa"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Dange Shuni",
+  "Start": "Barracks",
+  "End": "Market"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Wammakko",
+  "Start": "Arkilla",
+  "End": "Hajia Halima market"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Wammakko",
+  "Start": "Gidan mallam ada",
+  "End": "UDUTH"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Wammakko",
+  "Start": "Gidan mallam ada",
+  "End": "NYSC orientation camp"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Sokoto South",
+  "Start": "Dambuwa",
+  "End": "Kano road"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Sokoto South",
+  "Start": "Dambuwa",
+  "End": "UDUTH"
+ },
+ {
+  "State": "Sokoto",
+  "LGA": "Sokoto South",
+  "Start": "Dambuwa",
+  "End": "Hayjia Alima"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Ardo Kola",
+  "Start": "Sunkani",
+  "End": "Bakin-Dutse"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Ardo Kola",
+  "Start": "ATC",
+  "End": "Sunkani"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Ardo Kola",
+  "Start": "Jalingo",
+  "End": "Sunkani"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Yorro",
+  "Start": "Round about Pantisawa",
+  "End": " GDSS Pantisawa"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Yorro",
+  "Start": "Round about Pantisawa",
+  "End": " Kalau"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Yorro",
+  "Start": "Round about Pantisawa",
+  "End": " Nyaja"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Lau",
+  "Start": "Appawa",
+  "End": "Kunini"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Lau",
+  "Start": "Appawa",
+  "End": "Mayo-Lope"
+ },
+ {
+  "State": "Taraba",
+  "LGA": "Lau",
+  "Start": "Appawa",
+  "End": "Jalingo"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Bade",
+  "Start": "Tashan kuka",
+  "End": "Low cost"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Bade",
+  "Start": "Mobile base",
+  "End": "Market"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Bade",
+  "Start": "Market",
+  "End": "College"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Damaturu",
+  "Start": "Bayantasha",
+  "End": "New Jerusalem"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Damaturu",
+  "Start": "YBC",
+  "End": "New Bra bra"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Damaturu",
+  "Start": "Malari",
+  "End": "Sabonpegi"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Potiskum",
+  "Start": "Signal barracks",
+  "End": "Jos park"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Potiskum",
+  "Start": "FCE",
+  "End": "Market"
+ },
+ {
+  "State": "Yobe",
+  "LGA": "Potiskum",
+  "Start": "Texaco",
+  "End": "Dazigau"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Bungudu",
+  "Start": "General hospital",
+  "End": "Kasuwa"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Bungudu",
+  "Start": "Gidan sarki",
+  "End": "Tasha"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Bungudu",
+  "Start": "Gidan sarki",
+  "End": "Area 1"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Gusau",
+  "Start": "Sabon gari",
+  "End": "Samaru"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Gusau",
+  "Start": "GRA",
+  "End": "Tudun wada"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Gusau",
+  "Start": "Damba",
+  "End": "Labin labin"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Tsafe",
+  "Start": "Hanyan tumbi",
+  "End": "Market"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Tsafe",
+  "Start": "Market",
+  "End": "Area 2"
+ },
+ {
+  "State": "Zamfara",
+  "LGA": "Tsafe",
+  "Start": "Area 2",
+  "End": "Green house"
+ }
+]

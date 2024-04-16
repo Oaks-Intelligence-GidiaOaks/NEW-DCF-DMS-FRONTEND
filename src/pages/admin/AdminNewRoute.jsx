@@ -9,22 +9,23 @@ const AdminNewRoute = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("create");
 
-  const {
-    data: lrData,
-    isLoading: lrLoading,
-    isSuccess: lrSuccess,
-  } = useQuery({
-    queryKey: ["getRoutesByCountry"],
-    queryFn: () => getRoutesByCountry(user.country),
-  });
+  // const {
+  //   data: lrData,
+  //   isLoading: lrLoading,
+  //   isSuccess: lrSuccess,
+  // } = useQuery({
+  //   queryKey: ["getRoutesByCountry"],
+  //   queryFn: () => getRoutesByCountry(user.country),
+  // });
 
   // component variables
-  const lgaRoutes = lrData?.data.data;
-  console.log(lgaRoutes, "lgaRoutes");
+
+  // const lgaRoutes = lrData?.data.data;
+  // console.log(lgaRoutes, "lgaRoutes");
 
   const activeForm = {
-    create: <CreateLgaRoutes lgaRoutes={lgaRoutes} />,
-    update: <UpdateLgaRoutes lgaRoutes={lgaRoutes} />,
+    create: <CreateLgaRoutes lgaRoutes={[]} />,
+    update: <UpdateLgaRoutes lgaRoutes={[]} />,
   };
 
   let activeTabStyle =

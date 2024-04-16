@@ -9,8 +9,20 @@ import {
 } from "../../lib/service";
 import { AddedRemovedChart } from "../../containers";
 import { MetricCard } from "../../components";
+import { getDistrictRoutesLgas, seedDistrictRoutes } from "../../lib/routes";
+import ggg from "../../constants/test.json";
 
 const Dashboard = () => {
+  // const createRoutes = async () => {
+  //   let dd = await seedDistrictRoutes(ggg);
+  //   return dd;
+  // };
+
+  // const getRoutes = async () => {
+  //   let dd = await getDistrictRoutesLgas();
+  //   return dd;
+  // };
+
   const {
     data: subAdmins,
     isLoading: loadingSubAdmin,
@@ -85,6 +97,7 @@ const Dashboard = () => {
     <div className="">
       <div className="mx-auto  mt-8 pb-4 md:w-[]">
         <div className="flex items-center justify-between gap-3 overflow-x-scroll metrics-scrollbar">
+          {/* <button onClick={getRoutes}>add</button> */}
           {subAdminsCount ? (
             <MetricCard
               leadText="Sub Admin"

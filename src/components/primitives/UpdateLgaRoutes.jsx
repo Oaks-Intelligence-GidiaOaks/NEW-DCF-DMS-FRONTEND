@@ -1,238 +1,279 @@
 import React, { useEffect, useState } from "react";
-import { allLgasByState } from "../../data/form/allLgasByState";
-import { FormInputDropDown, FormInputEditable } from "../form";
+import { FormInputDropDown, FormInputEditable, TextInput } from "../form";
 import { AllStates } from "../../data/form/states";
 import { Rings } from "react-loader-spinner";
+import { allLgasByState } from "../../data/form/allLgasByState";
 import axios from "axios";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  createRoute,
+  getAllCountryStates,
+  getAllStateDistricts,
+  getRoutesByDistrict,
+  updateRoute,
+} from "../../lib/service";
+import { toast } from "react-toastify";
+import { useAuth } from "../../context";
+import {
+  transformDistrictsFormData,
+  transformStateFormData,
+} from "../../lib/utils";
+import { GeneralTable } from "../charts";
 
 const UpdateLgaRoutes = ({ lgaRoutes }) => {
-  const [state, setState] = useState(null);
-  const [lga, setLga] = useState(null);
-  const [lgaId, setLgaId] = useState("");
+  const { user } = useAuth();
 
-  const [routesLga, setRoutesLga] = useState(null);
-  const [route1Start, setRoute1Start] = useState(null);
-  const [route1End, setRoute1End] = useState(null);
-  const [route2Start, setRoute2Start] = useState(null);
-  const [route2End, setRoute2End] = useState(null);
-  const [route3Start, setRoute3Start] = useState(null);
-  const [route3End, setRoute3End] = useState(null);
+  // component states
+  const [inputRoute, setInputRoute] = useState({
+    start: "",
+    end: "",
+  });
 
-  const [errors, setErrors] = useState(null);
-  const [submitted, setSubmitted] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [formFields, setFormFields] = useState({
+    country_id: user.country,
+    state_id: "",
+    district_id: "",
+    routes: [],
+  });
+
+  const { mutate, isPending: mtPending } = useMutation({
+    mutationKey: ["updateRoute"],
+    mutationFn: (dt) => updateRoute(dt),
+    onSuccess: (sx) => {
+      toast.success(`district routes updated successfully`);
+      resetForm();
+    },
+    onError: (ex) => {
+      toast.error(ex.message);
+    },
+  });
+
+  // get states in a country
+  const {
+    data: states,
+    isLoading: stLoading,
+    isSuccess: stSuccess,
+  } = useQuery({
+    queryKey: ["getAllCountryStates"],
+    queryFn: () => getAllCountryStates(user.country),
+  });
+
+  // get districts in a state
+  const {
+    data: districts,
+    isLoading: dtLoading,
+    isSuccess: dtSuccess,
+    refetch,
+  } = useQuery({
+    queryKey: ["getAllStateDistricts"],
+    queryFn: () => getAllStateDistricts(formFields.state_id),
+    enabled: formFields.state_id.length > 0,
+    refetchOnMount: false,
+  });
+
+  // get all routes in a district query
+  const {
+    data: dstRoutes,
+    isLoading: dstLoading,
+    isSuccess: dstSuccess,
+    refetch: dstRefetch,
+  } = useQuery({
+    queryKey: ["getDistrictRoutes"],
+    queryFn: () => getRoutesByDistrict(formFields.district_id),
+    enabled: formFields.district_id.length > 1,
+    refetchOnMount: false,
+  });
 
   useEffect(() => {
-    if (lga) {
-      setRoutesLga(null);
-      const filteredRoutesLga = lgaRoutes.filter((it) => it.lga === lga);
-      setRoutesLga(filteredRoutesLga);
-
-      filteredRoutesLga[0].routes.map((item, i) => {
-        if (i === 0) {
-          setRoute1Start(item.start);
-          setRoute1End(item.end);
-        }
-        if (i === 1) {
-          setRoute2Start(item.start);
-          setRoute2End(item.end);
-        }
-        if (i === 2) {
-          setRoute3Start(item.start);
-          setRoute3End(item.end);
-        }
-      });
-    } else {
-      setRoutesLga(null);
+    if (formFields.state_id.length > 0) {
+      refetch();
     }
-  }, [lga, lgaRoutes]);
+  }, [refetch, formFields.state_id]);
 
-  const coveredLgas = lgaRoutes && lgaRoutes.map((it) => it.lga);
-  let lgaOptions = state ? allLgasByState[state].map((it) => it.value) : [];
+  useEffect(() => {
+    if (formFields.district_id.length > 0) {
+      (async () => {
+        const { data } = await dstRefetch();
 
-  let currentLgas =
-    lgaOptions.length > 0 &&
-    coveredLgas &&
-    lgaOptions
-      .filter((val) => coveredLgas.includes(val))
-      .map((it) => ({ label: it, value: it }));
+        toast.success("lga routes populated");
 
-  const onChangeState = (selectedOption) => {
-    setState(selectedOption);
-    setLga(null);
+        let newRoutes = data.data.data[0]?.routes || [];
+
+        setFormFields({
+          ...formFields,
+          routes: newRoutes,
+        });
+      })();
+    }
+  }, [dstRefetch, formFields.district_id]);
+
+  // component variables
+  const countryStates = stSuccess
+    ? transformStateFormData(states.data.data)
+    : [];
+
+  const stateDistricts = dtSuccess
+    ? transformDistrictsFormData(districts.data.data)
+    : [];
+
+  // const districtRoutes = dstSuccess ? dstRoutes.data.data[0]?.routes : [];
+
+  const handleinputRouteChange = (val, fieldName) => {
+    setInputRoute({ ...inputRoute, [fieldName]: val });
   };
 
-  const onChangeLga = (selectedOption) => {
-    setLga(selectedOption);
-    let lgaid = lgaRoutes?.filter((item) => item.lga === selectedOption)[0]._id;
+  const handleChange = (val, fieldName) => {
+    setFormFields({ ...formFields, [fieldName]: val });
+  };
 
-    setLgaId(lgaid);
+  const addInputRoute = (route) => {
+    let isError = !!Object.values(route).filter((it) => !it.length).length;
+
+    let error2 = false;
+
+    if (formFields.routes.length === 3) {
+      error2 = true;
+    }
+
+    if (isError) {
+      return toast.error(`Please fill all input fields`);
+    }
+
+    if (error2) {
+      return toast.error(`you can only add 3 routes per district`);
+    }
+
+    const no = parseInt(formFields.routes.length) + 1;
+
+    const tRoute = {
+      ...route,
+      name: `route ${no}`,
+    };
+
+    clearRoutes();
+
+    let newInputs = [...formFields.routes, tRoute];
+    handleChange(newInputs, "routes");
+  };
+
+  const removeInputRoute = (route) => {
+    let newInputs = [...formFields.routes]
+      .filter((it) => it.name !== route.name)
+      .map((it, i) => ({ ...it, name: `Route ${i + 1}` }));
+
+    handleChange(newInputs, "routes");
+  };
+
+  const clearRoutes = () => {
+    setInputRoute({
+      start: "",
+      end: "",
+    });
   };
 
   const resetForm = () => {
-    setErrors(false);
-    setLga(null);
-    setState(null);
-    setRoute1Start("");
-    setRoute1End("");
+    setFormFields({
+      country_id: user.country,
+      state_id: "",
+      district_id: "",
+      routes: [],
+    });
 
-    setRoute2Start("");
-    setRoute2End("");
-
-    setRoute3Start("");
-    setRoute3End("");
+    clearRoutes();
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async (e) => {
+    // e.preventDefault();
 
-    if (
-      (!lga,
-      !state,
-      !route1Start,
-      !route1End,
-      !route2Start,
-      !route2End,
-      !route3Start,
-      !route3End)
-    ) {
-      return setErrors("Please fill all fields");
+    const isError = Object.values(formFields).filter((it) => !it.length).length;
+
+    if (isError) {
+      return toast.error(`Please fill in all input fields`);
     }
 
-    let route1 = {
-      start: route1Start,
-      end: route1End,
+    const newRoutes = {
+      districtId: formFields.district_id,
+      data: { ...formFields },
     };
 
-    let route2 = {
-      start: route2Start,
-      end: route2End,
-    };
+    // console.log("newRoutes", newRoutes);
 
-    let route3 = {
-      start: route3Start,
-      end: route3End,
-    };
-
-    const updatedRoutes = {
-      lga,
-      routes: [route1, route2, route3],
-    };
-    setLoading(true);
-
-    axios
-      .patch(`/lga_routes/${lgaId}`, updatedRoutes)
-      .then((res) => {
-        setSubmitted(true);
-        setLoading(false);
-        resetForm();
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-        setErrors(err.message);
-      });
+    await mutate(newRoutes);
   };
 
   return (
     <div>
-      <form action="" className="w-full px-2" onSubmit={handleFormSubmit}>
+      <div action="" className="w-full px-2" onSubmit={handleFormSubmit}>
         <FormInputDropDown
           label="State"
-          data={AllStates}
-          onChange={onChangeState}
+          data={countryStates}
+          onChange={(val) => handleChange(val, "state_id")}
           index="z-20"
         />
 
         <FormInputDropDown
-          label="LGA"
-          onChange={onChangeLga}
-          data={currentLgas}
+          label="Districts"
+          onChange={(val) => handleChange(val, "district_id")}
+          data={stateDistricts}
           index="z-10"
         />
 
-        {routesLga && (
-          <>
-            <div className="bg-white py-4 my-2 rounded-md drop-shadow-sm lg:items-center flex flex-col lg:flex-row flex-wrap lg:space-x-6">
-              <FormInputEditable
-                label="Route 1 - Start"
-                data={routesLga?.[0]?.routes[0]?.start}
-                onChange={(selectedOption) => setRoute1Start(selectedOption)}
-              />
-
-              <FormInputEditable
-                label="Route 1 - End"
-                data={routesLga?.[0]?.routes[0]?.end}
-                onChange={(selectedOption) => setRoute1End(selectedOption)}
-              />
+        {formFields.district_id.length > 0 && (
+          <div className="bg-white py-4 px-3 rounded-md drop-shadow-sm">
+            <div>
+              <h2>Routes Data</h2>
             </div>
 
-            <div className="bg-white py-4 my-2 rounded-md drop-shadow-sm lg:items-center flex flex-col lg:flex-row flex-wrap lg:space-x-6">
-              <FormInputEditable
-                label="Route 2 - Start"
-                data={routesLga?.[0]?.routes[1]?.start}
-                onChange={(selectedOption) => setRoute2Start(selectedOption)}
+            <div className=" lg:items-center grid grid-cols-1 md:grid-cols-1">
+              <TextInput
+                label="Start"
+                value={inputRoute.start}
+                onChange={(e) =>
+                  handleinputRouteChange(e.target.value, "start")
+                }
               />
 
-              <FormInputEditable
-                label="Route 2 - End"
-                data={routesLga?.[0]?.routes[1]?.end}
-                onChange={(selectedOption) => setRoute2End(selectedOption)}
+              <TextInput
+                label="End"
+                value={inputRoute.end}
+                onChange={(e) => handleinputRouteChange(e.target.value, "end")}
               />
+
+              <button
+                onClick={() => addInputRoute(inputRoute)}
+                className="h-[40px] w-[95%] mx-auto rounded-[5px] text-center font-[500] text-xs text-[#82B22E] mt-[10px] border border-[#82B22E]"
+              >
+                Add Input
+              </button>
             </div>
 
-            <div className="bg-white py-4 my-2 rounded-md drop-shadow-sm lg:items-center flex flex-col lg:flex-row flex-wrap lg:space-x-6">
-              <FormInputEditable
-                onChange={(selectedOption) => setRoute3Start(selectedOption)}
-                label="Route 3 - Start"
-                data={routesLga?.[0]?.routes[2]?.start}
-              />
+            <div>
+              <GeneralTable
+                height={100}
+                flag={{
+                  title: "Remove",
+                  action: (row) => {
+                    removeInputRoute(row);
+                    console.log(row, "row");
 
-              <FormInputEditable
-                onChange={(selectedOption) => setRoute3End(selectedOption)}
-                label="Route 3 - End"
-                data={routesLga?.[0]?.routes[2]?.end}
+                    // const newInputs = [...formFields.routes].filter(
+                    //   (it) => it.name !== row.name
+                    // );
+                    // handleChange(newInputs, "routes");
+                  },
+                }}
+                data={formFields.routes}
               />
             </div>
-          </>
-        )}
-
-        {errors && (
-          <p className="p-2 py-3 flex px-3 items-center justify-between rounded bg-white">
-            <span className="text-red-500 text-xs">
-              Please fill all form fields
-            </span>
-
-            <span
-              onClick={() => setErrors(null)}
-              className="text- text-xl cursor-pointer rounded-full bg-gray300"
-            >
-              x
-            </span>
-          </p>
-        )}
-
-        {submitted && (
-          <p className="p-2 py-3 flex px-3 items-center justify-between rounded bg-white">
-            <span className="text-green-500 text-xs">
-              lga routes successfully updated
-            </span>
-
-            <span
-              onClick={() => setSubmitted(null)}
-              className="text- text-xl cursor-pointer rounded-full bg-gray300"
-            >
-              x
-            </span>
-          </p>
+          </div>
         )}
 
         <button
+          onClick={handleFormSubmit}
           className="bg-oaksgreen w-full text-xs grid place-items-center mx-2 text-white p-3 
-          my-6 rounded"
+        my-6 rounded"
         >
-          {loading ? (
+          {mtPending ? (
             <Rings
               height="36"
               width="36"
@@ -244,10 +285,10 @@ const UpdateLgaRoutes = ({ lgaRoutes }) => {
               ariaLabel="rings-loading"
             />
           ) : (
-            "Submit"
+            "Update"
           )}
         </button>
-      </form>
+      </div>
     </div>
   );
 };

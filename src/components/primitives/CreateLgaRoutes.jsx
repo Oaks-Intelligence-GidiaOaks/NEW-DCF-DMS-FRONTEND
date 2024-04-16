@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormInputDropDown, FormInputEditable, TextInput } from "../form";
-import { AllStates } from "../../data/form/states";
 import { Rings } from "react-loader-spinner";
-import { allLgasByState } from "../../data/form/allLgasByState";
-import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createRoute,
@@ -18,7 +15,7 @@ import {
 } from "../../lib/utils";
 import { GeneralTable } from "../charts";
 
-const CreateLgaRoutes = ({ lgaRoutes }) => {
+const CreateLgaRoutes = () => {
   const { user } = useAuth();
 
   const [inputRoute, setInputRoute] = useState({
@@ -64,11 +61,15 @@ const CreateLgaRoutes = ({ lgaRoutes }) => {
   } = useQuery({
     queryKey: ["getAllStateDistricts"],
     queryFn: () => getAllStateDistricts(formFields.state_id),
-    enabled: formFields.state_id.length > 0,
+    // enabled: formFields.state_id.length > 0,
+    enabled: false,
+    refetchOnMount: false,
   });
 
   useEffect(() => {
-    refetch();
+    if (formFields.state_id.length > 0) {
+      refetch();
+    }
   }, [refetch, formFields.state_id]);
 
   const countryStates = stSuccess
@@ -100,7 +101,7 @@ const CreateLgaRoutes = ({ lgaRoutes }) => {
 
     const tRoute = {
       ...route,
-      name: `Route ${no}`,
+      name: `route ${no}`,
     };
 
     clearRoutes();
@@ -117,14 +118,14 @@ const CreateLgaRoutes = ({ lgaRoutes }) => {
     handleChange(newInputs, "routes");
   };
 
-  const onChangeState = (selectedOption) => {
-    setState(selectedOption);
-    setLga(null);
-  };
+  // const onChangeState = (selectedOption) => {
+  //   setState(selectedOption);
+  //   setLga(null);
+  // };
 
-  const onChangeLga = (selectedOption) => {
-    setLga(selectedOption);
-  };
+  // const onChangeLga = (selectedOption) => {
+  //   setLga(selectedOption);
+  // };
 
   const clearRoutes = () => {
     setInputRoute({
