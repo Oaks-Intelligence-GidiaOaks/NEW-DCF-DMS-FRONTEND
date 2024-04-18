@@ -118,6 +118,15 @@ function EnumeratorForm() {
       return res;
     },
   });
+  const routesData = useQuery({
+    queryKey: ["district-routes", currentLGA],
+    queryFn: async () => {
+      const res = await axios.get(`district_route/by_district/${currentLGA}`);
+      return res;
+    },
+  });
+
+  console.log("Routes data: ", routesData?.data?.data?.data);
 
   console.log("User data: ", userData.data);
 
@@ -317,6 +326,7 @@ function EnumeratorForm() {
                   ].map((product, index) => (
                     <ProductItemInput
                       productData={product}
+                      routesData={routesData?.data?.data?.data}
                       key={index}
                       handleState={(e, productData, inputId) => {
                         setFormState((prev) => {
