@@ -33,11 +33,11 @@ const AddTeamLead = () => {
   const [file, setFile] = useState(null);
   const [identityImage, setIdentityImage] = useState(null);
 
-  const [openPoll, setOpenPoll] = useState(false);
+  // const [openPoll, setOpenPoll] = useState(false);
 
-  const handleClosePoll = () => {
-    setOpenPoll(false);
-  };
+  // const handleClosePoll = () => {
+  //   setOpenPoll(false);
+  // };
 
   const { mutate, isPending: mutateLoading } = useMutation({
     mutationKey: ["createUser"],
@@ -365,11 +365,11 @@ const AddTeamLead = () => {
         </button>
       </form>
 
-      {openPoll && (
+      {/* {openPoll && (
         <div className="fixed z-50 bg-gray-300 bg-opacity-50 top-0 left-0 w-screen h-screen">
           <CreateDistrict onclick={handleClosePoll} cStates={cStates} />
         </div>
-      )}
+      )} */}
     </div>
   );
   ``;
