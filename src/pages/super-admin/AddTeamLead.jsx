@@ -19,6 +19,7 @@ import {
 } from "../../lib/service";
 import { toast } from "react-toastify";
 import { Link, useParams } from "react-router-dom";
+import CreateDistrict from "../../components/CreateDistrict";
 
 const AddTeamLead = () => {
   const { countryId } = useParams();
@@ -31,6 +32,12 @@ const AddTeamLead = () => {
   const [avatar, setAvatar] = useState(null);
   const [file, setFile] = useState(null);
   const [identityImage, setIdentityImage] = useState(null);
+
+  const [openPoll, setOpenPoll] = useState(false);
+
+  const handleClosePoll = () => {
+    setOpenPoll(false);
+  };
 
   const { mutate, isPending: mutateLoading } = useMutation({
     mutationKey: ["createUser"],
@@ -304,6 +311,12 @@ const AddTeamLead = () => {
         />
 
         {/* {states.length > 0 && ( */}
+        <button
+          onClick={() => setOpenPoll(true)}
+          className="rounded-lg bg-green-600 text-white p-1"
+        >
+          Create District
+        </button>
         <FormMultipleSelect
           label="Districts"
           onChange={handleLgaChange}
@@ -351,6 +364,12 @@ const AddTeamLead = () => {
           {mutateLoading ? <RingsCircle /> : "Submit"}
         </button>
       </form>
+
+      {openPoll && (
+        <div className="fixed z-50 bg-gray-300 bg-opacity-50 top-0 left-0 w-screen h-screen">
+          <CreateDistrict onclick={handleClosePoll} cStates={cStates} />
+        </div>
+      )}
     </div>
   );
   ``;
