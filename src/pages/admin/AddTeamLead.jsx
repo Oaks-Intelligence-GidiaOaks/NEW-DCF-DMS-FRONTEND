@@ -315,18 +315,20 @@ const AddTeamLead = () => {
         />
 
         {/* {states.length > 0 && ( */}
-        <FormMultipleSelect
-          label="Districts"
-          onChange={handleLgaChange}
-          data={cDistricts}
-          index="z-20"
-        />
-        <button
-          onClick={() => setOpenPoll(true)}
-          className="text-xs rounded-lg bg-primary-green text-white p-1"
-        >
-          Create District
-        </button>
+        <div className="relative">
+          <FormMultipleSelect
+            label="Districts"
+            onChange={handleLgaChange}
+            data={cDistricts}
+            index="z-20"
+          />
+          <button
+            onClick={() => setOpenPoll(true)}
+            className="absolute -bottom-2 left-2 text-xs rounded-lg text-primary-green cursor-pointer"
+          >
+            Add New
+          </button>
+        </div>
         {/* )} */}
 
         <FormInputDropDown

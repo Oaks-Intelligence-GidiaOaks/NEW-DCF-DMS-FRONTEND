@@ -311,12 +311,12 @@ const AddTeamLead = () => {
         />
 
         {/* {states.length > 0 && ( */}
-        <button
+        {/* <button
           onClick={() => setOpenPoll(true)}
           className="rounded-lg bg-green-600 text-white p-1"
         >
           Create District
-        </button>
+        </button> */}
         <FormMultipleSelect
           label="Districts"
           onChange={handleLgaChange}
