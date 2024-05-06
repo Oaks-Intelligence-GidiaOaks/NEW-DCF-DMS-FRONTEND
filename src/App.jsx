@@ -459,7 +459,7 @@ function App() {
                 }
               />
             }
-          />
+          /> 
 
           <Route
             path="/super_admin/configuration"

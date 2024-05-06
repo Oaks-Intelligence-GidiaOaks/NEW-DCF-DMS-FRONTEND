@@ -22,6 +22,7 @@ import {
   getMyProfile,
 } from "../../lib/service";
 import { toast } from "react-toastify";
+import CreateDistrict from "../../components/CreateDistrict";
 
 const AddTeamLead = () => {
   const { user } = useAuth();
@@ -33,6 +34,12 @@ const AddTeamLead = () => {
   const [avatar, setAvatar] = useState(null);
   const [file, setFile] = useState(null);
   const [identityImage, setIdentityImage] = useState(null);
+
+  const [openPoll, setOpenPoll] = useState(false);
+
+  const handleClosePoll = () => {
+    setOpenPoll(false);
+  };
 
   const { mutate, isPending: mutateLoading } = useMutation({
     mutationKey: ["createUser"],
@@ -308,12 +315,20 @@ const AddTeamLead = () => {
         />
 
         {/* {states.length > 0 && ( */}
-        <FormMultipleSelect
-          label="Districts"
-          onChange={handleLgaChange}
-          data={cDistricts}
-          index="z-20"
-        />
+        <div className="relative">
+          <FormMultipleSelect
+            label="Districts"
+            onChange={handleLgaChange}
+            data={cDistricts}
+            index="z-20"
+          />
+          <button
+            onClick={() => setOpenPoll(true)}
+            className="absolute -bottom-2 left-2 text-xs rounded-lg text-primary-green cursor-pointer"
+          >
+            Add New
+          </button>
+        </div>
         {/* )} */}
 
         <FormInputDropDown
@@ -355,6 +370,11 @@ const AddTeamLead = () => {
           {mutateLoading ? <RingsCircle /> : "Submit"}
         </button>
       </form>
+      {openPoll && (
+        <div className="fixed z-50 bg-gray-300 bg-opacity-50 top-0 left-0 w-screen h-screen">
+          <CreateDistrict onclick={handleClosePoll} cStates={cStates} />
+        </div>
+      )}
     </div>
   );
   ``;
