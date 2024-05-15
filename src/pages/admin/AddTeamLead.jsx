@@ -322,12 +322,12 @@ const AddTeamLead = () => {
             data={cDistricts}
             index="z-20"
           />
-          <button
+          <p
             onClick={() => setOpenPoll(true)}
             className="absolute -bottom-2 left-2 text-xs rounded-lg text-primary-green cursor-pointer"
           >
             Add New
-          </button>
+          </p>
         </div>
         {/* )} */}
 

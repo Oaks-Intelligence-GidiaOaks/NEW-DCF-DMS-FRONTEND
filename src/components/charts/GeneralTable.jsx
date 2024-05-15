@@ -109,7 +109,7 @@ const GeneralTable = ({
       : [];
 
   // const toolbarOptions = ["Edit", "Delete", "Update", "Cancel"];
-  const pageSettings = { pageSize };
+  const pageSettings = { pageSize } || 20;
   const sortSettings = { colums: [{ field: "state", direction: "Ascending" }] };
 
   const ActionTemplate = (rwdata) => {
@@ -206,6 +206,7 @@ const GeneralTable = ({
     return rowData ? Number(rowData.index) + 1 : "";
   };
 
+  console.log(masterRow.length);
   return masterRow ? (
     <div className="p-3">
       <div className="flex items-center justify-between">
@@ -272,7 +273,8 @@ const GeneralTable = ({
           </ColumnsDirective>
           <Inject
             services={[
-              data.length > pageSize && Page,
+              masterRow?.length > pageSize && Page,
+              // Page,
               Sort,
               Filter,
               Group,

@@ -109,12 +109,13 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
     }
   };
 
-  return (
+  // console.log(prodGridData);
+  return prodGridData.length > 0 ? (
     <div>
       <GeneralTable
         title="Form Responses"
         height={400}
-        pageSize={60}
+        pageSize={20}
         data={prodGridData}
         commands={Commands}
         handleSave={handleSave}
@@ -123,6 +124,8 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
         hiddenFields={productsByCategoryHiddenFields}
       />
     </div>
+  ) : (
+    <div>Loading</div>
   );
 };
 
