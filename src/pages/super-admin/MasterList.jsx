@@ -10,6 +10,7 @@ import {
 } from "../../lib/utils";
 import { FormInputDropDown } from "../../components/form";
 import { GeneralTable } from "../../components/charts";
+import { Loading } from "../../components/reusable";
 
 const MasterList = () => {
   const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552abe");
@@ -140,11 +141,22 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <GeneralTable title="Master List" data={tData} />
+        {!masterLoading ? (
+          <GeneralTable
+            title={"Master List"}
+            pageSize={20}
+            data={tData}
+            height={360}
+          />
+        ) : (
+          <Loading />
+          // <div className="text-3xl font-semibold">Loading data!!!</div>
+        )}
+        {/* <GeneralTable title="Master List" data={tData} /> */}
 
-        <div className="p-2 border ">
+        {/* <div className="p-2 border ">
           <div className="ml-auto flex items-center">{<PageNumbers />}</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

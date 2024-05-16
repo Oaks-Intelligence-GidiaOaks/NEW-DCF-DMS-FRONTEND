@@ -109,7 +109,9 @@ const GeneralTable = ({
       : [];
 
   // const toolbarOptions = ["Edit", "Delete", "Update", "Cancel"];
-  const pageSettings = { pageSize } || 20;
+  let pgs = { pageSize };
+  // console.log(pgs);
+  const pageSettings = masterRow.length > pgs.pageSize ? pgs : { pageSize: 20 };
   const sortSettings = { colums: [{ field: "state", direction: "Ascending" }] };
 
   const ActionTemplate = (rwdata) => {
@@ -206,7 +208,7 @@ const GeneralTable = ({
     return rowData ? Number(rowData.index) + 1 : "";
   };
 
-  console.log(masterRow.length);
+  console.log(masterRow);
   return masterRow ? (
     <div className="p-3">
       <div className="flex items-center justify-between">

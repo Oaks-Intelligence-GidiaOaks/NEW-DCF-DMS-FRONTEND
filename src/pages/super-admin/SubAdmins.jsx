@@ -1,5 +1,5 @@
 import React from "react";
-import { CountCard } from "../../components/reusable";
+import { CountCard, Loading } from "../../components/reusable";
 import { GeneralTable } from "../../components/charts";
 import { transformSubAdminGridData } from "../../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
@@ -105,7 +105,7 @@ const SubAdmins = () => {
       </div>
 
       {/* table */}
-      <div>
+      {!saLoading ? (
         <GeneralTable
           title="Sub Admin Table"
           data={
@@ -115,7 +115,11 @@ const SubAdmins = () => {
           }
           actions={tableActions}
         />
-      </div>
+      ) : (
+        <Loading />
+        // <div className="text-3xl font-semibold">Loading data!!!</div>
+      )}
+      <div></div>
 
       {/* graphs */}
     </div>
