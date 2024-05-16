@@ -7,6 +7,7 @@ import { getMasterDataByCountry } from "../../lib/service";
 import { useQuery } from "@tanstack/react-query";
 import { transformMasterGridData } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
+import { Loading } from "../../components/reusable";
 
 const MasterList = () => {
   const { user } = useAuth();
@@ -127,16 +128,27 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <GeneralTable
+        {!masterLoading ? (
+          <GeneralTable
+            title={"Master List"}
+            pageSize={20}
+            data={mGridData}
+            height={300}
+          />
+        ) : (
+          <Loading />
+          // <div className="text-3xl font-semibold">Loading data!!!</div>
+        )}
+        {/* <GeneralTable
           title="Master List"
           height={260}
           pageSize={115}
           data={mGridData}
-        />
+        /> */}
 
-        <div className="p-2 border ">
+        {/* <div className="p-2 border ">
           <div className="ml-auto flex items-center">{<PageNumbers />}</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

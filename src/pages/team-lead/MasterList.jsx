@@ -7,6 +7,7 @@ import { getMasterDataByCountry } from "../../lib/service";
 import { transformMasterGridData } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
 import { useAuth } from "../../context";
+import { Loading } from "../../components/reusable";
 
 const MasterList = () => {
   const { user } = useAuth();
@@ -41,7 +42,7 @@ const MasterList = () => {
     ? transformMasterGridData(masterData.data.data)
     : null;
 
-  console.log("master data", mGridData);
+  // console.log("master data", mGridData);
 
   // let paginationItems =
   //   totalDataCount &&
@@ -128,17 +129,22 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <GeneralTable
-          title={"Master List"}
-          pageSize={113}
-          data={mGridData}
-          height={360}
-        />
-        <div className="p-2 border ">
+        {mGridData ? (
+          <GeneralTable
+            title={"Master List"}
+            pageSize={20}
+            data={mGridData}
+            height={360}
+          />
+        ) : (
+          <Loading />
+          // <div className="text-3xl font-semibold">Loading data!!!</div>
+        )}
+        {/* <div className="p-2 border ">
           <div className="ml-auto flex items-center">
-            {/* {<PageNumbers />} */}
+            {<PageNumbers />}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

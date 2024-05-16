@@ -10,6 +10,7 @@ import { transformProductGridData } from "../lib/utils";
 import { toast } from "react-toastify";
 import catProdSubmission from "../data/grid/categoryProductsSubmission.json";
 import { commands, productsByCategoryHiddenFields } from "../lib/actions";
+import { Loading, NoData } from "../components/reusable";
 
 const ProductsByCategoryTableTL = ({ categoryId }) => {
   const queryClient = useQueryClient();
@@ -109,8 +110,12 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
     }
   };
 
-  // console.log(prodGridData);
-  return prodGridData.length > 0 ? (
+  console.log(prodGridData);
+  return !prodLoading ? (
+    <div className="h-32">
+      <Loading />
+    </div>
+  ) : prodGridData.length > 0 ? (
     <div>
       <GeneralTable
         title="Form Responses"
@@ -125,8 +130,22 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
       />
     </div>
   ) : (
-    <div>Loading</div>
+    // <ProductsByCategoryTableTL categoryId={categoryId} />
+    <div className="h-32">
+      <NoData text="No Catgeory Selected" />
+    </div>
   );
+  // {isLoading ? (
+  //   <div className="h-32">
+  //     <Loading />
+  //   </div>
+  // ) : prodGridData.length > 0 ? (
+  //   <ProductsByCategoryTableTL categoryId={categoryId} />
+  // ) : (
+  //   <div className="h-32">
+  //     <NoData text="No Catgeory Selected" />
+  //   </div>
+  // )}
 };
 
 export default ProductsByCategoryTableTL;

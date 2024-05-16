@@ -109,7 +109,7 @@ const FormResponses = () => {
           <div className="h-32">
             <NoData text="No Catgeory Selected" />
           </div>
-        ) : catLoading ? (
+        ) : srLoading ? (
           <div className="h-32">
             <Loading />
           </div>
