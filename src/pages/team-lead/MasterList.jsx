@@ -13,7 +13,7 @@ const MasterList = () => {
   const { user } = useAuth();
 
   const [countryId, setCountryId] = useState(user.country);
-
+  const [newLoad, setNewLoad] = useState(true);
   const [startDateValue, setStartDateValue] = useState("");
   const [endDateValue, setEndDateValue] = useState("");
   let [pageNo, setPageNo] = useState(1);
@@ -41,6 +41,10 @@ const MasterList = () => {
   let mGridData = masterSuccess
     ? transformMasterGridData(masterData.data.data)
     : null;
+
+  // if (masterSuccess) {
+  //   setNewLoad(false);
+  // }
 
   // console.log("master data", mGridData);
 
@@ -84,6 +88,14 @@ const MasterList = () => {
     let formatDate = new Date(args.value).toISOString().split("T")[0];
 
     setEndDateValue(`${formatDate}`);
+    // setNewLoad(true);
+    // setTimeout(() => {
+    //   setNewCat();
+    // }, 5000);
+  };
+
+  const setNewCat = () => {
+    setNewLoad(false);
   };
 
   const handlePageNumberChange = (no) => {

@@ -43,6 +43,7 @@ const ProductsByCategoryTable = ({ categoryId }) => {
 
   useEffect(() => {
     refetch();
+    // console.log(categoryId);
   }, [categoryId, refetch]);
 
   // component variables
@@ -93,6 +94,10 @@ const ProductsByCategoryTable = ({ categoryId }) => {
       await mutate(mtData);
     }
   };
+
+  if (prodGridData.length == 0) {
+    return <div>No data</div>;
+  }
 
   return !prodLoading ? (
     <GeneralTable

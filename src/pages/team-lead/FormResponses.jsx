@@ -19,6 +19,7 @@ const FormResponses = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("food");
   const [categoryId, setCategoryId] = useState(null);
+  const [newLoad, setNewLoad] = useState(true);
 
   const {
     data: categoryData,
@@ -60,7 +61,16 @@ const FormResponses = () => {
       };
 
   const handleCategoryClick = (id) => {
+    // setCategoryId(null);
     setCategoryId(id);
+    setNewLoad(true);
+    setTimeout(() => {
+      setNewCat();
+    }, 6000);
+  };
+
+  const setNewCat = () => {
+    setNewLoad(false);
   };
 
   return (
@@ -109,7 +119,7 @@ const FormResponses = () => {
           <div className="h-32">
             <NoData text="No Catgeory Selected" />
           </div>
-        ) : srLoading ? (
+        ) : newLoad ? (
           <div className="h-32">
             <Loading />
           </div>
