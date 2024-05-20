@@ -111,7 +111,12 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
   };
 
   console.log(prodGridData);
-  return !prodLoading ? (
+
+  if (prodGridData.length == 0) {
+    return <div>No data</div>;
+  }
+
+  return prodLoading ? (
     <div className="h-32">
       <Loading />
     </div>

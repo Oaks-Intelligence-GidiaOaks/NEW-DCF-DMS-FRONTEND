@@ -34,7 +34,10 @@ const GeneralTable = ({
   hiddenFields,
 }) => {
   if (!data) return;
-  const masterRow = data;
+  // const masterRow = data;
+  const masterRow = data.map((d, i) => {
+    return { ...d, id: i + 1 };
+  });
   const [selectedUser, setSelectedUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
@@ -111,7 +114,7 @@ const GeneralTable = ({
   // const toolbarOptions = ["Edit", "Delete", "Update", "Cancel"];
   let pgs = { pageSize };
   // console.log(pgs);
-  const pageSettings = masterRow.length > pgs.pageSize ? pgs : { pageSize: 20 };
+  const pageSettings = masterRow.length > 100 ? { pageSize: 40 } : pgs;
   const sortSettings = { colums: [{ field: "state", direction: "Ascending" }] };
 
   const ActionTemplate = (rwdata) => {
@@ -205,10 +208,11 @@ const GeneralTable = ({
   };
 
   const serialNumberTemplate = (rowData) => {
+    // console.log(rowData);
     return rowData ? Number(rowData.index) + 1 : "";
   };
 
-  console.log(masterRow);
+  // console.log(pageSettings);
   return masterRow ? (
     <div className="p-3">
       <div className="flex items-center justify-between">
@@ -246,7 +250,8 @@ const GeneralTable = ({
             <ColumnDirective
               headerText="S/N"
               width={80}
-              template={serialNumberTemplate}
+              field="id"
+              // template={serialNumberTemplate}
               allowEditing={false}
             />
             {masterColumn}

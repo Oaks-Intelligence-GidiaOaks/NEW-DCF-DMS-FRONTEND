@@ -47,8 +47,8 @@ const MasterList = () => {
 
   let totalDataCount = mGridData?.length;
 
-  console.log(totalDataCount, "totalDataCount");
-  console.log("mGridData", mGridData);
+  // console.log(totalDataCount, "totalDataCount");
+  // console.log("mGridData", mGridData);
 
   let paginationItems =
     totalDataCount &&

@@ -27,6 +27,7 @@ const FormResponses = () => {
   const [activeTab, setActiveTab] = useState(null);
   const [countryId, setCountryId] = useState("65e344bff0eab8c4f2552abe");
   const [categoryId, setCategoryId] = useState(null);
+  const [newLoad, setNewLoad] = useState(true);
 
   // styles
   const activeStyle = "bg-oaksgreen text-white";
@@ -72,6 +73,14 @@ const FormResponses = () => {
 
   const handleCategoryClick = (id) => {
     setCategoryId(id);
+    setNewLoad(true);
+    setTimeout(() => {
+      setNewCat();
+    }, 5000);
+  };
+
+  const setNewCat = () => {
+    setNewLoad(false);
   };
 
   return (
@@ -123,7 +132,7 @@ const FormResponses = () => {
           <div className="h-32">
             <NoData text="No Catgeory Selected" />
           </div>
-        ) : catLoading ? (
+        ) : newLoad ? (
           <div className="h-32">
             <Loading />
           </div>
