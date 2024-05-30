@@ -129,7 +129,10 @@ function EnumeratorLogin() {
           // }
 
           // block login if current date is past Wednesday
-          if (isRestrictedDay(others.currentTime)) {
+          if (
+            user.role.toLowerCase() === "enumerator" &&
+            isRestrictedDay(others.currentTime)
+          ) {
             return setShowModal(true);
           }
 
@@ -183,10 +186,6 @@ function EnumeratorLogin() {
         });
     }
   };
-
-  // if (expired) {
-  //   setShowModal(true);
-  // }
 
   return (
     <>
