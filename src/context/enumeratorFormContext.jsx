@@ -702,7 +702,7 @@ export function EnumeratorFormProvider({ children }) {
     localStorage.removeItem("oaks-enum-forms");
     setState(initialState);
   };
-  const logOut = () => {
+  const logOut = (extra) => {
     try {
       fetch(`${base_url}logout`)
         .then((res) => res.json())
@@ -714,7 +714,7 @@ export function EnumeratorFormProvider({ children }) {
             secureLocalStorage.removeItem("oius");
             setUser(null);
             setIsLoggedIn(false);
-            return navigate("/");
+            return navigate("/" + extra);
           }
         })
         .catch((error) => {
@@ -722,7 +722,7 @@ export function EnumeratorFormProvider({ children }) {
           secureLocalStorage.clear();
           setUser(null);
           setIsLoggedIn(false);
-          return navigate("/");
+          return navigate("/" + extra);
         });
     } catch (err) {
       // console.log("error:", err);
