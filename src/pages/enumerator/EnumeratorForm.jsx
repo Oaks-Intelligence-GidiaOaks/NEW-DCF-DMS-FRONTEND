@@ -61,8 +61,13 @@ function EnumeratorForm() {
   const [formState, setFormState] = useState(savedState?.formState ?? null);
 
   // logout user if date is restricted
-  if (isRestrictedDay(user?.currentTime)) {
-    logOut("?expired=true");
+  if (user?.currentTime) {
+    if (isRestrictedDay(user?.currentTime)) {
+      logOut("?expired=true");
+      setUser(null);
+    }
+  } else {
+    logOut("");
     setUser(null);
   }
 
