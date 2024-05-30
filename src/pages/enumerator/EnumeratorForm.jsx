@@ -25,6 +25,7 @@ import {
   deepCompare,
   deepCopy,
 } from "../../lib";
+import { isRestrictedDay } from "../../lib/helpers";
 
 function EnumeratorForm() {
   const { secureLocalStorage } = useApp();
@@ -58,6 +59,12 @@ function EnumeratorForm() {
 
   const { setUser, user } = useAuth();
   const [formState, setFormState] = useState(savedState?.formState ?? null);
+
+  // logout user if date is restricted
+  if (isRestrictedDay(user?.currentTime)) {
+    logOut("?expired=true");
+    setUser(null);
+  }
 
   console.log("form state: ", savedState);
 

@@ -263,3 +263,28 @@ export const parseDate = (dateStr) => {
 
   return date;
 };
+
+export function isRestrictedDay(dateString) {
+  // Parse the date string
+  const date = new Date(dateString);
+
+  // Check if the date is valid
+  if (isNaN(date)) {
+    throw new Error("Invalid date string");
+  }
+
+  // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  const dayOfWeek = date.getDay();
+
+  // Check if the day is Thursday (4), Friday (5), Saturday (6), or Sunday (0)
+  if (
+    dayOfWeek === 0 ||
+    dayOfWeek === 4 ||
+    dayOfWeek === 5 ||
+    dayOfWeek === 6
+  ) {
+    return true;
+  }
+
+  return false;
+}

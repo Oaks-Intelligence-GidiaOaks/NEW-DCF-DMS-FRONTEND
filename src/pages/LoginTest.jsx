@@ -8,6 +8,8 @@ import { Rings } from "react-loader-spinner";
 import secureLocalStorage from "react-secure-storage";
 import { useApp } from "../context";
 import axios from "axios";
+import { isRestrictedDay } from "../lib/helpers";
+import InfoModal from "../components/Modal";
 
 function EnumeratorLogin() {
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ function EnumeratorLogin() {
   });
   const [errorResponse, setErrorResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleShowPassword = (e) => {
     e.preventDefault();
@@ -116,6 +119,11 @@ function EnumeratorLogin() {
               return setErrorResponse(others.message);
             }
 
+            // block login if current date is past Wednesday
+            if (isRestrictedDay(others.currentTime)) {
+              return setShowModal(true);
+            }
+
             setUser({ ...user, ...others });
             setIsLoggedIn(true);
 
@@ -174,44 +182,56 @@ function EnumeratorLogin() {
   };
 
   return (
-    <div className="max-w-[1280px] mx-auto justify-center px-4">
-      <div className="flex justify-between max-w-[1280px] mx-auto items-center px-10 lg:px-10 md:px-4 sm:px-4 xs:px-4 py-3">
-        <img
-          src={oaksLogo}
-          alt="Company Logo"
-          className="fix-image max-w-[150px] xs:max-w-[120px] sm:max-w-[150px]"
-        />
-        <p className="text-base xs:text-sm sm:text-base">
-          <span className="font-semibold">Data Capture</span> <span>Form</span>
-        </p>
-      </div>
-
-      <div className="p-8 login-form-shadow rounded-[10px] max-w-[480px] min-w-[240px] mt-8 mx-auto justify-center">
-        <div className="w-20 h-20 bg-primary-green mx-auto rounded-full flex items-center justify-center">
-          <HiUserCircle width={40} height={40} size={60} color="white" />
+    <>
+      {/* modal for blocking user */}
+      <InfoModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        title="Login Restricted"
+      >
+        The Data Capture Form is only accessible on Mondays, Tuesdays, and
+        Wednesdays.
+      </InfoModal>
+      {/* login form */}
+      <div className="max-w-[1280px] mx-auto justify-center px-4">
+        <div className="flex justify-between max-w-[1280px] mx-auto items-center px-10 lg:px-10 md:px-4 sm:px-4 xs:px-4 py-3">
+          <img
+            src={oaksLogo}
+            alt="Company Logo"
+            className="fix-image max-w-[150px] xs:max-w-[120px] sm:max-w-[150px]"
+          />
+          <p className="text-base xs:text-sm sm:text-base">
+            <span className="font-semibold">Data Capture</span>{" "}
+            <span>Form</span>
+          </p>
         </div>
-        <p className="text-center text-4 text-[#555555] mt-3">Welcome back</p>
-        <p className="text-center font-bold xl:text-2xl lg:text-xl md:text-lg mt-4">
-          Login your account
-        </p>
-        <form className="flex flex-col mt-4 sm:px-10" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label htmlFor="user-id" className="text-[14px]">
-              User ID
-            </label>
-            <input
-              type="text"
-              name="user-id"
-              id="user-id"
-              className="border-[1px] border-solid border-gray-300 p-2 rounded-[4px] mt-1 outline-[#72a247]"
-              value={loginForm.userId}
-              onChange={(e) =>
-                setLoginForm((prev) => ({ ...prev, userId: e.target.value }))
-              }
-            />
-            <p className="text-red-500 text-xs mt-1">{fieldErrors.userId}</p>
+
+        <div className="p-8 login-form-shadow rounded-[10px] max-w-[480px] min-w-[240px] mt-8 mx-auto justify-center">
+          <div className="w-20 h-20 bg-primary-green mx-auto rounded-full flex items-center justify-center">
+            <HiUserCircle width={40} height={40} size={60} color="white" />
           </div>
-          {/* <div className="flex flex-col mt-4">
+          <p className="text-center text-4 text-[#555555] mt-3">Welcome back</p>
+          <p className="text-center font-bold xl:text-2xl lg:text-xl md:text-lg mt-4">
+            Login your account
+          </p>
+          <form className="flex flex-col mt-4 sm:px-10" onSubmit={handleSubmit}>
+            <div className="flex flex-col">
+              <label htmlFor="user-id" className="text-[14px]">
+                User ID
+              </label>
+              <input
+                type="text"
+                name="user-id"
+                id="user-id"
+                className="border-[1px] border-solid border-gray-300 p-2 rounded-[4px] mt-1 outline-[#72a247]"
+                value={loginForm.userId}
+                onChange={(e) =>
+                  setLoginForm((prev) => ({ ...prev, userId: e.target.value }))
+                }
+              />
+              <p className="text-red-500 text-xs mt-1">{fieldErrors.userId}</p>
+            </div>
+            {/* <div className="flex flex-col mt-4">
             <label htmlFor="password" className="text-[14px]">
               Password
             </label>
@@ -241,34 +261,35 @@ function EnumeratorLogin() {
             </div>
             <p className="text-red-500 text-xs mt-1">{fieldErrors.password}</p>
           </div> */}
-          <p className="text-red-500 text-xs mt-7">{errorResponse}</p>
+            <p className="text-red-500 text-xs mt-7">{errorResponse}</p>
 
-          <button
-            type="submit"
-            className="mt-7 bg-primary-green text-white rounded-[4px] flex items-center justify-center"
-          >
-            {isLoading ? (
-              <Rings
-                height="36"
-                width="36"
-                color="#ffffff"
-                radius="6"
-                wrapperStyle={{ backgoundColor: "yellow" }}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="rings-loading"
-              />
-            ) : (
-              <span className="block p-2 text-[14px]">Login</span>
-            )}
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="mt-7 bg-primary-green text-white rounded-[4px] flex items-center justify-center"
+            >
+              {isLoading ? (
+                <Rings
+                  height="36"
+                  width="36"
+                  color="#ffffff"
+                  radius="6"
+                  wrapperStyle={{ backgoundColor: "yellow" }}
+                  wrapperClass=""
+                  visible={true}
+                  ariaLabel="rings-loading"
+                />
+              ) : (
+                <span className="block p-2 text-[14px]">Login</span>
+              )}
+            </button>
+          </form>
+        </div>
+        <p className="mt-10 text-center text-xs md:text-sm">
+          &copy; {new Date().getFullYear()} All Rights Reserved. Oaks
+          Intelligence.
+        </p>
       </div>
-      <p className="mt-10 text-center text-xs md:text-sm">
-        &copy; {new Date().getFullYear()} All Rights Reserved. Oaks
-        Intelligence.
-      </p>
-    </div>
+    </>
   );
 }
 
