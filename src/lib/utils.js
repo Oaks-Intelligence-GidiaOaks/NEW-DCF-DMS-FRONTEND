@@ -235,8 +235,11 @@ export const transformProductGridData = (data) => {
       return acc;
     }, {});
 
+    console.log(item, "item");
+
     const tData = {
       _id: item._id,
+      date: formatDate(item.createdAt),
       name: item.product?.name,
       ...inputs,
       createdAt: item?.createdAt,
@@ -255,6 +258,7 @@ export const transformMasterGridData = (data) => {
   const newGridData = [];
 
   data.forEach((dt) => {
+    console.log("dt", dt);
     const hold = reduceProductsArrayToObject(dt.products);
 
     let rStructure = hold.reduce(
@@ -267,10 +271,12 @@ export const transformMasterGridData = (data) => {
 
     let last = {
       _id: dt._id,
+      date: formatDate(dt.createdAt),
       country: dt.country?.name,
       created_by: dt.created_by?.id,
       district: dt.district?.name,
       state: dt.state?.name,
+
       ...rStructure,
     };
 
@@ -279,6 +285,16 @@ export const transformMasterGridData = (data) => {
 
   return newGridData;
 };
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  const day = String(date.getDate()).padStart(2, "0"); // Get day and pad with leading zero if needed
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month (0-based) and pad with leading zero if needed
+  const year = date.getFullYear(); // Get full year
+
+  return `${day}/${month}/${year}`;
+}
 
 const reduceArrayToObject = (data) =>
   data.reduce((acc, inp) => {
