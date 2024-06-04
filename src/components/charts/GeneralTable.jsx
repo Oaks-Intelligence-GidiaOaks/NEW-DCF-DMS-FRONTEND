@@ -34,10 +34,10 @@ const GeneralTable = ({
   hiddenFields,
 }) => {
   if (!data) return;
-  // const masterRow = data;
-  const masterRow = data.map((d, i) => {
-    return { ...d, id: i + 1 };
-  });
+  const masterRow = data;
+  // const masterRow = data.map((d, i) => {
+  //   return { ...d, S_N: i + 1 };
+  // });
   const [selectedUser, setSelectedUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
@@ -250,11 +250,13 @@ const GeneralTable = ({
             <ColumnDirective
               headerText="S/N"
               width={80}
-              field="id"
-              // template={serialNumberTemplate}
+              // field="id"
+              template={serialNumberTemplate}
               allowEditing={false}
             />
+
             {masterColumn}
+
             {actions && (
               <ColumnDirective
                 headerText="Actions"

@@ -50,7 +50,7 @@ const AdminEnumerators = () => {
     },
   });
 
-  console.log(teamLead, "team lead");
+  // console.log(teamLead, "team lead");
 
   // component variables
   let enumData = enumSuccess
