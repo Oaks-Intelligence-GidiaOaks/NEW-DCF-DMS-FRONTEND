@@ -25,6 +25,7 @@ import {
   deepCompare,
   deepCopy,
 } from "../../lib";
+import { formatMongoDate } from "../../lib/utils";
 import { isRestrictedDay } from "../../lib/helpers";
 
 function EnumeratorForm() {
@@ -437,8 +438,12 @@ function EnumeratorForm() {
             </div>
             <p className="text-center font-bold text-xl">Form Submitted</p>
             <p className="text-center px-3 xs:px-1 sm:px-3 pt-2">
-              Your captured data has been successfully submitted. Thanks for
-              your contribution.
+              Your captured data has been successfully submitted on this day
+              being{" "}
+              <strong>
+                {formatMongoDate(user?.currentTime ?? new Date().toISOString())}
+              </strong>
+              . Thanks for your contribution.
             </p>
             <div className="mt-5 flex justify-center">
               {user.districts.length > 1 && <LGAController />}
