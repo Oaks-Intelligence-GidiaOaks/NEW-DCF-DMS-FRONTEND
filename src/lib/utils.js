@@ -388,7 +388,7 @@ export const filterExpectedInputs = (allExpectedInputs, selectedInputs) => {
  * @param {string} mongoDateString - The MongoDB date string.
  * @returns {string} - The formatted date string.
  */
-function formatMongoDate(mongoDateString) {
+export function formatMongoDate(mongoDateString) {
   const date = new Date(mongoDateString);
 
   const daysOfWeek = [
