@@ -1,25 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Loading } from "../../components/reusable";
+import { Loading, SkeletonLoaders } from "../../components/reusable";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLog } from "../../lib/service";
 import { GeneralTable } from "../../components/charts";
 import { transformLogsGridData } from "../../lib/utils";
+import TableSkeleton from "../../components/reusable/TableSkeleton";
 
 const History = () => {
   const [startDateValue, setStartDateValue] = useState("");
   const [endDateValue, setEndDateValue] = useState("");
+
+  const [tableLoading, setTableLoading] = useState(false);
+
   let [pageNo, setPageNo] = useState(1);
+  let limit = 200;
 
   const {
     data: logs,
     isLoading: logLoading,
     isSuccess: logSuccess,
+    isFetching: isFetchingLogs,
     refetch,
   } = useQuery({
     queryKey: ["getAllLog"],
-    queryFn: getAllLog,
+    queryFn: () => getAllLog({ limit, pageNo }),
+    onSettled: () => setTableLoading(false),
   });
+
+  useEffect(() => {
+    setTableLoading(isFetchingLogs);
+  }, [isFetchingLogs]);
 
   useEffect(() => {
     refetch();
@@ -28,20 +39,23 @@ const History = () => {
   // component variables
   const logsData = logSuccess ? transformLogsGridData(logs.data.data) : [];
 
-  let [totalDataCount, setTotalDataCount] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
+  let totalPages = logSuccess && Math.floor(logs.data.total / limit);
 
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 7);
   const maxDate = new Date(new Date().getFullYear(), new Date().getMonth(), 27);
 
-  const itemsPerPage = 10;
-
   const paginationItems = totalPages;
-  const PageNumbers = ({ currentPage, onPageChange }) => {
+
+  const onPageChange = (no) => {
+    setTableLoading(true);
+    setPageNo(no);
+  };
+
+  const PageNumbers = ({ currentPage }) => {
     const numArr = Array.from({ length: paginationItems }, (_, i) => i + 1);
 
     return (
-      <div className="flex flex-wrap space-x-2">
+      <div className="flex flex-wrap space-x-2 text-base">
         {numArr.length > 0 &&
           numArr.map((singleNo) => (
             <button
@@ -49,7 +63,7 @@ const History = () => {
                 singleNo === pageNo ? "bg-oaksgreen text-white" : "bg-gray-200"
               } `}
               key={singleNo}
-              onClick={() => setPageNo(singleNo)}
+              onClick={() => onPageChange(singleNo)}
             >
               <span>{singleNo}</span>
             </button>
@@ -107,12 +121,22 @@ const History = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        <GeneralTable
-          title="Audit Logs"
-          data={logsData}
-          height={260}
-          pageSize={120}
-        />
+        {logLoading || tableLoading ? (
+          <div className="h-full w-full">
+            <TableSkeleton />
+          </div>
+        ) : logsData.length > 0 ? (
+          <GeneralTable
+            title="Audit Logs"
+            data={logsData}
+            height={260}
+            pageSize={limit}
+          />
+        ) : (
+          <div className="text-base h-[250px] grid w-full place-items-center">
+            <p>No Data Available...</p>
+          </div>
+        )}
 
         <div className="py-2 px-4 border ">
           <div className="ml-auto flex items-center">{<PageNumbers />}</div>
