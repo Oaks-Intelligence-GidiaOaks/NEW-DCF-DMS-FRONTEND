@@ -420,7 +420,24 @@ export const deleteRoute = async (districtId) => {
 };
 
 // Audit Log
-export const getAllLog = async () => {
-  const data = await axios.get(`audit_log`);
+export const getAllLog = async ({ limit, pageNo }) => {
+  let url = `audit_log`;
+
+  // Build the query parameters
+  const params = {};
+  if (limit) {
+    params.limit = limit;
+  }
+  if (pageNo) {
+    params.page = pageNo;
+  }
+
+  // Convert the params object to query string
+  const queryString = new URLSearchParams(params).toString();
+  if (queryString) {
+    url += `?${queryString}`;
+  }
+
+  const data = await axios.get(url);
   return data;
 };

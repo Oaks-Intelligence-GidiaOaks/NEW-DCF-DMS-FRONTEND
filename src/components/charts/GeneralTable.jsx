@@ -114,7 +114,8 @@ const GeneralTable = ({
   // const toolbarOptions = ["Edit", "Delete", "Update", "Cancel"];
   let pgs = { pageSize };
   // console.log(pgs);
-  const pageSettings = masterRow.length > 100 ? { pageSize: 40 } : pgs;
+  const pageSettings =
+    masterRow.length > 100 ? { pageSize: pageSize || 40 } : pgs;
   const sortSettings = { colums: [{ field: "state", direction: "Ascending" }] };
 
   const ActionTemplate = (rwdata) => {
