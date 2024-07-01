@@ -278,7 +278,11 @@ export const transformProductGridData = (data) => {
 
 function getKeysWithPrice(obj) {
   return Object.keys(obj)
-    .filter((key) => key.toLowerCase().includes("price"))
+    .filter(
+      (key) =>
+        key.toLowerCase().includes("price") ||
+        key.toLowerCase().includes("cost")
+    )
     .map((key) => ({ [key]: obj[key] }));
 }
 
