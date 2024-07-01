@@ -54,8 +54,6 @@ const FormResponses = () => {
     submited: sRate?.data.submited,
   };
 
-  console.log("SrCount", sRCount);
-
   const handleCategoryClick = (id) => {
     setCategoryId(id);
     setNewLoad(true);
