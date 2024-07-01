@@ -58,8 +58,6 @@ const ProductsByCategoryTable = ({ categoryId }) => {
         ids: [row._id],
       };
 
-      console.log(tRow, "tRow");
-
       try {
         const res = await flagResponse(row._id);
         queryClient.invalidateQueries({

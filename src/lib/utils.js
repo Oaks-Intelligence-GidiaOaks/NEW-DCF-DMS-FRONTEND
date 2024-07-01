@@ -235,18 +235,40 @@ export const transformProductGridData = (data) => {
       return acc;
     }, {});
 
-    console.log(item, "item");
+    // console.log(inputs, "inputs");
 
-    const tData = {
+    let tData = {
       _id: item._id,
       date: formatDate(item.createdAt),
       name: item.product?.name,
       ...inputs,
+      // price: inputs.price?.replace(/,/g, ""),
       createdAt: item?.createdAt,
       created_by: item.created_by?.id,
       district: item.district?.name,
       flagged: item.flagged,
     };
+
+    const priceArrays = getKeysWithPrice(inputs);
+
+    if (priceArrays.length > 0) {
+      let noCommaValues = priceArrays.map((item) => {
+        return {
+          [Object.keys(item)[0]]: Object.values(item)[0].replace(/,/g, ""),
+        };
+      });
+
+      noCommaValues.map((item) => {
+        tData = {
+          ...tData,
+          ...item,
+        };
+      });
+    }
+
+    if (inputs.rent) {
+      tData.rent = inputs.rent?.replace(/,/g, "");
+    }
 
     return tData;
   });
@@ -254,11 +276,20 @@ export const transformProductGridData = (data) => {
   return newData;
 };
 
+function getKeysWithPrice(obj) {
+  return Object.keys(obj)
+    .filter(
+      (key) =>
+        key.toLowerCase().includes("price") ||
+        key.toLowerCase().includes("cost")
+    )
+    .map((key) => ({ [key]: obj[key] }));
+}
+
 export const transformMasterGridData = (data) => {
   const newGridData = [];
 
   data.forEach((dt) => {
-    console.log("dt", dt);
     const hold = reduceProductsArrayToObject(dt.products);
 
     let rStructure = hold.reduce(
