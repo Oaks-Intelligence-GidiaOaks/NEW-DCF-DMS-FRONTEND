@@ -300,6 +300,8 @@ export const transformMasterGridData = (data) => {
       {}
     );
 
+    console.log(rStructure, "---- data");
+
     let last = {
       _id: dt._id,
       date: formatDate(dt.createdAt),
@@ -310,6 +312,23 @@ export const transformMasterGridData = (data) => {
 
       ...rStructure,
     };
+
+    const priceArrays = getKeysWithPrice(rStructure);
+
+    if (priceArrays.length > 0) {
+      let noCommaValues = priceArrays.map((item) => {
+        return {
+          [Object.keys(item)[0]]: Object.values(item)[0].replace(/,/g, ""),
+        };
+      });
+
+      noCommaValues.map((item) => {
+        last = {
+          ...last,
+          ...item,
+        };
+      });
+    }
 
     newGridData.push(last);
   });
