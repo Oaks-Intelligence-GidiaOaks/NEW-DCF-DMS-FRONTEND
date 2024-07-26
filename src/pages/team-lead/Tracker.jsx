@@ -161,7 +161,7 @@ const Tracker = () => {
             height={200}
             title="Response Tracker"
             data={trackerData?.enumerators}
-            pageSize={30}
+            pageSize={50}
           />
         )}
       </div>
