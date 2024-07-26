@@ -4,6 +4,7 @@ export const transformCategoryGridData = (data) => {
     country_id: item.country._id,
     "Category name": item.name,
     "Expected Inputs": item.expected_inputs,
+    Status: item.active ? "Active" : "Disabled",
   }));
 
   return newData;

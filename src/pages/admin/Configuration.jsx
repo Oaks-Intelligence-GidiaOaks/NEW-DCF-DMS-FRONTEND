@@ -57,6 +57,30 @@ const Configuration = () => {
       },
     },
     {
+      title: "Toggle",
+      action: async (row) => {
+        const categoryId = row._id;
+        try {
+          const iData = {
+            categoryId,
+            categoryData: {
+              active: row.Status === "Active" ? false : true,
+            },
+          };
+
+          const res = await updateCategory(iData);
+
+          toast.success(res.data.message);
+
+          queryClient.invalidateQueries({
+            queryKey: ["getCategoryByCountry"],
+          });
+        } catch (ex) {
+          toast.error(ex.message);
+        }
+      },
+    },
+    {
       title: "Delete",
       action: async (row) => {
         const categoryId = row._id;

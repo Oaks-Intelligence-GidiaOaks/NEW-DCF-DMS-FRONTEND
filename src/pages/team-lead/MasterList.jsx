@@ -144,7 +144,7 @@ const MasterList = () => {
         {mGridData ? (
           <GeneralTable
             title={"Master List"}
-            pageSize={20}
+            pageSize={120}
             data={mGridData}
             height={360}
           />
