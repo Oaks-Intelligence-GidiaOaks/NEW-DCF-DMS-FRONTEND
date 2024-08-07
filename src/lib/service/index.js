@@ -441,3 +441,21 @@ export const getAllLog = async ({ limit, pageNo }) => {
   const data = await axios.get(url);
   return data;
 };
+
+// SURVEY
+
+export const createSurvey = async (formData) => {
+  const data = await axios.post(`survey`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return data;
+};
+
+export const getSurveys = async () => {
+  const { data } = await axios.get(`survey`);
+
+  return data;
+};

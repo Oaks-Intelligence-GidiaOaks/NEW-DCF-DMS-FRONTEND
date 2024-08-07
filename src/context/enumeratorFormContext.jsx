@@ -714,7 +714,7 @@ export function EnumeratorFormProvider({ children }) {
             secureLocalStorage.removeItem("oius");
             setUser(null);
             setIsLoggedIn(false);
-            return navigate("/" + extra);
+            return navigate("/");
           }
         })
         .catch((error) => {
@@ -722,7 +722,7 @@ export function EnumeratorFormProvider({ children }) {
           secureLocalStorage.clear();
           setUser(null);
           setIsLoggedIn(false);
-          return navigate("/" + extra);
+          return navigate("/");
         });
     } catch (err) {
       // console.log("error:", err);

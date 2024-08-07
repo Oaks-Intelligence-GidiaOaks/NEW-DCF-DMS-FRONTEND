@@ -27,6 +27,7 @@ import {
 } from "../../lib";
 import { formatMongoDate } from "../../lib/utils";
 import { isRestrictedDay } from "../../lib/helpers";
+import { Link } from "react-router-dom";
 
 function EnumeratorForm() {
   const { secureLocalStorage } = useApp();
@@ -242,11 +243,13 @@ function EnumeratorForm() {
         }`}
       >
         <div className="flex justify-between max-w-[1280px] mx-auto items-center px-10 lg:px-10 md:px-4 sm:px-4 xs:px-4 py-3">
-          <img
-            src={oaksLogo}
-            alt="Company Logo"
-            className="fix-image max-w-[150px] xs:max-w-[120px] sm:max-w-[150px]"
-          />
+          <Link to="/landing">
+            <img
+              src={oaksLogo}
+              alt="Company Logo"
+              className="fix-image max-w-[150px] xs:max-w-[120px] sm:max-w-[150px]"
+            />
+          </Link>
           <p className="text-base xs:text-sm sm:text-base">
             <span className="font-semibold">Data Capture</span>{" "}
             <span>Form</span>

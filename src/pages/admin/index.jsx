@@ -14,3 +14,4 @@ export { default as AdminNewCategory } from "./NewCategory";
 export { default as AdminNewProduct } from "./NewProduct";
 export { default as AdminViewProducts } from "./ViewProducts";
 export { default as AdminEditTeamLead } from "./EditTeamLead";
+export { default as AdminSurvey } from "./Survey";

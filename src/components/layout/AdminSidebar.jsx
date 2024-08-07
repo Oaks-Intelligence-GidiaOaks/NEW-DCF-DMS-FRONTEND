@@ -123,6 +123,13 @@ const AdminSidebar = () => {
             Icon={FilterNone}
             link="admin/history"
           />
+
+          <SidebarItem
+            key="8"
+            text="Surveys"
+            Icon={OpenWith}
+            link="admin/survey"
+          />
           <LogoutButton />
         </div>
       </div>

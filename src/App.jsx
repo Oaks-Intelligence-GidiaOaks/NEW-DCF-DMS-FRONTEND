@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { EnumeratorForm } from "./pages/enumerator";
+import { EnumeratorForm, EnumeratorSurveyForm } from "./pages/enumerator";
 
 import {
   Enumerators,
@@ -34,6 +34,7 @@ import {
   AdminNewCategory,
   AdminViewProducts,
   AdminEditTeamLead,
+  AdminSurvey,
 } from "./pages/admin";
 
 import TeamLead from "./components/layout/TeamLead";
@@ -70,6 +71,7 @@ import {
 import SuperAdmin from "./components/layout/SuperAdmin";
 import { ProtectedRoute } from "./components/layout";
 import { ToastContainer } from "react-toastify";
+import Landing from "./pages/landing/Landing";
 
 export const queryClient = new QueryClient();
 
@@ -103,7 +105,7 @@ function App() {
 
   const identifyRoute = (user) => {
     if (user.role.toLowerCase() === "enumerator") {
-      return <Navigate replace to={"/form"} />;
+      return <Navigate replace to={"/landing"} />;
     }
     if (user.role === "TeamLead") {
       return <Navigate replace to={"/home"} />;
@@ -140,14 +142,35 @@ function App() {
             path="/login_test"
             element={isLoggedIn && user ? identifyRoute(user) : <LoginTest />}
           />
-          {/* enumerator routes */}
 
+          {/* Landing route */}
+          <Route
+            path="/landing"
+            element={
+              isLoggedIn && user ? <Landing /> : <Navigate replace to={"/"} />
+            }
+          />
+
+          {/* enumerator routes */}
           <Route
             path="/form"
             element={
               isLoggedIn && user && user.role.toLowerCase() === "enumerator" ? (
                 <EnumeratorFormProvider>
                   <EnumeratorForm />
+                </EnumeratorFormProvider>
+              ) : (
+                <Navigate replace to={"/"} />
+              )
+            }
+          />
+
+          <Route
+            path="/survey"
+            element={
+              isLoggedIn && user && user.role.toLowerCase() === "enumerator" ? (
+                <EnumeratorFormProvider>
+                  <EnumeratorSurveyForm />
                 </EnumeratorFormProvider>
               ) : (
                 <Navigate replace to={"/"} />
@@ -316,6 +339,19 @@ function App() {
               )
             }
           />
+
+          <Route
+            path="admin/survey"
+            element={
+              adminRoleCheck ? (
+                <Admin>
+                  <AdminSurvey />
+                </Admin>
+              ) : (
+                <Navigate replace to={"/"} />
+              )
+            }
+          />
           <Route
             path="/admin/add"
             element={
@@ -459,7 +495,7 @@ function App() {
                 }
               />
             }
-          /> 
+          />
 
           <Route
             path="/super_admin/configuration"

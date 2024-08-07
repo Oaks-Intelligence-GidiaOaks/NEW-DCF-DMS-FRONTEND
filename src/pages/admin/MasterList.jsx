@@ -7,7 +7,7 @@ import { getMasterDataByCountry } from "../../lib/service";
 import { useQuery } from "@tanstack/react-query";
 import { transformMasterGridData } from "../../lib/utils";
 import { GeneralTable } from "../../components/charts";
-import { Loading } from "../../components/reusable";
+import { Loading, NoData } from "../../components/reusable";
 
 const MasterList = () => {
   const { user } = useAuth();
@@ -32,6 +32,8 @@ const MasterList = () => {
       ),
   });
 
+  console.log(masterData, "masterdata");
+
   useEffect(() => {
     refetch();
   }, [endDateValue, pageNo]);
@@ -46,6 +48,8 @@ const MasterList = () => {
     : null;
 
   let totalDataCount = mGridData?.length;
+
+  console.log(mGridData, "=====kjhdgc");
 
   // console.log(totalDataCount, "totalDataCount");
   // console.log("mGridData", mGridData);
@@ -128,7 +132,9 @@ const MasterList = () => {
 
       {/* table */}
       <div className="bg-white h-80 w-full text-[6px]">
-        {!masterLoading ? (
+        {masterLoading ? (
+          <Loading />
+        ) : mGridData && mGridData.length > 0 ? (
           <GeneralTable
             title={"Master List"}
             pageSize={120}
@@ -136,15 +142,10 @@ const MasterList = () => {
             height={300}
           />
         ) : (
-          <Loading />
-          // <div className="text-3xl font-semibold">Loading data!!!</div>
+          <div>
+            <NoData key={1} text={"No Data Available"} />
+          </div>
         )}
-        {/* <GeneralTable
-          title="Master List"
-          height={260}
-          pageSize={115}
-          data={mGridData}
-        /> */}
 
         {/* <div className="p-2 border ">
           <div className="ml-auto flex items-center">{<PageNumbers />}</div>
