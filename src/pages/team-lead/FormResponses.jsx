@@ -117,7 +117,7 @@ const FormResponses = () => {
       <div className="bg-white h-80 w-full">
         {!categoryId ? (
           <div className="h-32">
-            <NoData text="No Catgeory Selected" />
+            <NoData text="No Categeory Selected" />
           </div>
         ) : newLoad ? (
           <div className="h-32">

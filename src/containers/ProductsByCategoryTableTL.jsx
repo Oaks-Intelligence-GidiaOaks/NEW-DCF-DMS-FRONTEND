@@ -137,20 +137,9 @@ const ProductsByCategoryTableTL = ({ categoryId }) => {
   ) : (
     // <ProductsByCategoryTableTL categoryId={categoryId} />
     <div className="h-32">
-      <NoData text="No Catgeory Selected" />
+      <NoData text="No Categeory Selected" />
     </div>
   );
-  // {isLoading ? (
-  //   <div className="h-32">
-  //     <Loading />
-  //   </div>
-  // ) : prodGridData.length > 0 ? (
-  //   <ProductsByCategoryTableTL categoryId={categoryId} />
-  // ) : (
-  //   <div className="h-32">
-  //     <NoData text="No Catgeory Selected" />
-  //   </div>
-  // )}
 };
 
 export default ProductsByCategoryTableTL;

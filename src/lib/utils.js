@@ -507,3 +507,12 @@ export function formatMongoDate(mongoDateString) {
 
   return `${dayOfWeek} ${dayWithSuffix} ${month} ${year}`;
 }
+
+export const transformSurveyData = (data) => {
+  return data.map(({ created_by, ...rest }) => ({
+    "First Name": created_by?.first_name || "N/A",
+    "Last Name": created_by?.last_name || "N/A",
+    ID: created_by?.id || "N/A",
+    ...rest,
+  }));
+};
